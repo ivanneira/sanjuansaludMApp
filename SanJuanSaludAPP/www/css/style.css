@@ -1,4 +1,51 @@
 ﻿#mainBanner {
     background-color: #c12e2a;
+    padding: 1em;
 
+}
+
+.spacer {
+    height: 1em;
+}
+
+
+.cover-card {
+    border: 2px solid white;
+    background: silver;
+    padding: 0px;
+    margin: 0px;
+    height: 20em !important;
+}
+
+
+.overlay > p {
+    background-color: rgba(0,0,0,0.5);
+    vertical-align: text-bottom;
+    color: white;
+    text-shadow: 3px 3px  #000;
+    width: 100%;
+    height: 100%;
+    font-size: 20px;
+}
+
+.boton {
+
+    background-color: #c12e2a !important;
+}
+
+.boton-cuadrado {
+    text-align: start;
+    color: white !important;
+    height: 10em !important;
+}
+
+.boton-largo {
+
+    color: white !important;
+    height: 5em !important;
+
+}
+
+.botonera {
+    margin: 1em !important;
 }
