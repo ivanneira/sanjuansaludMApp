@@ -1,7 +1,8 @@
 {
-    "name": "SanJuanSaludAPP",
-    "version": "1.0.0",
-    "private": true,
-    "dependencies": {
-    }
+  "name": "SanJuanSaludAPP",
+  "version": "1.0.0",
+  "private": true,
+  "dependencies": {
+    "material-design-lite": "^1.3.0"
+  }
 }
