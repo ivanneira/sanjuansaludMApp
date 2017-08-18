@@ -1,8 +1,39 @@
 {
-  "name": "SanJuanSaludAPP",
-  "version": "1.0.0",
-  "private": true,
-  "dependencies": {
-    "material-design-lite": "^1.3.0"
-  }
+    "name": "SanJuanSaludAPP",
+    "version": "1.0.0",
+    "private": true,
+    "dependencies": {
+        "cordova-android": "^6.2.3",
+        "cordova-browser": "^4.1.0",
+        "cordova-ios": "4.2.0",
+        "cordova-plugin-compat": "^1.0.0",
+        "cordova-plugin-geolocation": "^2.4.3",
+        "cordova-plugin-googlemaps": "git+https://github.com/mapsplugin/cordova-plugin-googlemaps.git#multiple_maps",
+        "cordova-plugin-googlemaps-sdk": "git+https://github.com/mapsplugin/cordova-plugin-googlemaps-sdk.git",
+        "cordova-plugin-whitelist": "1.2.2",
+        "cordova-sqlite-storage": "^2.0.4",
+        "cordova-windows": "4.4.2",
+        "material-design-lite": "^1.3.0"
+    },
+    "cordova": {
+        "platforms": [
+            "android",
+            "browser",
+            "ios",
+            "windows"
+        ],
+        "plugins": {
+            "cordova-plugin-whitelist": {},
+            "cordova-sqlite-storage": {},
+            "cordova-plugin-geolocation": {
+                "GEOLOCATION_USAGE_DESCRIPTION": " "
+            },
+            "cordova-plugin-googlemaps": {
+                "API_KEY_FOR_ANDROID": "AIzaSyC_LkjOstSW67FyZ2oABpMfZSG4STjiu7c",
+                "API_KEY_FOR_IOS": "AIzaSyBZK0bGv6wCVNOpLiLRLgV_hy8B-Y07pp4",
+                "LOCATION_WHEN_IN_USE_DESCRIPTION": "Show your location on the map",
+                "LOCATION_ALWAYS_USAGE_DESCRIPTION": "Trace your location on the map"
+            }
+        }
+    }
 }
