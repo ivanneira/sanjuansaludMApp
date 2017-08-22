@@ -1,6 +1,8 @@
-﻿var map;
+﻿
 var ErrorAjax = "Ups! Hubo un problema con su conexión a internet.";
 var NoticiasURL = "http://10.64.65.200/AresApi/Api/Portal/Noticias";
+var DepartamentosURL = "http://10.64.65.200/AresApi/Api/Departamento";
+var CapsURL = "http://10.64.65.200/AresApi/Api/CentroDeSalud";
 //var portalUrl = "http://200.0.236.210/AresApi/Api/Portal/Noticias";
 
 
@@ -29,6 +31,7 @@ function createDatabase()
 
 }
 
+/*FUNCION QUE OBTIENE EL SLIDER ACTUAL DEL PORTAL DE GOBIERNO A TRAVES DE LA API DE PAULO*/
 function getSlider()
 {
     $.ajax({
@@ -48,46 +51,7 @@ function getSlider()
     });
 }
 
-function maps() {
-
-    var div = document.getElementById("map_canvas");
-
-    // Initialize the map view
-    map = plugin.google.maps.Map.getMap(div);
-    //map = plugin.google.maps.Map.getMap(div);
-    // Wait until the map is ready status.
-    //map.addEventListener(plugin.google.maps.event.MAP_READY, onMapReady);
-}
-
-
-function onMapReady() {
-
-
-        // Add a maker
-        map.addMarker({
-            position: {lat: 37.422359, lng: -122.084344},
-            title: "Welecome to \n" +
-            "Cordova GoogleMaps plugin for iOS and Android",
-            snippet: "This plugin is awesome!",
-            animation: plugin.google.maps.Animation.BOUNCE
-        }, function (marker) {
-
-            // Show the info window
-            marker.showInfoWindow();
-
-            // Catch the click event
-            marker.on(plugin.google.maps.event.INFO_CLICK, function () {
-
-                // To do something...
-                alert("Hello world!");
-
-            });
-
-        });
-
-
-}
-
+/*FUNCION QUE VUELCA LOS DATOS EN EL SLIDER UNA VEZ CREADA LA ESTRUCTURA*/
 function fillSlider(selector,json)
 {
     console.dir(json);
@@ -123,4 +87,107 @@ function fillSlider(selector,json)
 
 });
 
+}
+
+/*FUNCION PARA OBTENER DEPARTAMENTOS*/
+function getDepartamento()
+{
+    $.ajax({
+
+        url: DepartamentosURL,
+        cache: false,
+        type: 'get',
+        dataType: "json",
+        success: function (response) {
+
+            //fillSlider($("#slider"), response);
+            console.dir(response);
+        },
+        error: function (error) {
+            alert(ErrorAjax);
+        }
+
+    });
+}
+
+
+/*FUNCION PARA OBTENER CENTROS DE SALUD*/
+function getCentrosDeSalud()
+{
+    $.ajax({
+
+        url: CapsURL,
+        cache: false,
+        type: 'get',
+        dataType: "json",
+        success: function (response) {
+
+            //fillSlider($("#slider"), response);
+            console.dir(response);
+        },
+        error: function (error) {
+            alert(ErrorAjax);
+        }
+
+    });
+}
+
+/*FUNCION PARA OBTENER UN CENTRO DE SALUD*/
+function getCentroDeSalud(id)
+{
+    $.ajax({
+
+        url: CapsURL + "/" + id,
+        cache: false,
+        type: 'get',
+        dataType: "json",
+        success: function (response) {
+
+            console.dir(response);
+        },
+        error: function (error) {
+            alert(ErrorAjax);
+        }
+
+    });
+}
+
+/*FUNCION PARA OBTENER ESPECIALIDADES Y HORARIOS PARA UN CENTRO DE SALUD*/
+function getCentroDeSaludEyH(id)
+{
+    $.ajax({
+
+        url: CapsURL + "/" + id+ "/EspecialidadesYHorarios",
+        cache: false,
+        type: 'get',
+        dataType: "json",
+        success: function (response) {
+
+            console.dir(response);
+        },
+        error: function (error) {
+            alert(ErrorAjax);
+        }
+
+    });
+}
+
+/*FUNCION PARA OBTENER LINEAS DE COLECTIVOS QUE LLEGAN A UN CENTRO DE SALUD*/
+function getCentroDeSaludLC(id)
+{
+    $.ajax({
+
+        url: CapsURL + "/" + id+ "/LineasDeColectivos",
+        cache: false,
+        type: 'get',
+        dataType: "json",
+        success: function (response) {
+
+            console.dir(response);
+        },
+        error: function (error) {
+            alert(ErrorAjax);
+        }
+
+    });
 }
