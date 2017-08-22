@@ -196,6 +196,6 @@ $("#bntCSalud").click(function () {
 
     $.get("departamentos.html", function(data){
 
-        $("body").html(data)
+        $("#mainContainer").html(data)
     })
 });
