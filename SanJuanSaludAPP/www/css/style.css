@@ -1,5 +1,10 @@
-﻿#mainBanner {
-    background-color: #c12e2a;
+﻿body {
+
+    background-color: #940f12 !important;
+}
+
+#mainBanner {
+    /*background-color: #940f12;*/
     padding: 1em;
 
 }
@@ -30,22 +35,33 @@
 
 .boton {
 
-    background-color: #c12e2a !important;
+   background-color: #fff !important;
 }
 
 .boton-cuadrado {
     text-align: start;
-    color: white !important;
+    color: #940f12;
     height: 10em !important;
 }
 
 .boton-largo {
 
-    color: white !important;
+    color: #940f12 !important;
     height: 5em !important;
 
 }
 
 .botonera {
     margin: 1em !important;
+}
+
+.btnImg path{
+
+    background-color: #000;
+}
+
+#slideContainer {
+
+    width: 100%;
+
 }

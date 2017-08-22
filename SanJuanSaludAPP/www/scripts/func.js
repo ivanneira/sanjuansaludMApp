@@ -103,7 +103,7 @@ function fillSlider(selector,json)
             '</p>'+
             '<div style="display:none" id="'+json[i].nid+'_full">' +
             '<p>'+json[i].nd+'</p>'+
-            '</div>';
+            '</div>'+
             '</div>'+
             '</div>';
 
@@ -112,11 +112,14 @@ function fillSlider(selector,json)
     }
 
     $('.slide').slick({
-    autoplay: 5000,
-    slidesToShow: 1,
-    adaptiveHeight: true,
-    centerMode: false,
-    centerPadding: '60px'
+        autoplay: 5000,
+        slidesToShow: 1,
+        adaptiveHeight: true,
+        centerMode: true,
+        dots: true,
+        arrows: false,
+        centerPadding: '10px',
+        mobileFirst: true
 
 });
 
