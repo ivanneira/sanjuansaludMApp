@@ -39,6 +39,7 @@
 }
 
 .boton-cuadrado {
+    overflow: hidden;
     text-align: start;
     color: #940f12;
     height: 10em !important;
@@ -47,7 +48,7 @@
 .boton-largo {
 
     color: #940f12 !important;
-    height: 5em !important;
+
 
 }
 
@@ -63,5 +64,10 @@
 #slideContainer {
 
     width: 100%;
+}
 
+
+.btn-sq-lg {
+    width: 150px !important;
+    height: 150px !important;
 }

@@ -191,3 +191,11 @@ function getCentroDeSaludLC(id)
 
     });
 }
+
+$("#bntCSalud").click(function () {
+
+    $.get("departamentos.html", function(data){
+
+        $("body").html(data)
+    })
+});
