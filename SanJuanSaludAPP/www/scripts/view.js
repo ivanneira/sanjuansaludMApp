@@ -13,17 +13,7 @@ $$(document).on('DOMContentLoaded', function(){
 
     });
 
-    $("#btnCentros").click(function(){
 
-        $.ajax({
-            url:"opciones.html"
-
-        }).done(function(data){
-            myApp.popup(data);
-        });
-
-
-    });
 
 
     $("#btnProtur").click(function(){
@@ -37,5 +27,21 @@ $$(document).on('DOMContentLoaded', function(){
 
 
     });
+
+
+    $$('#btnCentros').on('click',function(){
+
+        var clickedLink = this;
+
+        myApp.popover('.popover-links', clickedLink);
+    });
+
+/*
+    $$('#btnDepto').on('click',function(){
+        console.log("llega");
+        mainView.router.loadPage("departamentos.html");
+
+    });
+*/
 
 });
