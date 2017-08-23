@@ -43,7 +43,7 @@ function getSlider()
         dataType: "json",
         success: function (response) {
 
-            fillSlider($("#slider"), response);
+            fillSlider($("#slide"), response);
         },
         error: function (error) {
             alert(ErrorAjax);
@@ -61,7 +61,7 @@ function fillSlider(selector,json)
 
     for(var i=0; i<json.length;i++)
     {
-        var temp ='<div id="'+json[i].nid+'" class="cover-card col-sm-12 img-thumbnail" style="background: url(http://sanjuan.gov.ar/'+json[i].nf+') no-repeat center top;background-size:cover;">'+
+        var temp ='<div id="'+json[i].nid+'" class="swiper-slide" style="background: url(http://sanjuan.gov.ar/'+json[i].nf+') no-repeat center top;background-size:cover;">'+
             '<div class="overlay">'+
             '<p>'+
             json[i].nt+
@@ -75,8 +75,6 @@ function fillSlider(selector,json)
 
         $(selector).append(temp);
     }
-
-
 }
 
 /*FUNCION PARA OBTENER DEPARTAMENTOS*/

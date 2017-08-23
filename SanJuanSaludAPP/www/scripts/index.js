@@ -6,7 +6,7 @@
 
 
     function onDeviceReady() {
-        //getSlider();
+        getSlider();
         //createDatabase();
         //maps();
 
