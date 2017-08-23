@@ -1,8 +1,9 @@
 ﻿
+var server = "10.64.65.200";
 var ErrorAjax = "Ups! Hubo un problema con su conexión a internet.";
-var NoticiasURL = "http://200.0.236.210/AresApi/Api/Portal/Noticias";
-var DepartamentosURL = "http://10.64.65.200/AresApi/Api/Departamento";
-var CapsURL = "http://10.64.65.200/AresApi/Api/CentroDeSalud";
+var NoticiasURL = "http://"+server+"/AresApi/Api/Portal/Noticias";
+var DepartamentosURL = "http://"+server+"/AresApi/Api/Departamento";
+var CapsURL = "http://"+server+"/AresApi/Api/CentroDeSalud";
 //var portalUrl = "http://200.0.236.210/AresApi/Api/Portal/Noticias";
 
 
