@@ -76,12 +76,25 @@ function fillSlider(selector,json)
         $(selector).append(temp);
     }
 
+    //inicialización de swiper
     var mySwiper = myApp.swiper('.swiper-container', {
         speed: 600,
         spaceBetween: 10,
         autoplay: 4000
     });
+
+    mySwiper.on('onTap', function(data){
+       abrirNoticia(data);
+    });
 }
+
+//función para abrir noticia
+
+function abrirNoticia(slide){
+
+
+}
+
 
 /*FUNCION PARA OBTENER DEPARTAMENTOS*/
 function getDepartamento()

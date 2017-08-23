@@ -28,13 +28,48 @@ $$(document).on('DOMContentLoaded', function(){
 
     });
 
-
+/*
     $$('#btnCentros').on('click',function(){
-
-        var clickedLink = this;
+   var clickedLink = this;
 
         myApp.popover('.popover-links', clickedLink);
+
+
+
     });
+*/
+
+    //- Two groups
+    $$('.ac-3').on('click', function () {
+        var buttons = [
+            {
+                text: 'Elija de qué forma buscar Centros de Salud:',
+                label: true
+            },
+            {
+                text: 'Buscar con mi dispositivo móvil',
+                bold: true
+            },
+            {
+                text: 'Buscar por departamento',
+                bold: true,
+                onClick: function(){
+                    mainView.router.loadPage("departamentos.html");
+                }
+            }
+        ];
+        var buttons2 = [
+            {
+                text: 'Cancel',
+                color: 'red'
+            }
+        ];
+        var groups = [buttons, buttons2];
+
+        myApp.actions(groups);
+    });
+
+
 
 /*
     $$('#btnDepto').on('click',function(){

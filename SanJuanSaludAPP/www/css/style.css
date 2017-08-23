@@ -4265,11 +4265,12 @@ body {
 .boton {
     height: 10em !important;
     color: #940f12 !important;
+    line-height: 1em !important;
 }
 
 .boton-chico {
 
-    height: 5em !important;
+    height: 3em !important;
     color: #940f12 !important;
 }
 
@@ -4393,10 +4394,6 @@ body {
     color: white !important;
 }
 
-.asdf {
-    color: white !important;
-}
-
 ::-webkit-input-placeholder{
 
     color: #aaa !important;
@@ -4418,9 +4415,10 @@ body {
 
 textarea {
     color: #fff !important;
+    height: 2em !important;
 }
 
 .buttons-row a img{
 
-    height: 7em;
+    height: 5em;
 }
