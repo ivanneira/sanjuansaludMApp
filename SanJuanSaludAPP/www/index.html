@@ -16,6 +16,7 @@
         <!--framework7-->
         <link rel = "stylesheet" href = "css/framework7-material.css" />
         <link rel = "stylesheet" href = "css/framework7-colors.css" />
+        <link rel = "stylesheet" href = "css/framework7-icons.css" />
 
 
 
@@ -28,7 +29,7 @@
         <title>SanJuanSaludAPP</title>
     </head>
 
-    <body class="theme-deeporange">
+    <body class="theme-white">
 
     <div class="views">
 
@@ -55,7 +56,7 @@
 
                         <div class="content-block">
 
-                            <div class="row">
+                            <div class="row" id="sombraSlide">
                                 <div class="col-100">
 
                                     <!-- Slider container -->
@@ -69,23 +70,29 @@
                                             <div class="swiper-slide">Slide 3</div>
                                             -->
                                         </div>
-                                        <!-- Pagination, if required -->
-                                        <div class="swiper-pagination"></div>
+
                                     </div>
 
                                 </div>
                             </div>
 
                                 <p class="buttons-row">
-                                    <a href="#" id="btnCentros" data-ignore-cache="true" class="button button-fill button-raised boton" >centros</a>
+                                    <a href="#" id="btnCentros" data-ignore-cache="true" class="button button-fill button-raised boton" >
+                                        
+                                        <span>Centros de Salud <br> <img src="images/btnMap.svg" alt=""></span>
+                                    </a>
 
-                                    <a href="#" id="btnProtur" data-ignore-cache="true" class="button button-fill button-raised boton">protur</a>
+                                    <a href="#" id="btnProtur" data-ignore-cache="true" class="button button-fill button-raised boton">
+                                        <span>Programar turno<br> <img src="images/btnProtur.svg" alt=""></span>
+                                    </a>
                                 </p>
 
 
                             <div class="row">
-                                <div class="col-100">
-                                    <a href="#" id="btnAyuda" data-ignore-cache="true" class="button button-fill button-raised boton-chico">Ayuda </a>
+                                <div class="col-100 ">
+                                    <a href="#" id="btnAyuda" data-ignore-cache="true" class="button button-fill button-raised boton-chico">
+                                        <span>Ayuda</span>
+                                    </a>
 
                                 </div>
                             </div>
@@ -111,9 +118,6 @@
 
             // Add the view
             var mainView = myApp.addView('.view-main', {
-
-                // enable the dynamic navbar for this view:
-                dynamicNavbar: true
             });
 
 

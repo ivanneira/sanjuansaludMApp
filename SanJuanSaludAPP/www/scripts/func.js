@@ -1,5 +1,5 @@
 ﻿
-var server = "10.64.65.200";
+var server = "200.0.236.210";
 var ErrorAjax = "Ups! Hubo un problema con su conexión a internet.";
 var NoticiasURL = "http://"+server+"/AresApi/Api/Portal/Noticias";
 var DepartamentosURL = "http://"+server+"/AresApi/Api/Departamento";
@@ -77,9 +77,8 @@ function fillSlider(selector,json)
     }
 
     var mySwiper = myApp.swiper('.swiper-container', {
-        pagination:'.swiper-pagination',
         speed: 600,
-        spaceBetween: 100,
+        spaceBetween: 10,
         autoplay: 4000
     });
 }
