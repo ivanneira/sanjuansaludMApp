@@ -75,6 +75,13 @@ function fillSlider(selector,json)
 
         $(selector).append(temp);
     }
+
+    var mySwiper = myApp.swiper('.swiper-container', {
+        pagination:'.swiper-pagination',
+        speed: 600,
+        spaceBetween: 100,
+        autoplay: 4000
+    });
 }
 
 /*FUNCION PARA OBTENER DEPARTAMENTOS*/
