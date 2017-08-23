@@ -1,6 +1,6 @@
 ﻿
 var ErrorAjax = "Ups! Hubo un problema con su conexión a internet.";
-var NoticiasURL = "http://10.64.65.200/AresApi/Api/Portal/Noticias";
+var NoticiasURL = "http://200.0.236.210/AresApi/Api/Portal/Noticias";
 var DepartamentosURL = "http://10.64.65.200/AresApi/Api/Departamento";
 var CapsURL = "http://10.64.65.200/AresApi/Api/CentroDeSalud";
 //var portalUrl = "http://200.0.236.210/AresApi/Api/Portal/Noticias";
@@ -75,17 +75,6 @@ function fillSlider(selector,json)
         $(selector).append(temp);
     }
 
-    $('.slide').slick({
-        autoplay: 5000,
-        slidesToShow: 1,
-        adaptiveHeight: true,
-        centerMode: true,
-        dots: true,
-        arrows: false,
-        centerPadding: '10px',
-        mobileFirst: true
-
-});
 
 }
 
@@ -199,3 +188,4 @@ $("#bntCSalud").click(function () {
         $("#mainContainer").html(data)
     })
 });
+

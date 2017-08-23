@@ -6,9 +6,9 @@
 
 
     function onDeviceReady() {
-        getSlider();
+        //getSlider();
         //createDatabase();
-        maps();
+        //maps();
 
         // Controlar la pausa de Cordova y reanudar eventos
         document.addEventListener( 'pause', onPause.bind( this ), false );
@@ -29,4 +29,7 @@
     function onResume() {
         // TODO: esta aplicación se ha reactivado. Restaure el estado de la aplicación aquí.
     };
+
+
+
 } )();

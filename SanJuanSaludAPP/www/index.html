@@ -11,137 +11,133 @@
         <meta name="format-detection" content="telephone=no">
         <meta name="msapplication-tap-highlight" content="no">
         <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+        <!--JS jquery-->
+        <script type="text/javascript" src="jquery/jquery-3.2.1.min.js"></script>
+        <!--framework7-->
+        <link rel = "stylesheet"
+              href = "https://cdnjs.cloudflare.com/ajax/libs/framework7/1.6.4/css/framework7.material.css" />
+        <link rel = "stylesheet"
+              href = "https://cdnjs.cloudflare.com/ajax/libs/framework7/1.6.4/css/framework7.material.colors.min.css" />
+        <link rel="stylesheet" href="node_modules/framework7-icons/css/framework7-icons.css">
+        <!--JS Slick-->
+        <script src="slick/slick.min.js"></script>
         <!--CSS principal-->
         <link rel="stylesheet" type="text/css" href="css/index.css">
         <link rel="stylesheet" type="text/css" href="css/style.css">
-        <!--bootstrap-->
-        <link rel="stylesheet" href="bootstrap/css/bootstrap.paper.min.css">
         <!--Slick-->
         <link rel="stylesheet" href="slick/slick.css">
         <link rel="stylesheet" href="slick/slick-theme.css">
 
+
         <title>SanJuanSaludAPP</title>
     </head>
 
-    <body>
+    <body class="theme-deeporange">
 
-        <div class="asd">
+    <div class="views">
+        <div class="view view-main">
 
-            <div class="container" id="mainContainer"><!--
-                <div class="row">
-                    <canvas style="width:100%;height:400px" id="map_canvas" ></canvas>
+            <div class = "navbar">
+                <div class = "navbar-inner">
+                    <div class = "left"></div>
+                    <div class = "center"><img class="mainBanner" src="images/mainBanner.svg"></div>
+                    <div class = "right"></div>
                 </div>
--->
-
-                <!--banner-->
-
-                <div class="row">
-                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" id="mainBanner">
-                        <img src="images/mainBanner.svg" alt="">
-                    </div>
-                </div>
-
-                <!--FIN banner-->
-
-                <!--espaciador-->
-
-                <div class="row spacer"></div>
-
-                <!--FIN espaciador-->
-
-                <!--slide-->
-
-                <div class="row" id="slideContainer">
-
-                    <div id="slider" class="slide">
-
-                        <!--AJAX-->
-
-
-                    </div>
-
-                </div>
-
-                <!--FIN slide-->
-
-
-
-                <!--botonera-->
-
-                <div class="row botonera">
-
-                    <!--botones cuadrados-->
-                    <div class="row center-block">
-
-
-                        <a id="bntCSalud" class=" col-xs-5 col-sm-5 btn btn-default btn-sq-lg boton">
-                            <img class="btnImg" src="images/btnMap.svg" alt=""><br/>
-                            CENTROS DE SALUD
-                        </a>
-
-
-                        <a href="#" class=" col-xs-5 col-sm-5 btn btn-default btn-sq-lg boton">
-                            <img class="btnImg" src="images/btnProtur.svg" alt=""><br/>
-                            PROTUR
-                        </a>
-
-                    </div>
-
-                    <!--FIN botones cuadrados-->
-
-                    <!--espaciador-->
-
-                    <div class="row spacer"></div>
-
-                    <!--FIN espaciador-->
-
-                    <!--botón largo-->
-
-                    <div class="row">
-
-
-                            <a href="#" class="btn btn-block btn-default boton boton-largo"><span class="glyphicon"><img class="btnImg" src="images/btnHelp.svg" alt=""></span> ayuda</a>
-                            <!--c-->
-
-
-                    </div>
-
-                    <!--FIN botón largo-->
-
-
-
-                </div>
-
-                <!--FIN botonera-->
-
-                <!--footer-->
-
-                <footer class="footer">
-                    <div class="container">
-                        <span class="text-muted">División Informática, Ministerio de Salud de la provincia de San Juan.</span>
-                    </div>
-                </footer>
-
-
-                <!--FIN footer-->
-
-
             </div>
 
 
-        </div>
 
-        <script type="text/javascript" src="cordova.js"></script>
-        <script type="text/javascript" src="scripts/platformOverrides.js"></script>
-        <!--JS jquery-->
-        <script type="text/javascript" src="jquery/jquery-3.2.1.min.js"></script>
-        <!--JS bootstrap-->
-        <script src="bootstrap/js/bootstrap.min.js"></script>
-        <!--JS Slick-->
-        <script src="slick/slick.min.js"></script>
-        <!--JS usuario-->
-        <script type="text/javascript" src="scripts/index.js"></script>
-        <script type="text/javascript" src="scripts/func.js"></script>
+            <div class="pages">
+
+                <div class="page navbar-fixed" data-page = "index">
+
+                    <div class="page-content">
+
+                        <div class="content-block">
+
+                            <div class="row">
+                                <div class="col-100">
+
+                                    <!-- Slider container -->
+                                    <div class="swiper-container">
+                                        <!-- Slides wrapper -->
+                                        <div class="swiper-wrapper">
+                                            <!-- Slides -->
+                                            <div class="swiper-slide">Slide 1</div>
+                                            <div class="swiper-slide">Slide 2</div>
+                                            <div class="swiper-slide">Slide 3</div>
+                                            ... other slides ...
+                                        </div>
+                                        <!-- Pagination, if required -->
+                                        <div class="swiper-pagination"></div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                                <p class="buttons-row">
+                                    <a href="#" id="btnCentros" data-ignore-cache="true" class="button button-fill button-raised boton" >centros</a>
+
+                                    <a href="#" id="btnProtur" data-ignore-cache="true" class="button button-fill button-raised boton">protur</a>
+                                </p>
+
+
+                            <div class="row">
+                                <div class="col-100">
+                                    <a href="#" id="btnAyuda" data-ignore-cache="true" class="button button-fill button-raised boton-chico">Ayuda </a>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+        <script type = "text/javascript"
+                src = "https://cdnjs.cloudflare.com/ajax/libs/framework7/1.4.2/js/framework7.min.js"></script>
+
+        <script>
+            // here initialize the app
+            var myApp = new Framework7();
+
+            // If your using custom DOM library, then save it to $$ variable
+            var $$ = Dom7;
+
+            // Add the view
+            var mainView = myApp.addView('.view-main', {
+
+                // enable the dynamic navbar for this view:
+                dynamicNavbar: true
+            });
+
+
+            var mySwiper = myApp.swiper('.swiper-container', {
+                pagination:'.swiper-pagination',
+                speed: 600,
+                spaceBetween: 100,
+                autoplay: 4000
+            });
+
+
+
+
+
+        </script>
 
     </body>
+
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="scripts/platformOverrides.js"></script>
+
+    <!--JS usuario-->
+    <script type="text/javascript" src="scripts/index.js"></script>
+    <script type="text/javascript" src="scripts/func.js"></script>
+    <script type="text/javascript" src="scripts/view.js"></script>
 </html>
