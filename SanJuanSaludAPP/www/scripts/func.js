@@ -85,14 +85,35 @@ function fillSlider(selector,json)
 
     mySwiper.on('onTap', function(data){
        abrirNoticia(data);
+
     });
 }
 
 //función para abrir noticia
-
 function abrirNoticia(slide){
 
+    var imagenURL;
 
+    $("#"+slide.clickedSlide.id).filter(function(){
+        imagenURL = $(this).css("background-image");
+    });
+
+    var titulo = slide.clickedSlide.innerText;
+
+    var texto = slide.clickedSlide.textContent;
+
+    var popupHTML =
+        '<div class="popup tablet-fullscreen">'+
+        '<div class="content-block backimage">'+
+        '<h3>'+titulo+'</h3>'+
+        '<p>'+texto+'</p>'+
+        '<p><a href="#" class="close-popup">Volver</a></p>'+
+        '</div>'+
+        '</div>';
+
+    //$(".backimage").css({'background-image':  imagenURL + " !important"  });
+
+    myApp.popup(popupHTML);
 }
 
 
