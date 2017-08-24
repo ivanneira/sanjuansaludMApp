@@ -124,3 +124,7 @@ textarea {
 
     height: 5em;
 }
+
+.statusbar-overlay {
+    background: #940f12;
+}
