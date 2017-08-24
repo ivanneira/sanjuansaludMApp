@@ -48,7 +48,10 @@ $$(document).on('DOMContentLoaded', function(){
             },
             {
                 text: 'Buscar con mi dispositivo móvil',
-                bold: true
+                bold: true,
+                onClick: function(){
+                    mainView.router.loadPage("GPS.html");
+                }
             },
             {
                 text: 'Buscar por departamento',
@@ -60,7 +63,7 @@ $$(document).on('DOMContentLoaded', function(){
         ];
         var buttons2 = [
             {
-                text: 'Cancel',
+                text: 'Cancelar',
                 color: 'red'
             }
         ];
