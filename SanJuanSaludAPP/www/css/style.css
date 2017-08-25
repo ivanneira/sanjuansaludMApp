@@ -1,4 +1,10 @@
-﻿
+﻿.color-h3
+{
+    color: #fff;
+}
+
+#map-canvas { height: 100% }
+
 .boton {
     height: 10em !important;
     color: #940f12 !important;

@@ -5,7 +5,12 @@ var NoticiasURL = "http://"+server+"/AresApi/Api/Portal/Noticias";
 var DepartamentosURL = "http://"+server+"/AresApi/Api/Departamento";
 var CapsURL = "http://"+server+"/AresApi/Api/CentroDeSalud";
 //var portalUrl = "http://200.0.236.210/AresApi/Api/Portal/Noticias";
+var DptoID = 0;
 
+function setDptoId(id)
+{
+    DptoID=id;
+}
 
 function createDatabase()
 {
@@ -130,6 +135,9 @@ function getDepartamento()
 
             //fillSlider($("#slider"), response);
             console.dir(response);
+            for(var i=0;i<response.length;i++) {
+                $("#dptos-container").append('<a href="caps.html"  onclick="javascript:setDptoId('+response[i].ID+')" class="button button-fill button-raised boton-chico">' + response[i].Nombre + ' </a><br>');
+            }
         },
         error: function (error) {
             alert(ErrorAjax);
@@ -180,6 +188,34 @@ function getCentroDeSalud(id)
     });
 }
 
+function getCentroDeSaludxDpto(id)
+{
+    console.log(id);
+    var tmp = [];
+    var j=0;
+    $.ajax({
+
+        url: CapsURL,
+        cache: false,
+        type: 'get',
+        dataType: "json",
+        success: function (response) {
+
+            for(var i=0;i<response.length;i++) {
+                if (response[i].DepartamentoID == id) {
+                    tmp.push(response[i]);
+
+                    $("#caps-container").append('<a href="#"  class="button button-fill button-raised boton-chico">'+response[i].Nombre+' </a><br>');
+                }
+            }
+            console.dir(tmp);
+        },
+        error: function (error) {
+            alert(ErrorAjax);
+        }
+
+    });
+}
 /*FUNCION PARA OBTENER ESPECIALIDADES Y HORARIOS PARA UN CENTRO DE SALUD*/
 function getCentroDeSaludEyH(id)
 {

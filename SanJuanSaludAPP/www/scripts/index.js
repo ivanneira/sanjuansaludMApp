@@ -1,4 +1,19 @@
 ﻿
+// here initialize the app
+var myApp = new Framework7();
+
+// If your using custom DOM library, then save it to $$ variable
+var $$ = Dom7;
+
+// Add the view
+var mainView = myApp.addView('.view-main', {
+    main: true,
+    material: true
+});
+
+
+
+
 (function () {
     "use strict";
 
