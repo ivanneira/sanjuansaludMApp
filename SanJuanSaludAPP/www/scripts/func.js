@@ -55,7 +55,7 @@ function createDatabase()
 /*FUNCION QUE OBTIENE EL SLIDER ACTUAL DEL PORTAL DE GOBIERNO A TRAVES DE LA API DE PAULO*/
 function getSlider()
 {
-
+    myApp.showPreloader('Por favor espere...');
     $.ajax({
 
         url: NoticiasURL,
@@ -63,7 +63,7 @@ function getSlider()
         type: 'get',
         dataType: "json",
         success: function (response) {
-
+myApp.hidePreloader();
             fillSlider($("#slide"), response);
         },
         error: function (error) {
@@ -148,6 +148,7 @@ function abrirNoticia(slide){
 /*FUNCION PARA OBTENER DEPARTAMENTOS*/
 function getDepartamento()
 {
+    myApp.showPreloader('Por favor espere...');
     $.ajax({
 
         url: DepartamentosURL,
@@ -155,7 +156,7 @@ function getDepartamento()
         type: 'get',
         dataType: "json",
         success: function (response) {
-
+myApp.hidePreloader();
             //fillSlider($("#slider"), response);
             for(var i=0;i<response.length;i++) {
                 response = response.sort(keysrt('Zona'));
@@ -194,6 +195,7 @@ function getCentrosDeSalud()
 /*FUNCION PARA OBTENER UN CENTRO DE SALUD*/
 function getCentroDeSalud(id)
 {
+    myApp.showPreloader('Por favor espere...');
     $.ajax({
 
         url: CapsURL + "/" + id,
@@ -201,7 +203,7 @@ function getCentroDeSalud(id)
         type: 'get',
         dataType: "json",
         success: function (response) {
-
+            myApp.hidePreloader();
             console.dir(response);
             $("#caps-tittle").html(response.Nombre);
             $("#caps-basic").append("<p>Dirección: " + response.Direccion + "</p>");
@@ -231,6 +233,7 @@ function getCentroDeSalud(id)
 
 function getCentroDeSaludxDpto(id)
 {
+    myApp.showPreloader('Por favor espere...');
     console.log(id);
     var tmp = [];
     var j=0;
@@ -241,7 +244,7 @@ function getCentroDeSaludxDpto(id)
         type: 'get',
         dataType: "json",
         success: function (response) {
-
+myApp.hidePreloader();
             response = response.sort(keysrt('Nombre'));
             for(var i=0;i<response.length;i++) {
                 if (response[i].DepartamentoID == id) {
@@ -262,6 +265,7 @@ function getCentroDeSaludxDpto(id)
 /*FUNCION PARA OBTENER ESPECIALIDADES Y HORARIOS PARA UN CENTRO DE SALUD*/
 function getCentroDeSaludEyH(id)
 {
+    myApp.showPreloader('Por favor espere...');
     $.ajax({
 
         url: CapsURL + "/" + id+ "/EspecialidadesYHorarios",
@@ -269,7 +273,7 @@ function getCentroDeSaludEyH(id)
         type: 'get',
         dataType: "json",
         success: function (response) {
-
+myApp.hidePreloader();
             console.dir(response);
             response  = response.sort(keysrt('Nombre'));
             if(response.length !=0) {
@@ -298,6 +302,7 @@ function getCentroDeSaludEyH(id)
 /*FUNCION PARA OBTENER LINEAS DE COLECTIVOS QUE LLEGAN A UN CENTRO DE SALUD*/
 function getCentroDeSaludLC(id)
 {
+    myApp.showPreloader('Por favor espere...');
     $.ajax({
 
         url: CapsURL + "/" + id+ "/LineasDeColectivos",
@@ -305,7 +310,7 @@ function getCentroDeSaludLC(id)
         type: 'get',
         dataType: "json",
         success: function (response) {
-
+myApp.hidePreloader();
             console.dir(response);
             if(response.length !=0) {
                 for (var i = 0; i < response.length; i++) {
