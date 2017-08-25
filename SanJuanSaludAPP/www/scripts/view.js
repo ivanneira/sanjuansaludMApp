@@ -22,7 +22,8 @@ myApp.onPageInit('caps', function (page) {
 myApp.onPageInit('index', function (page) {
 
     console.log("init");
-    mainView.router.reloadPage("index.html")
+    location.reload();
+
 
 });
 
