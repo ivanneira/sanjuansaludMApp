@@ -151,7 +151,8 @@ function getDepartamento()
 
             //fillSlider($("#slider"), response);
             for(var i=0;i<response.length;i++) {
-                $("#dptos-container").append('<a href="#"  onclick="javascript:setDptoId('+response[i].ID+',\'caps.html\')" class="button button-fill button-raised boton-chico">' + response[i].Nombre + ' </a><br>');
+               // $("#dptos-container").append('<a href="#"  onclick="javascript:setDptoId('+response[i].ID+',\'caps.html\')" class="button button-fill button-raised boton-chico">' + response[i].Nombre + ' </a><br>');
+                $("#dptos-container").append('<li class="item-content"> <div class="item-inner" onclick="javascript:setDptoId('+response[i].ID+',\'caps.html\')"><div class="item-title titluloListaBlanca">'+ response[i].Nombre +'</div></div></li>')
             }
         },
         error: function (error) {
@@ -237,7 +238,8 @@ function getCentroDeSaludxDpto(id)
                 if (response[i].DepartamentoID == id) {
                     tmp.push(response[i]);
 
-                    $("#caps-container").append('<a href="#"  onclick="javascript:setCapsId('+response[i].ID+',\'capsDetail.html\')" class="button button-fill button-raised boton-chico">'+response[i].Nombre+' </a><br>');
+                    //$("#caps-container").append('<a href="#"  class="button button-fill button-raised boton-chico">'+response[i].Nombre+' </a><br>');
+                    $("#caps-container").append('<li class="item-content"> <div class="item-inner" onclick="javascript:setCapsId('+response[i].ID+',\'capsDetail.html\')"><div class="item-title titluloListaBlanca">'+ response[i].Nombre +'</div></div></li>')
                 }
             }
             console.dir(tmp);
