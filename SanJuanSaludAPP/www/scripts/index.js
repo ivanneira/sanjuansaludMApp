@@ -8,10 +8,8 @@ var $$ = Dom7;
 // Add the view
 var mainView = myApp.addView('.view-main', {
     main: true,
-    material: true
+    material: true,
 });
-
-
 
 
 (function () {
@@ -19,9 +17,9 @@ var mainView = myApp.addView('.view-main', {
 
     document.addEventListener( 'deviceready', onDeviceReady.bind( this ), false );
 
-
     function onDeviceReady() {
-        getSlider();
+
+
         //createDatabase();
         //maps();
 
@@ -47,10 +45,7 @@ var mainView = myApp.addView('.view-main', {
 
     // device APIs are available
     //
-    function onDeviceReady() {
-        // Register the event listener
-        document.addEventListener("backbutton", onBackKeyDown, false);
-    }
+
 
     // Handle the back button
     //

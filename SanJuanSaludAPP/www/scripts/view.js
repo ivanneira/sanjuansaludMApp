@@ -1,5 +1,5 @@
 var onSuccess = function(position) {
-    alert('Latitude: '          + position.coords.latitude          + '\n' +
+    alert('Latitude: '          + position.coords.latitude        + '\n' +
         'Longitude: '         + position.coords.longitude         + '\n' +
         'Altitude: '          + position.coords.altitude          + '\n' +
         'Accuracy: '          + position.coords.accuracy          + '\n' +
@@ -13,12 +13,19 @@ myApp.onPageInit('departamentos', function (page) {
     getDepartamento();
 });
 
+
 myApp.onPageInit('caps', function (page) {
 
-    console.log("Caps.html");
-    console.dir(DptoID);
     getCentroDeSaludxDpto(DptoID);
 });
+
+myApp.onPageInit('index', function (page) {
+
+    console.log("init");
+    mainView.router.reloadPage("index.html")
+
+});
+
 
 myApp.onPageInit('mapa', function (page) {
 
@@ -49,7 +56,7 @@ myApp.onPageInit('mapa', function (page) {
 
 $$(document).on('DOMContentLoaded', function(){
 
-
+    getSlider();
     $("#btnAyuda").click(function(){
 
         $.ajax({
@@ -61,9 +68,6 @@ $$(document).on('DOMContentLoaded', function(){
 
 
     });
-
-
-
 
     $("#btnProtur").click(function(){
 
@@ -110,10 +114,4 @@ $$(document).on('DOMContentLoaded', function(){
 
         myApp.actions(groups);
     });
-
-
-
-
-
-
 });

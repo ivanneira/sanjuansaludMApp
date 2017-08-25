@@ -7,9 +7,10 @@ var CapsURL = "http://"+server+"/AresApi/Api/CentroDeSalud";
 //var portalUrl = "http://200.0.236.210/AresApi/Api/Portal/Noticias";
 var DptoID = 0;
 
-function setDptoId(id)
+function setDptoId(id,page)
 {
     DptoID=id;
+    openPage(page);
 }
 
 function createDatabase()
@@ -40,6 +41,7 @@ function createDatabase()
 /*FUNCION QUE OBTIENE EL SLIDER ACTUAL DEL PORTAL DE GOBIERNO A TRAVES DE LA API DE PAULO*/
 function getSlider()
 {
+
     $.ajax({
 
         url: NoticiasURL,
@@ -60,9 +62,7 @@ function getSlider()
 /*FUNCION QUE VUELCA LOS DATOS EN EL SLIDER UNA VEZ CREADA LA ESTRUCTURA*/
 function fillSlider(selector,json)
 {
-    console.dir(json);
     $(selector).empty();
-
 
     for(var i=0; i<json.length;i++)
     {
@@ -92,6 +92,11 @@ function fillSlider(selector,json)
        abrirNoticia(data);
 
     });
+}
+
+function openPage(page){
+    console.log("pepe");
+    mainView.router.loadPage(page);
 }
 
 //función para abrir noticia
@@ -126,7 +131,6 @@ function abrirNoticia(slide){
     myApp.popup(popupHTML);
 }
 
-
 /*FUNCION PARA OBTENER DEPARTAMENTOS*/
 function getDepartamento()
 {
@@ -139,9 +143,8 @@ function getDepartamento()
         success: function (response) {
 
             //fillSlider($("#slider"), response);
-            console.dir(response);
             for(var i=0;i<response.length;i++) {
-                $("#dptos-container").append('<a href="caps.html"  onclick="javascript:setDptoId('+response[i].ID+')" class="button button-fill button-raised boton-chico">' + response[i].Nombre + ' </a><br>');
+                $("#dptos-container").append('<a href="#"  onclick="javascript:setDptoId('+response[i].ID+',\'caps.html\')" class="button button-fill button-raised boton-chico">' + response[i].Nombre + ' </a><br>');
             }
         },
         error: function (error) {
@@ -150,7 +153,6 @@ function getDepartamento()
 
     });
 }
-
 
 /*FUNCION PARA OBTENER CENTROS DE SALUD*/
 function getCentrosDeSalud()
