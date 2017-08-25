@@ -104,12 +104,17 @@ function abrirNoticia(slide){
     });
 
     var titulo = slide.clickedSlide.innerText;
+    var letrasEnElTitulo = titulo.length;
+
+    console.log(letrasEnElTitulo)
 
     var texto = slide.clickedSlide.textContent;
 
+    texto = texto.substring(letrasEnElTitulo-2);
+
     var popupHTML =
         '<div class="popup tablet-fullscreen">'+
-        '<div class="content-block backimage">'+
+        '<div class="content-block backImage">'+
         '<h3>'+titulo+'</h3>'+
         '<p>'+texto+'</p>'+
         '<p><a href="#" class="close-popup">Volver</a></p>'+

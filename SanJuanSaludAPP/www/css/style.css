@@ -134,3 +134,9 @@ textarea {
 .statusbar-overlay {
     background: #940f12;
 }
+
+.popup p {
+
+    text-align: justify;
+    text-justify: inter-word;
+}

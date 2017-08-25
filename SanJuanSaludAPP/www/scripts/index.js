@@ -45,6 +45,20 @@ var mainView = myApp.addView('.view-main', {
         // TODO: esta aplicación se ha reactivado. Restaure el estado de la aplicación aquí.
     };
 
+    // device APIs are available
+    //
+    function onDeviceReady() {
+        // Register the event listener
+        document.addEventListener("backbutton", onBackKeyDown, false);
+    }
+
+    // Handle the back button
+    //
+    function onBackKeyDown() {
+
+        alert("Füller trolo")
+    }
+
 
 
 } )();
