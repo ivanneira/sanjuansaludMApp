@@ -8,6 +8,13 @@ var CapsURL = "http://"+server+"/AresApi/Api/CentroDeSalud";
 var DptoID = 0;
 var CapsID = 0;
 
+
+function keysrt(key,desc) {
+    return function(a,b){
+        return desc ? ~~(a[key] < b[key]) : ~~(a[key] > b[key]);
+    }
+}
+
 function setCapsId(id,page)
 {
     CapsID=id;
@@ -151,6 +158,7 @@ function getDepartamento()
 
             //fillSlider($("#slider"), response);
             for(var i=0;i<response.length;i++) {
+                response = response.sort(keysrt('Zona'));
                // $("#dptos-container").append('<a href="#"  onclick="javascript:setDptoId('+response[i].ID+',\'caps.html\')" class="button button-fill button-raised boton-chico">' + response[i].Nombre + ' </a><br>');
                 $("#dptos-container").append('<li class="item-content"> <div class="item-inner" onclick="javascript:setDptoId('+response[i].ID+',\'caps.html\')"><div class="item-title titluloListaBlanca">'+ response[i].Nombre + " - Zona : " +response[i].Zona +'</div></div></li>')
             }
@@ -234,6 +242,7 @@ function getCentroDeSaludxDpto(id)
         dataType: "json",
         success: function (response) {
 
+            response = response.sort(keysrt('Nombre'));
             for(var i=0;i<response.length;i++) {
                 if (response[i].DepartamentoID == id) {
                     tmp.push(response[i]);
@@ -262,10 +271,11 @@ function getCentroDeSaludEyH(id)
         success: function (response) {
 
             console.dir(response);
-
+            response  = response.sort(keysrt('Nombre'));
             if(response.length !=0) {
                 for (var i = 0; i < response.length; i++) {
                     $("#caps-eyh").append("<p>Especialidad: " + response[i].Nombre + "</p>");
+
                     for(var j=0;j<response[i].Horarios.length;j++)
                     {
                         $("#caps-eyh").append("<p><li>"+response[i].Horarios[j].Dia+": " + response[i].Horarios[j].HorarioEntrada + "--" + response[i].Horarios[j].HorarioSalida +"</li></p>");
