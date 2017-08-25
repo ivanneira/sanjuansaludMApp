@@ -11,6 +11,9 @@
     line-height: 1em !important;
 }
 
+.swiper-wrapper{
+    max-height: 250px;
+}
 .boton-chico {
 
     height: 3em !important;
@@ -139,27 +142,4 @@ textarea {
 
     text-align: justify;
     text-justify: inter-word;
-}
-
-.listaBlanca {
-
-    color: #940f12 !important;
-    background-color: white !important;
-}
-
-.titluloListaBlanca{
-
-    color: #940f12 !important;
-
-}
-
-@font-face {
-    font-family: 'Swiss';
-    src: url('/fonts/Swiss.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-}
-
-body {
-    font-family: 'Swiss' !important;
 }

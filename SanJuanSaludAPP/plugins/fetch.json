@@ -10,10 +10,15 @@
     "cordova-sqlite-storage": {
         "source": {
             "type": "registry",
-            "id": "cordova-sqlite-storage@^2.0.4"
+            "id": "cordova-plugin-googlemaps@git+https://github.com/mapsplugin/cordova-plugin-googlemaps.git#multiple_maps"
         },
         "is_top_level": true,
-        "variables": {}
+        "variables": {
+            "API_KEY_FOR_ANDROID": "AIzaSyC_LkjOstSW67FyZ2oABpMfZSG4STjiu7c",
+            "API_KEY_FOR_IOS": "AIzaSyBZK0bGv6wCVNOpLiLRLgV_hy8B-Y07pp4",
+            "LOCATION_WHEN_IN_USE_DESCRIPTION": "Show your location on the map",
+            "LOCATION_ALWAYS_USAGE_DESCRIPTION": "Trace your location on the map"
+        }
     },
     "cordova-plugin-geolocation": {
         "source": {
@@ -28,7 +33,7 @@
     "cordova-plugin-compat": {
         "source": {
             "type": "registry",
-            "id": "cordova-plugin-compat"
+            "id": "cordova-plugin-compat@^1.0.0"
         },
         "is_top_level": false,
         "variables": {}

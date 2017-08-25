@@ -29,8 +29,7 @@ myApp.onPageInit('caps-detail', function (page) {
 
 myApp.onPageInit('index', function (page) {
 
-    console.log("init");
-    //location.reload();
+  load();
 
 });
 
@@ -61,9 +60,8 @@ myApp.onPageInit('mapa', function (page) {
 
 
 
-
-$$(document).on('DOMContentLoaded', function(){
-
+function load()
+{
     getSlider();
 
     $("#btnAyuda").click(function(){
@@ -123,4 +121,9 @@ $$(document).on('DOMContentLoaded', function(){
 
         myApp.actions(groups);
     });
+}
+
+$$(document).on('DOMContentLoaded', function(){
+
+    load();
 });

@@ -1,44 +1,25 @@
 ﻿<!DOCTYPE html>
 <html>
     <head>
-    <!--
-        Personalice la directiva de seguridad de contenido en la etiqueta meta como sea necesario. Agregue "unsafe-inline" a default-src para permitir JavaScript insertado.
-        Para obtener más detalles, consulte http://go.microsoft.com/fwlink/?LinkID=617521
-    -->
 
-        <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
         <meta name="format-detection" content="telephone=no">
         <meta name="msapplication-tap-highlight" content="no">
         <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
         <!--JS jquery-->
-
         <!--framework7-->
-        <link rel = "stylesheet" href = "css/framework7-material.css" />
-        <link rel = "stylesheet" href = "css/framework7-colors.css" />
-        <link rel = "stylesheet" href = "css/framework7-icons.css" />
-
-
-
+        <link rel = "stylesheet" href = "css/framework7-material.css" >
+        <link rel = "stylesheet" href = "css/framework7-colors.css" >
+        <link rel = "stylesheet" href = "css/framework7-icons.css" >
         <!--CSS principal-->
         <link rel="stylesheet" type="text/css" href="css/index.css">
         <link rel="stylesheet" type="text/css" href="css/style.css">
-
-
-
         <title>SanJuanSaludAPP</title>
     </head>
-
     <body class="theme-white">
-
-        <div class="statusbar-overlay"></div>
-
+    <div class="statusbar-overlay"></div>
     <div class="views">
-
-
         <div class="view view-main">
-
-
-
             <div class = "navbar">
                 <div class = "navbar-inner">
                     <div class = "left"></div>
@@ -46,10 +27,7 @@
                     <div class = "right"></div>
                 </div>
             </div>
-
-
-
-            <div class="pages">
+            <div class="pages" data-ignore-cache="true">
 
                 <div class="page navbar-fixed" data-page = "index">
 
@@ -76,7 +54,6 @@
 
                                 </div>
                             </div>
-
                                 <p class="buttons-row">
                                     <a href="#" id="btnCentros" data-ignore-cache="true" class="ac-3 button button-fill button-raised boton" >
                                         
@@ -87,8 +64,6 @@
                                         <span><br>Programar <br>turno<br> <br><img src="images/btnProtur.svg" alt=""></span>
                                     </a>
                                 </p>
-
-
                             <div class="row">
                                 <div class="col-100 ">
                                     <a href="#" id="btnAyuda" data-ignore-cache="true" class="button button-fill button-raised boton-chico">
@@ -97,8 +72,18 @@
 
                                 </div>
                             </div>
-
                         </div>
+                        <footer style="bottom: 0; ">
+                            <div class="row">
+                                <div class="col-100 ">
+                                    <div class = "navbar" >
+                                        <div class = "navbar-inner">
+                                            <div  style="font-size: 12px !important; margin: 0 auto;" class = "center"><p>División Informática 2017 - San Juan Argentina</p></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </footer>
                     </div>
                 </div>
 
@@ -133,15 +118,12 @@
     <script type = "text/javascript" src = "scripts/framework7.js"></script>
     <script type="text/javascript" src="jquery/jquery-3.2.1.min.js"></script>
     <!--JS usuario-->
-    <!--
+
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBZK0bGv6wCVNOpLiLRLgV_hy8B-Y07pp4"></script>
--->
+
     <script type="text/javascript" src="scripts/func.js"></script>
     <script type="text/javascript" src="scripts/index.js"></script>
 
     <script type="text/javascript" src="scripts/view.js"></script>
-
-
-
 
 </html>

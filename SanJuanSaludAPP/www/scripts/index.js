@@ -1,5 +1,4 @@
-﻿
-// here initialize the app
+﻿﻿// here initialize the app
 var myApp = new Framework7();
 
 // If your using custom DOM library, then save it to $$ variable
@@ -10,7 +9,6 @@ var mainView = myApp.addView('.view-main', {
     main: true,
     material: true,
 });
-
 
 (function () {
     "use strict";
