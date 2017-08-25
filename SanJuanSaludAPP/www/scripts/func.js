@@ -1,5 +1,5 @@
 ﻿
-var server = "200.0.236.210";
+var server = "gedoc.sanjuan.gov.ar";
 var ErrorAjax = "Ups! Hubo un problema con su conexión a internet.";
 var NoticiasURL = "http://"+server+"/AresApi/Api/Portal/Noticias";
 var DepartamentosURL = "http://"+server+"/AresApi/Api/Departamento";
