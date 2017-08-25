@@ -65,6 +65,7 @@ myApp.onPageInit('mapa', function (page) {
 $$(document).on('DOMContentLoaded', function(){
 
     getSlider();
+
     $("#btnAyuda").click(function(){
 
         $.ajax({
