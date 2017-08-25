@@ -1,11 +1,18 @@
 ﻿
-var server = "10.64.65.200";
+var server = "200.0.236.210";
 var ErrorAjax = "Ups! Hubo un problema con su conexión a internet.";
 var NoticiasURL = "http://"+server+"/AresApi/Api/Portal/Noticias";
 var DepartamentosURL = "http://"+server+"/AresApi/Api/Departamento";
 var CapsURL = "http://"+server+"/AresApi/Api/CentroDeSalud";
 //var portalUrl = "http://200.0.236.210/AresApi/Api/Portal/Noticias";
 var DptoID = 0;
+var CapsID = 0;
+
+function setCapsId(id,page)
+{
+    CapsID=id;
+    openPage(page);
+}
 
 function setDptoId(id,page)
 {
@@ -187,6 +194,24 @@ function getCentroDeSalud(id)
         success: function (response) {
 
             console.dir(response);
+            $("#caps-tittle").html(response.Nombre);
+            $("#caps-basic").append("<p>Dirección: " + response.Direccion + "</p>");
+            $("#caps-basic").append("<p>Teléfono: " + response.Telefono + "</p>");
+
+            var pos = {lat: response.Latitud, lng: response.Longitud};
+            var mapProp= {
+                //-31.536395, -68.536976
+                center:new google.maps.LatLng(pos),
+                zoom:15,
+
+            };
+            var map=new google.maps.Map(document.getElementById("googleMap"),mapProp);
+            var marker = new google.maps.Marker({position: pos});
+            var infowindow = new google.maps.InfoWindow({
+                content: response.Nombre
+            });
+            infowindow.open(map,marker);
+            marker.setMap(map);
         },
         error: function (error) {
             alert(ErrorAjax);
@@ -212,7 +237,7 @@ function getCentroDeSaludxDpto(id)
                 if (response[i].DepartamentoID == id) {
                     tmp.push(response[i]);
 
-                    $("#caps-container").append('<a href="#"  class="button button-fill button-raised boton-chico">'+response[i].Nombre+' </a><br>');
+                    $("#caps-container").append('<a href="#"  onclick="javascript:setCapsId('+response[i].ID+',\'capsDetail.html\')" class="button button-fill button-raised boton-chico">'+response[i].Nombre+' </a><br>');
                 }
             }
             console.dir(tmp);
@@ -235,6 +260,21 @@ function getCentroDeSaludEyH(id)
         success: function (response) {
 
             console.dir(response);
+
+            if(response.length !=0) {
+                for (var i = 0; i < response.length; i++) {
+                    $("#caps-eyh").append("<p>Especialidad: " + response[i].Nombre + "</p>");
+                    for(var j=0;j<response[i].Horarios.length;j++)
+                    {
+                        $("#caps-eyh").append("<p><li>"+response[i].Horarios[j].Dia+": " + response[i].Horarios[j].HorarioEntrada + "--" + response[i].Horarios[j].HorarioSalida +"</li></p>");
+
+                    }
+                }
+            }
+            else
+            {
+                $("#caps-eyh").append("<p>Sin información para mostrar</p>");
+            }
         },
         error: function (error) {
             alert(ErrorAjax);
@@ -255,8 +295,19 @@ function getCentroDeSaludLC(id)
         success: function (response) {
 
             console.dir(response);
+            if(response.length !=0) {
+                for (var i = 0; i < response.length; i++) {
+                    $("#caps-lc").append("<p>Línea número: " + response[i].Numero + "</p>");
+                }
+            }
+            else
+            {
+                $("#caps-lc").append("<p>Sin información para mostrar</p>");
+            }
+
         },
         error: function (error) {
+
             alert(ErrorAjax);
         }
 

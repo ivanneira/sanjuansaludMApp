@@ -19,11 +19,18 @@ myApp.onPageInit('caps', function (page) {
     getCentroDeSaludxDpto(DptoID);
 });
 
+myApp.onPageInit('caps-detail', function (page) {
+
+    getCentroDeSalud(CapsID);
+    getCentroDeSaludEyH(CapsID);
+    getCentroDeSaludLC(CapsID);
+
+});
+
 myApp.onPageInit('index', function (page) {
 
     console.log("init");
-    location.reload();
-
+    //location.reload();
 
 });
 
