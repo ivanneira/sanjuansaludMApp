@@ -56,6 +56,7 @@ function createDatabase()
 function getSlider()
 {
     myApp.showPreloader('Por favor espere...');
+    myApp.showIndicator();
     $.ajax({
 
         url: NoticiasURL,
@@ -64,6 +65,7 @@ function getSlider()
         dataType: "json",
         success: function (response) {
 myApp.hidePreloader();
+myApp.hideIndicator();
             fillSlider($("#slide"), response);
         },
         error: function (error) {
