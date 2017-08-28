@@ -1,5 +1,4 @@
-﻿﻿
-var server = "gedoc.sanjuan.gov.ar";
+﻿var server = "gedoc.sanjuan.gov.ar";
 var ErrorAjax = "Ups! Hubo un problema con su conexión a internet.";
 var NoticiasURL = "http://"+server+"/AresApi/Api/Portal/Noticias";
 var DepartamentosURL = "http://"+server+"/AresApi/Api/Departamento";
@@ -8,6 +7,25 @@ var CapsURL = "http://"+server+"/AresApi/Api/CentroDeSalud";
 var DptoID = 0;
 var CapsID = 0;
 
+
+$(document).ajaxStart(function() {
+    //myApp.showPreloader('Por favor espere...');
+}).ajaxStop(function() {
+    //myApp.hidePreloader();
+});
+
+
+function DistanciaKM(lat1,lon1,lat2,lon2)
+{
+    rad = function(x) {return x*Math.PI/180;}
+    var R = 6378.137; //Radio de la tierra en km
+    var dLat = rad( lat2 - lat1 );
+    var dLong = rad( lon2 - lon1 );
+    var a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.cos(rad(lat1)) * Math.cos(rad(lat2)) * Math.sin(dLong/2) * Math.sin(dLong/2);
+    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+    var d = R * c;
+    return d.toFixed(3); //Retorna tres decimales
+}
 
 function keysrt(key,desc) {
     return function(a,b){
@@ -55,8 +73,7 @@ function createDatabase()
 /*FUNCION QUE OBTIENE EL SLIDER ACTUAL DEL PORTAL DE GOBIERNO A TRAVES DE LA API DE PAULO*/
 function getSlider()
 {
-    myApp.showPreloader('Por favor espere...');
-    myApp.showIndicator();
+
     $.ajax({
 
         url: NoticiasURL,
@@ -64,8 +81,6 @@ function getSlider()
         type: 'get',
         dataType: "json",
         success: function (response) {
-myApp.hidePreloader();
-myApp.hideIndicator();
             fillSlider($("#slide"), response);
         },
         error: function (error) {
@@ -150,7 +165,6 @@ function abrirNoticia(slide){
 /*FUNCION PARA OBTENER DEPARTAMENTOS*/
 function getDepartamento()
 {
-    myApp.showPreloader('Por favor espere...');
     $.ajax({
 
         url: DepartamentosURL,
@@ -158,7 +172,6 @@ function getDepartamento()
         type: 'get',
         dataType: "json",
         success: function (response) {
-myApp.hidePreloader();
             //fillSlider($("#slider"), response);
             for(var i=0;i<response.length;i++) {
                 response = response.sort(keysrt('Zona'));
@@ -197,7 +210,6 @@ function getCentrosDeSalud()
 /*FUNCION PARA OBTENER UN CENTRO DE SALUD*/
 function getCentroDeSalud(id)
 {
-    myApp.showPreloader('Por favor espere...');
     $.ajax({
 
         url: CapsURL + "/" + id,
@@ -205,11 +217,12 @@ function getCentroDeSalud(id)
         type: 'get',
         dataType: "json",
         success: function (response) {
-            myApp.hidePreloader();
             console.dir(response);
             $("#caps-tittle").html(response.Nombre);
             $("#caps-basic").append("<p>Dirección: " + response.Direccion + "</p>");
             $("#caps-basic").append("<p>Teléfono: " + response.Telefono + "</p>");
+
+
 
             var pos = {lat: response.Latitud, lng: response.Longitud};
             var mapProp= {
@@ -225,6 +238,30 @@ function getCentroDeSalud(id)
             });
             infowindow.open(map,marker);
             marker.setMap(map);
+
+            var directionsDisplay = new google.maps.DirectionsRenderer();
+            var directionsService = new google.maps.DirectionsService();
+
+            var pos2 = {lat: -31.536395, lng: -68.536976};
+            var request = {
+                origin: pos,
+                destination: pos2,
+                travelMode: google.maps.DirectionsTravelMode['DRIVING'],
+                unitSystem: google.maps.DirectionsUnitSystem['METRIC'],
+                provideRouteAlternatives: true
+            };
+
+            directionsService.route(request, function(response, status) {
+                if (status == google.maps.DirectionsStatus.OK) {
+                    directionsDisplay.setMap(map);
+                    directionsDisplay.setPanel($("#panel_ruta").get(0));
+                    directionsDisplay.setDirections(response);
+                    alert(response.routes[0].legs[0].distance.value / 1000  + " KM");
+                } else {
+                    alert("No existen rutas entre ambos puntos");
+                }
+            });
+
         },
         error: function (error) {
             alert(ErrorAjax);
@@ -235,7 +272,6 @@ function getCentroDeSalud(id)
 
 function getCentroDeSaludxDpto(id)
 {
-    myApp.showPreloader('Por favor espere...');
     console.log(id);
     var tmp = [];
     var j=0;
@@ -246,7 +282,6 @@ function getCentroDeSaludxDpto(id)
         type: 'get',
         dataType: "json",
         success: function (response) {
-myApp.hidePreloader();
             response = response.sort(keysrt('Nombre'));
             for(var i=0;i<response.length;i++) {
                 if (response[i].DepartamentoID == id) {
@@ -267,7 +302,6 @@ myApp.hidePreloader();
 /*FUNCION PARA OBTENER ESPECIALIDADES Y HORARIOS PARA UN CENTRO DE SALUD*/
 function getCentroDeSaludEyH(id)
 {
-    myApp.showPreloader('Por favor espere...');
     $.ajax({
 
         url: CapsURL + "/" + id+ "/EspecialidadesYHorarios",
@@ -275,7 +309,6 @@ function getCentroDeSaludEyH(id)
         type: 'get',
         dataType: "json",
         success: function (response) {
-myApp.hidePreloader();
             console.dir(response);
             response  = response.sort(keysrt('Nombre'));
             if(response.length !=0) {
@@ -304,7 +337,6 @@ myApp.hidePreloader();
 /*FUNCION PARA OBTENER LINEAS DE COLECTIVOS QUE LLEGAN A UN CENTRO DE SALUD*/
 function getCentroDeSaludLC(id)
 {
-    myApp.showPreloader('Por favor espere...');
     $.ajax({
 
         url: CapsURL + "/" + id+ "/LineasDeColectivos",
@@ -312,7 +344,6 @@ function getCentroDeSaludLC(id)
         type: 'get',
         dataType: "json",
         success: function (response) {
-myApp.hidePreloader();
             console.dir(response);
             if(response.length !=0) {
                 for (var i = 0; i < response.length; i++) {
