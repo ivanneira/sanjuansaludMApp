@@ -10,9 +10,9 @@ var CapsID = 0;
 
 
 $(document).ajaxStart(function() {
-    //myApp.showPreloader('Por favor espere...');
-}).ajaxStop(function() {
-    //myApp.hidePreloader();
+    myApp.showPreloader('Por favor espere...');
+}).ajaxComplete(function() {
+    myApp.hidePreloader();
 });
 
 
@@ -32,6 +32,20 @@ function keysrt(key,desc) {
     return function(a,b){
         return desc ? ~~(a[key] < b[key]) : ~~(a[key] > b[key]);
     }
+}
+
+function errorSlider(selector)
+{
+    var temp ='<div id="err1" class="swiper-slide" style="background: url(images/error.jpg) no-repeat center top;background-size:cover;">'+
+        '<div class="overlay">'+
+        '<p>'+
+        'El conenido online no esta disponible momentaneamente.'+
+        '</p>'+
+        '</div>'+
+        '</div>';
+
+
+    $(selector).append(temp);
 }
 
 function setCapsId(id,page)
@@ -85,7 +99,8 @@ function getSlider()
             fillSlider($("#slide"), response);
         },
         error: function (error) {
-            alert(ErrorAjax);
+            //alert(ErrorAjax);
+            errorSlider($("#slide"));
         }
 
     });
