@@ -42,6 +42,71 @@ myApp.onPageInit('mapa', function (page) {
         //-31.536395, -68.536976
         center:new google.maps.LatLng(pos),
         zoom:10,
+        styles: [
+            {
+                "featureType": "administrative.country",
+                "elementType": "geometry.stroke",
+                "stylers": [
+                    {
+                        "lightness": -5
+                    },
+                    {
+                        "color": "#b0b0b0"
+                    },
+                    {
+                        "weight": 1.7
+                    }
+                ]
+            },
+            {
+                "featureType": "administrative.province",
+                "elementType": "all",
+                "stylers": [
+                    {
+                        "visibility": "off"
+                    }
+                ]
+            },
+            {
+                "featureType": "landscape",
+                "elementType": "geometry",
+                "stylers": [
+                    {
+                        "color": "#940f12"
+                    }
+                ]
+            },
+            {
+                "featureType": "poi",
+                "elementType": "geometry",
+                "stylers": [
+                    {
+                        "color": "#FFB3B3"
+                    }
+                ]
+            },
+            {
+                "featureType": "road.highway",
+                "elementType": "all",
+                "stylers": [
+                    {
+                        "color": "#FFB3B3"
+                    }
+                ]
+            },
+            {
+                "featureType": "water",
+                "elementType": "geometry",
+                "stylers": [
+                    {
+                        "color": "#FFB3B3"
+                    },
+                    {
+                        "lightness": 66
+                    }
+                ]
+            }
+        ]
 
     };
     var map=new google.maps.Map(document.getElementById("googleMap"),mapProp);
