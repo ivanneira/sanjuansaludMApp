@@ -143,3 +143,8 @@ textarea {
     text-align: justify;
     text-justify: inter-word;
 }
+
+.iconList {
+
+    margin-right: 1em;
+}

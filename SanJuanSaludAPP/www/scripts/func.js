@@ -253,8 +253,8 @@ function getCentroDeSalud(id)
         success: function (response) {
             console.dir(response);
             $("#caps-tittle").html(response.Nombre);
-            $("#caps-basic").append("<p>Dirección: " + response.Direccion + "</p>");
-            $("#caps-basic").append("<p>Teléfono: " + response.Telefono + "</p>");
+            $("#caps-basic").append(' <p><div class="icon f7-icons">home</div>' + "  " +response.Direccion + '</p>');
+            $("#caps-basic").append('<p><div class="icon f7-icons">phone</div>' + "  " +response.Telefono + "</p>");
 
 
 
@@ -357,7 +357,7 @@ function getCentroDeSaludEyH(id)
                     //$("#caps-eyh").append("<p>Especialidad: " + response[i].Nombre + "</p>");
 
                     //agrega título
-                    htmlStringEsp += '<li class="accordion-item "><a href="#" class="item-content item-link"><div class="item-inner"> <div class="item-title">'+ response[i].Nombre +'</div></div></a>';
+                    htmlStringEsp += '<li class="accordion-item "><a href="#" class="item-content item-link"><div class="item-inner"> <div class="item-title"><div class="icon f7-icons iconList">more_vertical</div>' +response[i].Nombre +'</div></div></a>';
 
 
 
@@ -379,7 +379,7 @@ function getCentroDeSaludEyH(id)
             }
             else
             {
-                $("#caps-eyh").append("<p>Sin información para mostrar</p>");
+                $("#caps-eyh").append('<p><div class="icon f7-icons">close</div>  Sin información para mostrar</p>');
             }
         },
         error: function (error) {
@@ -402,7 +402,7 @@ function getCentroDeSaludLC(id)
             console.dir(response);
             if(response.length !=0) {
                 for (var i = 0; i < response.length; i++) {
-                    $("#caps-lc").append("<p>Línea número: " + response[i].Numero + "</p>");
+                    $("#caps-lc").append('<p><div class="icon f7-icons">navigation</div>  Línea número ' + response[i].Numero + "</p>");
                 }
             }
             else
