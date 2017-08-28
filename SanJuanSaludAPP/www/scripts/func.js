@@ -1,4 +1,5 @@
-﻿var server = "gedoc.sanjuan.gov.ar";
+
+var server = "gedoc.sanjuan.gov.ar";
 var ErrorAjax = "Ups! Hubo un problema con su conexión a internet.";
 var NoticiasURL = "http://"+server+"/AresApi/Api/Portal/Noticias";
 var DepartamentosURL = "http://"+server+"/AresApi/Api/Departamento";
@@ -173,10 +174,28 @@ function getDepartamento()
         dataType: "json",
         success: function (response) {
             //fillSlider($("#slider"), response);
+
+            var titleFlag = "";
+            var htmlTitle= "";
+
             for(var i=0;i<response.length;i++) {
                 response = response.sort(keysrt('Zona'));
+
+                if(response[i].Zona !== titleFlag ){
+                    titleFlag = response[i].Zona;
+
+                    htmlTitle = '<div class="content-block-title">Zona '+titleFlag+'</div>';
+
+                    //htmlTitle = '<div class="list-block-label">Zona' + titleFlag + '</div>';
+                }else{
+                    htmlTitle = '';
+                }
+
+                //htmlTitle = '<div class="content-block-title">Zona '+titleFlag+'</div>';
                // $("#dptos-container").append('<a href="#"  onclick="javascript:setDptoId('+response[i].ID+',\'caps.html\')" class="button button-fill button-raised boton-chico">' + response[i].Nombre + ' </a><br>');
-                $("#dptos-container").append('<li class="item-content"> <div class="item-inner" onclick="javascript:setDptoId('+response[i].ID+',\'caps.html\')"><div class="item-title titluloListaBlanca">'+ response[i].Nombre + " - Zona : " +response[i].Zona +'</div></div></li>')
+                //$("#dptos-container").append('<li class="item-content"> <div class="item-inner" onclick="javascript:setDptoId('+response[i].ID+',\'caps.html\')"><div class="item-title titluloListaBlanca">'+ response[i].Nombre + " - Zona : " +response[i].Zona +'</div></div></li>')
+                var htmlString = htmlTitle+'<li class="item-content"> <div class="item-inner" onclick="javascript:setDptoId('+response[i].ID+',\'caps.html\')"><div class="item-title titluloListaBlanca">'+ response[i].Nombre + '</div></div></li>';
+                $("#dptos-container").append(htmlString);
             }
         },
         error: function (error) {
@@ -309,18 +328,39 @@ function getCentroDeSaludEyH(id)
         type: 'get',
         dataType: "json",
         success: function (response) {
-            console.dir(response);
+
+            //console.dir(response);
             response  = response.sort(keysrt('Nombre'));
+
             if(response.length !=0) {
+
+                //inicio
+                var htmlStringEsp = '<ul>';
+
+
                 for (var i = 0; i < response.length; i++) {
-                    $("#caps-eyh").append("<p>Especialidad: " + response[i].Nombre + "</p>");
+                    //$("#caps-eyh").append("<p>Especialidad: " + response[i].Nombre + "</p>");
+
+                    //agrega título
+                    htmlStringEsp += '<li class="accordion-item "><a href="#" class="item-content item-link"><div class="item-inner"> <div class="item-title">'+ response[i].Nombre +'</div></div></a>';
+
+
 
                     for(var j=0;j<response[i].Horarios.length;j++)
                     {
-                        $("#caps-eyh").append("<p><li>"+response[i].Horarios[j].Dia+": " + response[i].Horarios[j].HorarioEntrada + "--" + response[i].Horarios[j].HorarioSalida +"</li></p>");
+                        //$("#caps-eyh").append("<p><li>"+response[i].Horarios[j].Dia+": " + response[i].Horarios[j].HorarioEntrada + "--" + response[i].Horarios[j].HorarioSalida +"</li></p>");
+
+                        htmlStringEsp += '<div class="accordion-item-content"><div class="content-block"><p>'+response[i].Horarios[j].Dia+': ' + response[i].Horarios[j].HorarioEntrada + '--' + response[i].Horarios[j].HorarioSalida + '</p></div></div>'
 
                     }
+
+                    htmlStringEsp += '</li>';
                 }
+
+                htmlStringEsp += '</ul>';
+
+
+                $("#caps-eyh").append(htmlStringEsp);
             }
             else
             {
