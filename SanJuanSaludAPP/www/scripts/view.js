@@ -73,6 +73,7 @@ function load()
     $("#btnProtur").click(function(){
 
         mainView.router.loadPage("formularioProtur.html");
+        
     });
 
 
@@ -108,9 +109,12 @@ function load()
 
         myApp.actions(groups);
     });
+
 }
 
 $$(document).on('DOMContentLoaded', function(){
 
     load();
+
 });
+

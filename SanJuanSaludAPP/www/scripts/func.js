@@ -290,7 +290,7 @@ function getDepartamento()
                 if(response[i].Zona !== titleFlag ){
                     titleFlag = response[i].Zona;
 
-                    htmlTitle = '<div class="content-block-title">Zona '+titleFlag+'</div>';
+                    //htmlTitle = '<div class="content-block-title">Zona '+titleFlag+'</div>';
 
                     //htmlTitle = '<div class="list-block-label">Zona' + titleFlag + '</div>';
                 }else{
