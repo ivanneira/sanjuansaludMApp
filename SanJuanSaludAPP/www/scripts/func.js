@@ -7,6 +7,49 @@ var CapsURL = "http://"+server+"/AresApi/Api/CentroDeSalud";
 var DptoID = 0;
 var CapsID = 0;
 var sinConexion = 'El conenido online no esta disponible momentaneamente.';
+var myLat = 0;
+var myLong = 0;
+
+//PARAMETROS DE CONFIGURACION PARA EL GPS
+var optionsGPS = {
+    enableHighAccuracy: true,
+    timeout: 5000,
+    maximumAge: 0
+};
+
+//FUNCION QUE DEVOLVERA LA POSICION ACTUAL DEL GPS
+function successGPS(pos) {
+    var crd = pos.coords;
+
+    /*
+    console.log('Your current position is:');
+    console.log('Latitude : ' + crd.latitude);
+    console.log('Longitude: ' + crd.longitude);
+    console.log('More or less ' + crd.accuracy + ' meters.');
+    */
+
+    myLat = crd.latitude;
+    myLong = crd.longitude;
+
+
+    var pos = {lat: myLat, lng: myLong};
+    var mapProp= {
+        center:new google.maps.LatLng(pos),
+        zoom:10,
+    };
+    var map=new google.maps.Map(document.getElementById("googleMap"),mapProp);
+    var marker = new google.maps.Marker({position: pos});
+    var infowindow = new google.maps.InfoWindow({
+        content: "Posición Actual"
+    });
+    infowindow.open(map,marker);
+    marker.setMap(map);
+};
+
+//FUNCION QUE DEVOLVERA UN MENSAJE DE ERROR EN CASO DE NO RESPONDER O NO TENER PERMISOS EN GPS
+function errorGPS(err) {
+    alert("Disculpa, no pudimos obtener tus datos de ubicación");
+};
 
 //FUNCION QUE DETECTA EL LLAMADO Y RESPUESTA DE AJAX PARA MOSTRAR UN PRELOADER
 $(document).ajaxStart(function() {
@@ -147,7 +190,6 @@ function fillSlider(selector,json)
 
 //FUNCION PARA EL REDIRECCIONAMIENTO DE PAGINAS
 function openPage(page){
-    console.log("pepe");
     mainView.router.loadPage(page);
 }
 
@@ -163,7 +205,7 @@ function abrirNoticia(slide){
     var titulo = slide.clickedSlide.innerText;
     var letrasEnElTitulo = titulo.length;
 
-    console.log(letrasEnElTitulo)
+    //console.log(letrasEnElTitulo)
 
     var texto = slide.clickedSlide.textContent;
 
@@ -237,7 +279,7 @@ function getCentrosDeSalud()
         success: function (response) {
 
             //fillSlider($("#slider"), response);
-            console.dir(response);
+            //console.dir(response);
         },
         error: function (error) {
             alert(ErrorAjax);
@@ -256,51 +298,55 @@ function getCentroDeSalud(id)
         type: 'get',
         dataType: "json",
         success: function (response) {
-            console.dir(response);
+            //console.dir(response);
             $("#caps-tittle").html(response.Nombre);
             $("#caps-basic").append(' <p><div class="icon f7-icons">home</div>' + "  " +response.Direccion + '</p>');
             $("#caps-basic").append('<p><div class="icon f7-icons">phone</div>' + "  " +response.Telefono + "</p>");
 
 
 
-            var pos = {lat: response.Latitud, lng: response.Longitud};
-            var mapProp= {
-                //-31.536395, -68.536976
-                center:new google.maps.LatLng(pos),
-                zoom:15,
 
-            };
-            var map=new google.maps.Map(document.getElementById("googleMap"),mapProp);
-            var marker = new google.maps.Marker({position: pos});
-            var infowindow = new google.maps.InfoWindow({
-                content: response.Nombre
-            });
-            infowindow.open(map,marker);
-            marker.setMap(map);
+            if(response.Latitud != "0" || response.Longitud != "0") {
+                var pos = {lat: response.Latitud, lng: response.Longitud};
+                var mapProp = {
+                    center: new google.maps.LatLng(pos),
+                    zoom: 15,
 
-            var directionsDisplay = new google.maps.DirectionsRenderer();
-            var directionsService = new google.maps.DirectionsService();
+                };
+                var map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
+                var marker = new google.maps.Marker({position: pos});
+                var infowindow = new google.maps.InfoWindow({
+                    content: response.Nombre
+                });
+                infowindow.open(map, marker);
+                marker.setMap(map);
 
-            var pos2 = {lat: -31.536395, lng: -68.536976};
-            var request = {
-                origin: pos,
-                destination: pos2,
-                travelMode: google.maps.DirectionsTravelMode['DRIVING'],
-                unitSystem: google.maps.DirectionsUnitSystem['METRIC'],
-                provideRouteAlternatives: true
-            };
+                var directionsDisplay = new google.maps.DirectionsRenderer();
+                var directionsService = new google.maps.DirectionsService();
 
-            directionsService.route(request, function(response, status) {
-                if (status == google.maps.DirectionsStatus.OK) {
-                    directionsDisplay.setMap(map);
-                    directionsDisplay.setPanel($("#panel_ruta").get(0));
-                    directionsDisplay.setDirections(response);
-                    alert(response.routes[0].legs[0].distance.value / 1000  + " KM");
-                } else {
-                    alert("No existen rutas entre ambos puntos");
-                }
-            });
+                var posActual = {lat: myLat, lng: myLong};
+                var request = {
+                    origin: posActual,
+                    destination: pos,
+                    travelMode: google.maps.DirectionsTravelMode['DRIVING'],
+                    unitSystem: google.maps.DirectionsUnitSystem['METRIC'],
+                    provideRouteAlternatives: true
+                };
 
+                directionsService.route(request, function (response, status) {
+                    if (status == google.maps.DirectionsStatus.OK) {
+                        directionsDisplay.setMap(map);
+                        directionsDisplay.setPanel($("#panel_ruta").get(0));
+                        directionsDisplay.setDirections(response);
+                        alert(response.routes[0].legs[0].distance.value / 1000 + " KM");
+                    } else {
+                        alert("No existen rutas entre ambos puntos, el mapa no esta disponible.");
+                    }
+                });
+            }
+            else {
+                $("#googleMap").html("<p>No hay mapa para mostrar</p>");
+            }
         },
         error: function (error) {
             alert(ErrorAjax);
@@ -312,7 +358,6 @@ function getCentroDeSalud(id)
 //FUNCION QUE DEVUELVE LA LISTA DE CENTROS DE SALUD EN UN DEPTO SELECCIONADO
 function getCentroDeSaludxDpto(id)
 {
-    console.log(id);
     var tmp = [];
     var j=0;
     $.ajax({
@@ -331,7 +376,7 @@ function getCentroDeSaludxDpto(id)
                     $("#caps-container").append('<li class="item-content"> <div class="item-inner" onclick="javascript:setCapsId('+response[i].ID+',\'capsDetail.html\')"><div class="item-title titluloListaBlanca">'+ response[i].Nombre +'</div></div></li>')
                 }
             }
-            console.dir(tmp);
+            //console.dir(tmp);
         },
         error: function (error) {
             alert(ErrorAjax);
@@ -406,7 +451,7 @@ function getCentroDeSaludLC(id)
         type: 'get',
         dataType: "json",
         success: function (response) {
-            console.dir(response);
+            //console.dir(response);
             if(response.length !=0) {
                 for (var i = 0; i < response.length; i++) {
                     $("#caps-lc").append('<p><div class="icon f7-icons">navigation</div>  Línea número ' + response[i].Numero + "</p>");

@@ -15,6 +15,7 @@ var mainView = myApp.addView('.view-main', {
 
     document.addEventListener( 'deviceready', onDeviceReady.bind( this ), false );
 
+
     function onDeviceReady() {
 
 
