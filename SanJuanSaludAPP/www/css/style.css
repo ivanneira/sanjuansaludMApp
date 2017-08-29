@@ -158,3 +158,10 @@ textarea {
 
     margin-right: 1em;
  }
+
+.background-light {
+    padding: 1em;
+    background: #aa2524 !important;
+    border-radius: 2px;
+    box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
+}
