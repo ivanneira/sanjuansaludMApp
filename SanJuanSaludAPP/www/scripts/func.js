@@ -240,8 +240,9 @@ function getDepartamento()
             var titleFlag = "";
             var htmlTitle= "";
 
+            response = response.sort(keysrt('Zona'));
             for(var i=0;i<response.length;i++) {
-                response = response.sort(keysrt('Zona'));
+
 
                 if(response[i].Zona !== titleFlag ){
                     titleFlag = response[i].Zona;
@@ -291,6 +292,7 @@ function getCentrosDeSalud()
 //FUNCION PARA OBTENER UN CENTRO DE SALUD
 function getCentroDeSalud(id)
 {
+    var capsNombre = "";
     $.ajax({
 
         url: CapsURL + "/" + id,
@@ -302,18 +304,21 @@ function getCentroDeSalud(id)
             $("#caps-tittle").html(response.Nombre);
             $("#caps-basic").append(' <p><div class="icon f7-icons">home</div>' + "  " +response.Direccion + '</p>');
             $("#caps-basic").append('<p><div class="icon f7-icons">phone</div>' + "  " +response.Telefono + "</p>");
+            if(response.URLImagenDelCentroDeSalud != "No Disponible") {
+                $("#capsImg").append('<img src="' + response.URLImagenDelCentroDeSalud + '" height="250px">');
+            }
+
+            capsNombre = response.Nombre;
 
 
-
-
-            if(response.Latitud != "0" || response.Longitud != "0") {
+            if(response.Latitud != 0 || response.Longitud != 0) {
                 var pos = {lat: response.Latitud, lng: response.Longitud};
                 var mapProp = {
                     center: new google.maps.LatLng(pos),
                     zoom: 15,
 
                 };
-                var map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
+                var map = new google.maps.Map(document.getElementById("googleMapDetail"), mapProp);
                 var marker = new google.maps.Marker({position: pos});
                 var infowindow = new google.maps.InfoWindow({
                     content: response.Nombre
@@ -338,14 +343,16 @@ function getCentroDeSalud(id)
                         directionsDisplay.setMap(map);
                         directionsDisplay.setPanel($("#panel_ruta").get(0));
                         directionsDisplay.setDirections(response);
-                        alert(response.routes[0].legs[0].distance.value / 1000 + " KM");
+                        //alert(response.routes[0].legs[0].distance.value / 1000 + " KM");
+                        $("#Distancia").html("<p>Segun tu ubicación te encuentras a: "+ response.routes[0].legs[0].distance.value / 1000 + " KM" + "</p>");
                     } else {
-                        alert("No existen rutas entre ambos puntos, el mapa no esta disponible.");
+                        $("#Distancia").html("No existen rutas disponibles entre su ubicación actual y " + capsNombre +".");
+                        //alert("No existen rutas disponibles entre su ubicación actual y " + capsNombre +".");
                     }
                 });
             }
             else {
-                $("#googleMap").html("<p>No hay mapa para mostrar</p>");
+                $("#googleMapDetail").html("<p>No hay datos de geolocalización disponibles.</p>");
             }
         },
         error: function (error) {

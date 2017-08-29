@@ -12,6 +12,7 @@ myApp.onPageInit('caps', function (page) {
 
 myApp.onPageInit('caps-detail', function (page) {
 
+    navigator.geolocation.getCurrentPosition(successGPS, errorGPS, optionsGPS);
     getCentroDeSalud(CapsID);
     getCentroDeSaludEyH(CapsID);
     getCentroDeSaludLC(CapsID);
