@@ -69,7 +69,7 @@ function GPS()
 
                 if(response[i].Latitud != "0" || response[i].Longitud != "0")
                 {
-                    if ((DistanciaKM(myLat, myLong, response[i].Latitud, response[i].Longitud)) <= 4)
+                    if ((DistanciaKM(myLat, myLong, response[i].Latitud, response[i].Longitud)) <= 10)
                     {
                         var pos = {
                                     lat: response[i].Latitud,
