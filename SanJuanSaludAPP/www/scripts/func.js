@@ -1,4 +1,3 @@
-
 var server = "gedoc.sanjuan.gov.ar";
 var ErrorAjax = "Ups! Hubo un problema con su conexión a internet.";
 var NoticiasURL = "http://"+server+"/AresApi/Api/Portal/Noticias";
@@ -7,15 +6,16 @@ var CapsURL = "http://"+server+"/AresApi/Api/CentroDeSalud";
 //var portalUrl = "http://200.0.236.210/AresApi/Api/Portal/Noticias";
 var DptoID = 0;
 var CapsID = 0;
+var sinConexion = 'El conenido online no esta disponible momentaneamente.';
 
-
+//FUNCION QUE DETECTA EL LLAMADO Y RESPUESTA DE AJAX PARA MOSTRAR UN PRELOADER
 $(document).ajaxStart(function() {
     myApp.showPreloader('Por favor espere...');
 }).ajaxComplete(function() {
     myApp.hidePreloader();
 });
 
-
+//FUNCION PARA CALCULAR DISTANCIA ENTREW DOS PUNTOS
 function DistanciaKM(lat1,lon1,lat2,lon2)
 {
     rad = function(x) {return x*Math.PI/180;}
@@ -28,18 +28,20 @@ function DistanciaKM(lat1,lon1,lat2,lon2)
     return d.toFixed(3); //Retorna tres decimales
 }
 
+//FUNCION USADA PARA EL ORDENAMIENTO DE ARRAYS POR CLAVES
 function keysrt(key,desc) {
     return function(a,b){
         return desc ? ~~(a[key] < b[key]) : ~~(a[key] > b[key]);
     }
 }
 
+//FUNCION ALTERNATIVA A CUANDO LOS DATOS O CONECTIVIDAD DESDE EL DISPOSITIVO NO ESTAN DISPONIBLES
 function errorSlider(selector)
 {
     var temp ='<div id="err1" class="swiper-slide" style="background: url(images/error.jpg) no-repeat center top;background-size:cover;">'+
         '<div class="overlay">'+
         '<p>'+
-        'El conenido online no esta disponible momentaneamente.'+
+        sinConexion+
         '</p>'+
         '</div>'+
         '</div>';
@@ -48,12 +50,14 @@ function errorSlider(selector)
     $(selector).append(temp);
 }
 
+//FUNCION PARA SETEAR EL VALOR DE LA VARIABLE GOBAL CapsID
 function setCapsId(id,page)
 {
     CapsID=id;
     openPage(page);
 }
 
+//FUNCION PARA SETEAR EL VALOR DE LA VARIABLE GOBAL DptoID
 function setDptoId(id,page)
 {
     DptoID=id;
@@ -85,7 +89,7 @@ function createDatabase()
 
 }
 
-/*FUNCION QUE OBTIENE EL SLIDER ACTUAL DEL PORTAL DE GOBIERNO A TRAVES DE LA API DE PAULO*/
+//FUNCION QUE OBTIENE EL SLIDER ACTUAL DEL PORTAL DE GOBIERNO A TRAVES DE LA API DE PAULO
 function getSlider()
 {
 
@@ -106,7 +110,7 @@ function getSlider()
     });
 }
 
-/*FUNCION QUE VUELCA LOS DATOS EN EL SLIDER UNA VEZ CREADA LA ESTRUCTURA*/
+//FUNCION QUE VUELCA LOS DATOS EN EL SLIDER UNA VEZ CREADA LA ESTRUCTURA
 function fillSlider(selector,json)
 {
     $(selector).empty();
@@ -141,12 +145,13 @@ function fillSlider(selector,json)
     });
 }
 
+//FUNCION PARA EL REDIRECCIONAMIENTO DE PAGINAS
 function openPage(page){
     console.log("pepe");
     mainView.router.loadPage(page);
 }
 
-//función para abrir noticia
+//FUNCION PARA VER NOTICIA COMPLETA
 function abrirNoticia(slide){
 
     var imagenURL;
@@ -178,7 +183,7 @@ function abrirNoticia(slide){
     myApp.popup(popupHTML);
 }
 
-/*FUNCION PARA OBTENER DEPARTAMENTOS*/
+//FUNCION PARA OBTENER DEPARTAMENTOS
 function getDepartamento()
 {
     $.ajax({
@@ -220,7 +225,7 @@ function getDepartamento()
     });
 }
 
-/*FUNCION PARA OBTENER CENTROS DE SALUD*/
+//FUNCION PARA OBTENER CENTROS DE SALUD
 function getCentrosDeSalud()
 {
     $.ajax({
@@ -241,7 +246,7 @@ function getCentrosDeSalud()
     });
 }
 
-/*FUNCION PARA OBTENER UN CENTRO DE SALUD*/
+//FUNCION PARA OBTENER UN CENTRO DE SALUD
 function getCentroDeSalud(id)
 {
     $.ajax({
@@ -304,6 +309,7 @@ function getCentroDeSalud(id)
     });
 }
 
+//FUNCION QUE DEVUELVE LA LISTA DE CENTROS DE SALUD EN UN DEPTO SELECCIONADO
 function getCentroDeSaludxDpto(id)
 {
     console.log(id);
@@ -333,7 +339,8 @@ function getCentroDeSaludxDpto(id)
 
     });
 }
-/*FUNCION PARA OBTENER ESPECIALIDADES Y HORARIOS PARA UN CENTRO DE SALUD*/
+
+//FUNCION PARA OBTENER ESPECIALIDADES Y HORARIOS PARA UN CENTRO DE SALUD
 function getCentroDeSaludEyH(id)
 {
     $.ajax({
@@ -389,7 +396,7 @@ function getCentroDeSaludEyH(id)
     });
 }
 
-/*FUNCION PARA OBTENER LINEAS DE COLECTIVOS QUE LLEGAN A UN CENTRO DE SALUD*/
+//FUNCION PARA OBTENER LINEAS DE COLECTIVOS QUE LLEGAN A UN CENTRO DE SALUD
 function getCentroDeSaludLC(id)
 {
     $.ajax({
