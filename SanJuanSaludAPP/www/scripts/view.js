@@ -8,11 +8,12 @@ myApp.onPageInit('departamentos', function (page) {
 myApp.onPageInit('caps', function (page) {
 
     getCentroDeSaludxDpto(DptoID);
+    navigator.geolocation.getCurrentPosition(successGPS, errorGPS, optionsGPS);
 });
 
 myApp.onPageInit('caps-detail', function (page) {
 
-    navigator.geolocation.getCurrentPosition(successGPS, errorGPS, optionsGPS);
+
     getCentroDeSalud(CapsID);
     getCentroDeSaludEyH(CapsID);
     getCentroDeSaludLC(CapsID);
@@ -28,7 +29,8 @@ myApp.onPageInit('index', function (page) {
 
 myApp.onPageInit('mapa', function (page) {
 
-    navigator.geolocation.getCurrentPosition(successGPS, errorGPS, optionsGPS);
+
+    GPS();
 
 });
 
@@ -36,6 +38,7 @@ myApp.onPageInit('mapa', function (page) {
 
 function load()
 {
+    navigator.geolocation.getCurrentPosition(successGPS, errorGPS, optionsGPS);
     getSlider();
     /*
     $("#btnAyuda").click(function(){

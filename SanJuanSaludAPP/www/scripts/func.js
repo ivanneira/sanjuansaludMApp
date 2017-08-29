@@ -31,24 +31,67 @@ function successGPS(pos) {
     myLat = crd.latitude;
     myLong = crd.longitude;
 
+};
 
-    var pos = {lat: myLat, lng: myLong};
-    var mapProp= {
-        center:new google.maps.LatLng(pos),
+
+//FUNCION QUE BUSCA CENTROS DE SALUD EN UN RADIO DE 10KM
+function GPS()
+{
+
+
+    var posx = {lat: myLat, lng: myLong};
+    var mapPropx= {
+        center:new google.maps.LatLng(posx),
         zoom:10,
     };
-    var map=new google.maps.Map(document.getElementById("googleMap"),mapProp);
-    var marker = new google.maps.Marker({position: pos});
-    var infowindow = new google.maps.InfoWindow({
-        content: "Posición Actual"
+    var map=new google.maps.Map(document.getElementById("googleMap"),mapPropx);
+    var markerx = new google.maps.Marker({position: posx,icon: 'images/device.png'});
+    var infowindowx = new google.maps.InfoWindow({
+        content: "Ubicación Actual"
     });
-    infowindow.open(map,marker);
-    marker.setMap(map);
-};
+
+    infowindowx.open(map,markerx);
+    markerx.setMap(map);
+
+    //OBTENGO CAPS Y CALCULO DISTANCIAS EN UN RADIO DE 10KM
+    $.ajax({
+
+        url: CapsURL,
+        cache: false,
+        type: 'get',
+        dataType: "json",
+        success: function (response) {
+
+            /**********************************************/
+            for(var i=0;i<response.length; i++) {
+
+                if(response[i].Latitud != "0" || response[i].Longitud != "0") {
+                    if ((DistanciaKM(myLat, myLong, response[i].Latitud, response[i].Longitud)) <= 20) {
+                        var pos = {
+                                    lat: response[i].Latitud,
+                                    lng: response[i].Longitud
+                        };
+                        var marker = new google.maps.Marker({
+                            position: pos,
+                            title: response[i].Nombre,
+                            icon: 'images/caps.png'
+                        });
+                        marker.setMap(map);
+                    }
+                }
+            }
+            $("#googleMapt").html("<p style='font-weight: bold; color:#fff'>Centros de Salud  cercanos en un radio de 15 KM aproximados.</p>");
+            /**********************************************/
+        },
+        error: function (error) {
+            alert(ErrorAjax);
+        }
+    });
+}
 
 //FUNCION QUE DEVOLVERA UN MENSAJE DE ERROR EN CASO DE NO RESPONDER O NO TENER PERMISOS EN GPS
 function errorGPS(err) {
-    alert("Disculpa, no pudimos obtener tus datos de ubicación");
+    alert("Disculpe, no pudimos obtener sus datos de ubicación.");
 };
 
 //FUNCION QUE DETECTA EL LLAMADO Y RESPUESTA DE AJAX PARA MOSTRAR UN PRELOADER
@@ -240,9 +283,9 @@ function getDepartamento()
             var titleFlag = "";
             var htmlTitle= "";
 
-            response = response.sort(keysrt('Zona'));
-            for(var i=0;i<response.length;i++) {
 
+            for(var i=0;i<response.length;i++) {
+//response = response.sort(keysrt('Zona'));
 
                 if(response[i].Zona !== titleFlag ){
                     titleFlag = response[i].Zona;
