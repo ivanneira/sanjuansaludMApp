@@ -53,6 +53,7 @@ function GPS()
     infowindowx.open(map,markerx);
     markerx.setMap(map);
 
+
     //OBTENGO CAPS Y CALCULO DISTANCIAS EN UN RADIO DE 10KM
     $.ajax({
 
@@ -63,24 +64,38 @@ function GPS()
         success: function (response) {
 
             /**********************************************/
+            var infowindow = new google.maps.InfoWindow();
             for(var i=0;i<response.length; i++) {
 
-                if(response[i].Latitud != "0" || response[i].Longitud != "0") {
-                    if ((DistanciaKM(myLat, myLong, response[i].Latitud, response[i].Longitud)) <= 20) {
+                if(response[i].Latitud != "0" || response[i].Longitud != "0")
+                {
+                    if ((DistanciaKM(myLat, myLong, response[i].Latitud, response[i].Longitud)) <= 4)
+                    {
                         var pos = {
                                     lat: response[i].Latitud,
                                     lng: response[i].Longitud
                         };
-                        var marker = new google.maps.Marker({
+
+                         var marker = new google.maps.Marker({
                             position: pos,
+                            icon: 'images/caps.png',
                             title: response[i].Nombre,
-                            icon: 'images/caps.png'
+                            map:map,
+                            animation: google.maps.Animation.DROP
                         });
-                        marker.setMap(map);
+
+                        google.maps.event.addListener(marker, 'click', (function (marker, i) {
+                            return function () {
+                                infowindow.setContent(response[i].Nombre);
+                                infowindow.open(map, marker);
+                            }
+                        })(marker, i));
                     }
                 }
             }
-            $("#googleMapt").html("<p style='font-weight: bold; color:#fff'>Centros de Salud  cercanos en un radio de 15 KM aproximados.</p>");
+
+
+            $("#googleMapt").html("<p style='font-weight: bold; color:#fff'>Centros de Salud  cercanos en un radio de 10 KM aproximados.</p>");
             /**********************************************/
         },
         error: function (error) {
@@ -290,17 +305,13 @@ function getDepartamento()
                 if(response[i].Zona !== titleFlag ){
                     titleFlag = response[i].Zona;
 
-                    //htmlTitle = '<div class="content-block-title">Zona '+titleFlag+'</div>';
+                    htmlTitle = '<div class="content-block-title blancaynegritag">Zona '+titleFlag+'</div>';
 
-                    //htmlTitle = '<div class="list-block-label">Zona' + titleFlag + '</div>';
                 }else{
                     htmlTitle = '';
                 }
 
-                //htmlTitle = '<div class="content-block-title">Zona '+titleFlag+'</div>';
-               // $("#dptos-container").append('<a href="#"  onclick="javascript:setDptoId('+response[i].ID+',\'caps.html\')" class="button button-fill button-raised boton-chico">' + response[i].Nombre + ' </a><br>');
-                //$("#dptos-container").append('<li class="item-content"> <div class="item-inner" onclick="javascript:setDptoId('+response[i].ID+',\'caps.html\')"><div class="item-title titluloListaBlanca">'+ response[i].Nombre + " - Zona : " +response[i].Zona +'</div></div></li>')
-                var htmlString = htmlTitle+'<li class="item-content"> <div class="item-inner" onclick="javascript:setDptoId('+response[i].ID+',\'caps.html\')"><div class="item-title titluloListaBlanca">'+ response[i].Nombre + '</div></div></li>';
+                var htmlString = htmlTitle+'<li class="item-content"> <div class="icon f7-icons" style="color:#fff; margin-right: 5px;">search_strong</div><div class="item-inner" onclick="javascript:setDptoId('+response[i].ID+',\'caps.html\')"><div class="item-title titluloListaBlanca">'+ response[i].Nombre + '</div></div></li>';
                 $("#dptos-container").append(htmlString);
             }
         },
@@ -384,18 +395,18 @@ function getCentroDeSalud(id)
                 directionsService.route(request, function (response, status) {
                     if (status == google.maps.DirectionsStatus.OK) {
                         directionsDisplay.setMap(map);
-                        directionsDisplay.setPanel($("#panel_ruta").get(0));
+                        //directionsDisplay.setPanel($("#panel_ruta").get(0));
                         directionsDisplay.setDirections(response);
                         //alert(response.routes[0].legs[0].distance.value / 1000 + " KM");
-                        $("#Distancia").html("<p>Segun tu ubicación te encuentras a: "+ response.routes[0].legs[0].distance.value / 1000 + " KM" + "</p>");
+                        $("#Distancia").html("<p>Segun tu ubicación te encuentras a: "+ (response.routes[0].legs[0].distance.value / 1000).toFixed() + " KM aproximados." + "</p>");
                     } else {
                         $("#Distancia").html("No existen rutas disponibles entre su ubicación actual y " + capsNombre +".");
-                        //alert("No existen rutas disponibles entre su ubicación actual y " + capsNombre +".");
                     }
                 });
             }
             else {
-                $("#googleMapDetail").html("<p>No hay datos de geolocalización disponibles.</p>");
+                $("#googleMapDetail").html('<p><div class="icon f7-icons">close</div>  No hay datos de geolocalización disponibles.</p>');
+
             }
         },
         error: function (error) {
@@ -422,8 +433,7 @@ function getCentroDeSaludxDpto(id)
                 if (response[i].DepartamentoID == id) {
                     tmp.push(response[i]);
 
-                    //$("#caps-container").append('<a href="#"  class="button button-fill button-raised boton-chico">'+response[i].Nombre+' </a><br>');
-                    $("#caps-container").append('<li class="item-content"> <div class="item-inner" onclick="javascript:setCapsId('+response[i].ID+',\'capsDetail.html\')"><div class="item-title titluloListaBlanca">'+ response[i].Nombre +'</div></div></li>')
+                    $("#caps-container").append('<li class="item-content"> <div class="icon f7-icons" style="color:#fff;margin-right: 5px;">info</div> <div class="item-inner" onclick="javascript:setCapsId('+response[i].ID+',\'capsDetail.html\')"><div class="item-title titluloListaBlanca">'+ response[i].Nombre +'</div></div></li>')
                 }
             }
             //console.dir(tmp);
@@ -447,6 +457,8 @@ function getCentroDeSaludEyH(id)
         success: function (response) {
 
             //console.dir(response);
+            $("#caps-eyh").append('<h4 class="color-h3 ">Especialidades y Horarios:</h4>');
+
             response  = response.sort(keysrt('Nombre'));
 
             if(response.length !=0) {
@@ -465,7 +477,6 @@ function getCentroDeSaludEyH(id)
 
                     for(var j=0;j<response[i].Horarios.length;j++)
                     {
-                        //$("#caps-eyh").append("<p><li>"+response[i].Horarios[j].Dia+": " + response[i].Horarios[j].HorarioEntrada + "--" + response[i].Horarios[j].HorarioSalida +"</li></p>");
 
                         htmlStringEsp += '<div class="accordion-item-content"><div class="content-block"><p>'+response[i].Horarios[j].Dia+': ' + response[i].Horarios[j].HorarioEntrada + '--' + response[i].Horarios[j].HorarioSalida + '</p></div></div>'
 
@@ -481,7 +492,7 @@ function getCentroDeSaludEyH(id)
             }
             else
             {
-                $("#caps-eyh").append('<p><div class="icon f7-icons">close</div>  Sin información para mostrar</p>');
+                $("#caps-eyh").append('<p><div class="icon f7-icons">close</div>  Sin información para mostrar.</p>');
             }
         },
         error: function (error) {
@@ -494,6 +505,7 @@ function getCentroDeSaludEyH(id)
 //FUNCION PARA OBTENER LINEAS DE COLECTIVOS QUE LLEGAN A UN CENTRO DE SALUD
 function getCentroDeSaludLC(id)
 {
+
     $.ajax({
 
         url: CapsURL + "/" + id+ "/LineasDeColectivos",
@@ -502,14 +514,16 @@ function getCentroDeSaludLC(id)
         dataType: "json",
         success: function (response) {
             //console.dir(response);
+            $("#caps-basic").append('<h3 class="color-h3">Líneas de Colectivo disponibles</h3><div id="caps-lc"></div> ');
             if(response.length !=0) {
                 for (var i = 0; i < response.length; i++) {
-                    $("#caps-lc").append('<p><div class="icon f7-icons">navigation</div>  Línea número ' + response[i].Numero + "</p>");
+
+                    $("#caps-basic").append('<p><div class="icon f7-icons">navigation</div>  Línea número ' + response[i].Numero + "</p>");
                 }
             }
-            else
-            {
-                $("#caps-lc").append("<p>Sin información para mostrar</p>");
+            else{
+
+                $("#caps-lc").append('<p><div class="icon f7-icons">close</div>  Sin información para mostrar.</p>');
             }
 
         },

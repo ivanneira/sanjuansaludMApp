@@ -3,6 +3,17 @@
     color: #fff;
 }
 
+.blancaynegrita{
+    color: #fff;
+    font-weight: bold;
+}
+
+.blancaynegritag{
+    color: #fff;
+    font-size: larger;
+    font-weight: bold;
+}
+
 #map-canvas { height: 100% }
 
 .boton {
