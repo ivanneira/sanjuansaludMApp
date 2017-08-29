@@ -36,7 +36,7 @@ myApp.onPageInit('mapa', function (page) {
 function load()
 {
     getSlider();
-
+    /*
     $("#btnAyuda").click(function(){
 
         $.ajax({
@@ -59,6 +59,16 @@ function load()
         });
 
 
+    });*/
+
+    $("#btnAyuda").click(function(){
+
+        mainView.router.loadPage("ayuda.html");
+    });
+
+    $("#btnProtur").click(function(){
+
+        mainView.router.loadPage("formularioProtur.html");
     });
 
 

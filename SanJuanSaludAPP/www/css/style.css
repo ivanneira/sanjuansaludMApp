@@ -148,3 +148,13 @@ textarea {
 
     margin-right: 1em;
 }
+
+.navbarMenu {
+    font-size: smaller !important;
+
+}
+
+.navbarMenu p {
+
+    margin-right: 1em;
+ }
