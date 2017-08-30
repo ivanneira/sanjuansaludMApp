@@ -1,4 +1,7 @@
-﻿.color-h3
+﻿.page{
+    background-color: #fff;
+}
+.color-h3
 {
     color: #fff;
 }
@@ -54,10 +57,7 @@
 
 }
 
-.page {
 
-    background-color: #940f12 !important;
-}
 
 .navbar {
 
