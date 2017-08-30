@@ -495,7 +495,7 @@ function getCentroDeSaludEyH(id)
 
 
 
-                    for(var j=0; j<response[i].Horarios.length; j++)
+                   /* for(var j=0; j<response[i].Horarios.length; j++)
                     {
 
                         htmlStringEsp += '<div class="accordion-item-content">'+
@@ -505,6 +505,27 @@ function getCentroDeSaludEyH(id)
                             ' - ' + response[i].Horarios[j].HorarioSalida +
                             '</p></div></div>';
 
+                    }*/
+
+
+                    var HorariosDia = [];
+                    var Horarios = [];
+                    var IndexDia = 0;
+                    var IndexHorario = 0;
+                    for(var j=0;j<response[i].Horarios.length;j++)
+                    {
+                        IndexHorario = HorariosDia.indexOf(response[i].Horarios[j].Dia);
+                        if ( IndexHorario == -1){
+                            HorariosDia[IndexDia] = response[i].Horarios[j].Dia;
+                            Horarios[IndexDia] = response[i].Horarios[j].HorarioEntrada + ' hs. - ' + response[i].Horarios[j].HorarioSalida + ' hs.';
+                            IndexDia = IndexDia + 1;
+                        }
+                        else{
+                            Horarios[IndexHorario] += ' <br/> ' + response[i].Horarios[j].HorarioEntrada + ' hs. - ' + response[i].Horarios[j].HorarioSalida+ ' hs.';
+                        }
+                    }
+                    for(var k=0;k<HorariosDia.length;k++){
+                        htmlStringEsp += '<div class="accordion-item-content"><div class="content-block"><p>'+HorariosDia[k]+': <br/>' + Horarios[k] + '</p></div></div>';
                     }
 
                     htmlStringEsp += '</li>';
