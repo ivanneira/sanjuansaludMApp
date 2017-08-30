@@ -178,6 +178,10 @@ textarea {
     box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
 }
 
+.list-block .accordion-item .content-block, .list-block .accordion-item .list-block{
+    padding-left: 50px;
+}
+
 .content-list {
 
     background-color: #940f12;
