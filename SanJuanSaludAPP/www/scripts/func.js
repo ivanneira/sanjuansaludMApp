@@ -7,9 +7,10 @@ var CapsURL = "http://"+server+"/AresApi/Api/CentroDeSalud";
 var DptoID = 0;
 var CapsID = 0;
 var sinConexion = 'El conenido online no esta disponible momentaneamente.';
-var myLat = 0;
-var myLong = 0;
+var myLat = -31.536395;
+var myLong = -68.536976;
 
+//-31.536395, -68.536976
 //PARAMETROS DE CONFIGURACION PARA EL GPS
 var optionsGPS = {
     enableHighAccuracy: true,
@@ -37,8 +38,6 @@ function successGPS(pos) {
 //FUNCION QUE BUSCA CENTROS DE SALUD EN UN RADIO DE 10KM
 function GPS()
 {
-
-
     var posx = {lat: myLat, lng: myLong};
     var mapPropx= {
         center:new google.maps.LatLng(posx),
@@ -86,7 +85,7 @@ function GPS()
 
                         google.maps.event.addListener(marker, 'click', (function (marker, i) {
                             return function () {
-                                infowindow.setContent(response[i].Nombre);
+                                infowindow.setContent(response[i].Nombre + "<br><br>" + '<a style="color:blue; font-weight: bold; text-align: center;" onclick="javascript:setCapsId('+response[i].ID+',\'capsDetail.html\');" href="#">Detalles</a>' );
                                 infowindow.open(map, marker);
                             }
                         })(marker, i));
@@ -99,14 +98,16 @@ function GPS()
             /**********************************************/
         },
         error: function (error) {
-            alert(ErrorAjax);
+            //alert(ErrorAjax);
+            window.plugins.toast.show(ErrorAjax,"3000","bottom");
         }
     });
 }
 
 //FUNCION QUE DEVOLVERA UN MENSAJE DE ERROR EN CASO DE NO RESPONDER O NO TENER PERMISOS EN GPS
 function errorGPS(err) {
-    alert("Disculpe, no pudimos obtener sus datos de ubicación.");
+    //alert("Disculpe, no pudimos obtener sus datos de ubicación.");
+    window.plugins.toast.show("Disculpe, no pudimos obtener sus datos de ubicación.","3000","bottom");
 };
 
 //FUNCION QUE DETECTA EL LLAMADO Y RESPUESTA DE AJAX PARA MOSTRAR UN PRELOADER
@@ -300,7 +301,6 @@ function getDepartamento()
 
 
             for(var i=0;i<response.length;i++) {
-//response = response.sort(keysrt('Zona'));
 
                 if(response[i].Zona !== titleFlag ){
                     titleFlag = response[i].Zona;
@@ -316,7 +316,8 @@ function getDepartamento()
             }
         },
         error: function (error) {
-            alert(ErrorAjax);
+            //alert(ErrorAjax);
+            window.plugins.toast.show(ErrorAjax,"3000","bottom");
         }
 
     });
@@ -337,7 +338,8 @@ function getCentrosDeSalud()
             //console.dir(response);
         },
         error: function (error) {
-            alert(ErrorAjax);
+            //alert(ErrorAjax);
+            window.plugins.toast.show(ErrorAjax,"3000","bottom");
         }
 
     });
@@ -410,7 +412,8 @@ function getCentroDeSalud(id)
             }
         },
         error: function (error) {
-            alert(ErrorAjax);
+            //alert(ErrorAjax);
+            window.plugins.toast.show(ErrorAjax,"3000","bottom");
         }
 
     });
@@ -439,7 +442,8 @@ function getCentroDeSaludxDpto(id)
             //console.dir(tmp);
         },
         error: function (error) {
-            alert(ErrorAjax);
+            //alert(ErrorAjax);
+            window.plugins.toast.show(ErrorAjax,"3000","bottom");
         }
 
     });
@@ -496,7 +500,8 @@ function getCentroDeSaludEyH(id)
             }
         },
         error: function (error) {
-            alert(ErrorAjax);
+            //alert(ErrorAjax);
+            window.plugins.toast.show(ErrorAjax,"3000","bottom");
         }
 
     });
@@ -529,7 +534,9 @@ function getCentroDeSaludLC(id)
         },
         error: function (error) {
 
-            alert(ErrorAjax);
+            //alert(ErrorAjax);
+            window.plugins.toast.show(ErrorAjax,"3000","bottom");
+
         }
 
     });

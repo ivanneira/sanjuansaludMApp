@@ -10,6 +10,34 @@ var mainView = myApp.addView('.view-main', {
     material: true,
 });
 
+
+function requestPermissionGPS()
+{
+    if(typeof(cordova.plugins) != 'undefined') {
+        cordova.plugins.locationAccuracy.canRequest(function (canRequest) {
+            if (canRequest) {
+                cordova.plugins.locationAccuracy.request(function () {
+                        //console.log("Request successful");
+                        navigator.geolocation.getCurrentPosition(successGPS, errorGPS, optionsGPS);
+                    }, function (error) {
+                        //alert("Por favor habilite los permisos de ubicación para el correcto funcionamiento de la aplicación.");
+                        window.plugins.toast.show("Por favor habilite los permisos de ubicación para el correcto funcionamiento de la aplicación.","3000","bottom");
+                        if (error) {
+                            // Android only
+                            console.error("error code=" + error.code + "; error message=" + error.message);
+                            if (error.code !== cordova.plugins.locationAccuracy.ERROR_USER_DISAGREED) {
+                                if (window.confirm("Fallo al solicitar ubicación con alta presición. Desea abrir la configuración y hacerlo manualmente?")) {
+                                    cordova.plugins.diagnostic.switchToLocationSettings();
+                                }
+                            }
+                        }
+                    }, cordova.plugins.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY // iOS will ignore this
+                );
+            }
+        });
+    }
+
+}
 (function () {
     "use strict";
 
@@ -19,6 +47,8 @@ var mainView = myApp.addView('.view-main', {
     function onDeviceReady() {
 
 
+        //FORZADO DE ACTIVACION DE GPS EN LAS PLATAFORMAS
+        requestPermissionGPS();
         //createDatabase();
         //maps();
 

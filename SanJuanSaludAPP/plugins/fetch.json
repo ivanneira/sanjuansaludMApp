@@ -59,5 +59,21 @@
         },
         "is_top_level": false,
         "variables": {}
+    },
+    "cordova-plugin-request-location-accuracy": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-request-location-accuracy@^2.2.2"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-x-toast": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-x-toast"
+        },
+        "is_top_level": true,
+        "variables": {}
     }
 }
