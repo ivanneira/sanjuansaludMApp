@@ -10,8 +10,9 @@
 
 .blancaynegritag{
     color: #fff;
-    font-size: larger;
-    font-weight: bold;
+    text-transform: uppercase;
+    text-align: center;
+
 }
 
 #map-canvas { height: 100% }
@@ -175,4 +176,17 @@ textarea {
     background: #aa2524 !important;
     border-radius: 2px;
     box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
+}
+
+.content-list {
+
+    background-color: #940f12;
+}
+
+.background-light-noticia {
+    margin: 1em;
+    background: #aa2524 !important;
+    border-radius: 2px;
+    box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
+
 }

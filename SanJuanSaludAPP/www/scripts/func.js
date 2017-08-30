@@ -254,7 +254,7 @@ function openPage(page){
 
 //FUNCION PARA VER NOTICIA COMPLETA
 function abrirNoticia(slide){
-
+console.log(slide)
     var imagenURL;
 
     $("#"+slide.clickedSlide.id).filter(function(){
@@ -266,13 +266,13 @@ function abrirNoticia(slide){
 
     //console.log(letrasEnElTitulo)
 
-    var texto = slide.clickedSlide.textContent;
+    var texto = slide.clickedSlide.innerHTML;
 
     texto = texto.substring(letrasEnElTitulo-2);
 
     var popupHTML =
         '<div class="popup tablet-fullscreen">'+
-        '<div class="content-block backImage">'+
+        '<div class="content-block background-light-noticia">'+
         '<h3>'+titulo+'</h3>'+
         '<p>'+texto+'</p>'+
         '<p><a href="#" class="close-popup">Volver</a></p>'+
@@ -305,13 +305,21 @@ function getDepartamento()
                 if(response[i].Zona !== titleFlag ){
                     titleFlag = response[i].Zona;
 
-                    htmlTitle = '<div class="content-block-title blancaynegritag">Zona '+titleFlag+'</div>';
+                    htmlTitle = '<div class="content-block-title blancaynegritag" >Zona Sanitaria '+titleFlag+'</div><ul>';
 
                 }else{
                     htmlTitle = '';
                 }
 
-                var htmlString = htmlTitle+'<li class="item-content"> <div class="icon f7-icons" style="color:#fff; margin-right: 5px;">search_strong</div><div class="item-inner" onclick="javascript:setDptoId('+response[i].ID+',\'caps.html\')"><div class="item-title titluloListaBlanca">'+ response[i].Nombre + '</div></div></li>';
+                var htmlString = htmlTitle +
+                    '<li class="item-content">'+
+                    //'<div class="icon f7-icons" style="color:#fff; margin-right: 5px;">search</div>'+
+                    '<div class="item-inner background-light" onclick="javascript:setDptoId('+response[i].ID+',\'caps.html\')">'+
+                    '<div class="item-title">'+
+                    response[i].Nombre +
+                    '</div></div></li></ul>';
+
+
                 $("#dptos-container").append(htmlString);
             }
         },
@@ -465,6 +473,8 @@ function getCentroDeSaludEyH(id)
 
             response  = response.sort(keysrt('Nombre'));
 
+            //console.dir(response)
+
             if(response.length !=0) {
 
                 //inicio
@@ -475,14 +485,25 @@ function getCentroDeSaludEyH(id)
                     //$("#caps-eyh").append("<p>Especialidad: " + response[i].Nombre + "</p>");
 
                     //agrega título
-                    htmlStringEsp += '<li class="accordion-item "><a href="#" class="item-content item-link"><div class="item-inner"> <div class="item-title"><div class="icon f7-icons iconList">more_vertical</div>' +response[i].Nombre +'</div></div></a>';
+                    htmlStringEsp += '<li class="accordion-item background-light">'+
+                        '<a href="#" class="item-content item-link">'+
+                        '<div class="item-inner">'+
+                        ' <div class="item-title">'+
+                        '<div class="icon f7-icons iconList">more_vertical</div>' +
+                        response[i].Nombre +
+                        '</div></div></a>';
 
 
 
-                    for(var j=0;j<response[i].Horarios.length;j++)
+                    for(var j=0; j<response[i].Horarios.length; j++)
                     {
 
-                        htmlStringEsp += '<div class="accordion-item-content"><div class="content-block"><p>'+response[i].Horarios[j].Dia+': ' + response[i].Horarios[j].HorarioEntrada + '--' + response[i].Horarios[j].HorarioSalida + '</p></div></div>'
+                        htmlStringEsp += '<div class="accordion-item-content">'+
+                            '<div class="content-block"><p>'+
+                            response[i].Horarios[j].Dia+
+                            ': ' + response[i].Horarios[j].HorarioEntrada +
+                            ' - ' + response[i].Horarios[j].HorarioSalida +
+                            '</p></div></div>';
 
                     }
 
