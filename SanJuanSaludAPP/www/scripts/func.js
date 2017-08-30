@@ -85,7 +85,7 @@ function GPS()
 
                         google.maps.event.addListener(marker, 'click', (function (marker, i) {
                             return function () {
-                                infowindow.setContent(response[i].Nombre + "<br><br>" + '<a style="color:blue; font-weight: bold; text-align: center;" onclick="javascript:setCapsId('+response[i].ID+',\'capsDetail.html\');" href="#">Detalles</a>' );
+                                infowindow.setContent(response[i].Nombre + "<br><br>" + '<a style="color:blue; font-weight: bold; text-align: center;" onclick="javascript:setCapsId('+response[i].ID+',\'capsDetail.html\');" href="#">Información Detallada</a>' );
                                 infowindow.open(map, marker);
                             }
                         })(marker, i));
