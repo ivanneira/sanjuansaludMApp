@@ -254,34 +254,82 @@ function openPage(page){
 
 //FUNCION PARA VER NOTICIA COMPLETA
 function abrirNoticia(slide){
-console.log(slide)
+
     var imagenURL;
+
 
     $("#"+slide.clickedSlide.id).filter(function(){
         imagenURL = $(this).css("background-image");
     });
 
+    //imagenURL = imagenURL.replace("url(\"","");
+    //imagenURL = imagenURL.replace("\")","");
+
     var titulo = slide.clickedSlide.innerText;
     var letrasEnElTitulo = titulo.length;
 
-    //console.log(letrasEnElTitulo)
 
-    var texto = slide.clickedSlide.innerHTML;
+    var texto = slide.clickedSlide.textContent;
+
 
     texto = texto.substring(letrasEnElTitulo-2);
 
-    var popupHTML =
+    /*
+        var popupHTML =
+
         '<div class="popup tablet-fullscreen">'+
         '<div class="content-block background-light-noticia">'+
         '<h3>'+titulo+'</h3>'+
-        '<p>'+texto+'</p>'+
+        '<p class="textoNoticia">'+texto+'</p>'+
         '<p><a href="#" class="close-popup">Volver</a></p>'+
         '</div>'+
         '</div>';
+*/
 
-    //$(".backimage").css({'background-image':  imagenURL + " !important"  });
+    var pageHTML =
 
-    myApp.popup(popupHTML);
+                '<div class="page" data-page="noticia">'+
+
+                    '<div class="navbar">'+
+                        '<div class="navbar-inner navbarMenu">'+
+                            '<div class="left">'+
+                                '<a href="#" class="link back">'+
+                                    '<i class="icon icon-back"></i>'+
+                                    '<span>Volver</span>'+
+                                '</a>'+
+                            '</div>'+
+
+                            '<div class="right"><p>Noticia</p></div>'+
+                        '</div>'+
+
+                    '</div>'+
+
+                    '<div class="page-content">'+
+                        '<div class="content-block">'+
+                            '<br>'+
+                            '<br>'+
+
+                            '<div class="card">'+
+                                '<div class="card-content">'+
+                                    '<div class="card-content-inner">'+
+                                    '<div id="cardImageBackground" class="card-header">'+
+                                    '</div>'+
+                                '</div>'+
+                            '</div>'+
+
+                            '<div id="noticia" class="background-light">'+ texto +'</div>'+
+                        '</div>'+
+                    '</div>'+
+
+                '</div></div>';
+
+
+
+    //myApp.popup(popupHTML);
+
+    mainView.router.loadContent(pageHTML);
+
+    $("#cardImageBackground").css({"background-image": imagenURL});
 }
 
 //FUNCION PARA OBTENER DEPARTAMENTOS

@@ -2,7 +2,7 @@
     min-height: 100%;
 }
 .page{
-    background-color: #fff;
+    background-color: #ccc;
 }
 .color-h3
 {
@@ -15,7 +15,7 @@
 }
 
 .blancaynegritag{
-    color: #fff;
+    color: #940f12;
     text-transform: uppercase;
     text-align: center;
 
@@ -120,6 +120,7 @@
 .popup {
     color: white;
     background-color: #940f12 !important;
+    display: block !important;
 }
 
 .item-input input {
@@ -210,10 +211,25 @@ textarea {
     z-index: 100000;
     text-align: center !important;
     font-size: small;
+    box-shadow:  0px -3px 22px 1px rgba(0,0,0,0.75);
 }
 .toolbar-inner p{
     text-align: center !important;
     width: 100%;
 }
 
+#cardImageBackground {
 
+
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    height: 250px;
+    width: 100%;
+
+}
+
+#noticia {
+
+    color: white;
+}
