@@ -485,7 +485,7 @@ function getCentroDeSaludEyH(id)
                     //$("#caps-eyh").append("<p>Especialidad: " + response[i].Nombre + "</p>");
 
                     //agrega título
-                    htmlStringEsp += '<li class="accordion-item background-light">'+
+                    htmlStringEsp += '<li class="accordion-item ">'+
                         '<a href="#" class="item-content item-link">'+
                         '<div class="item-inner">'+
                         ' <div class="item-title">'+

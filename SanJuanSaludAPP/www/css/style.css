@@ -1,4 +1,7 @@
-﻿.page{
+﻿.body{
+    min-height: 100%;
+}
+.page{
     background-color: #fff;
 }
 .color-h3
@@ -194,3 +197,17 @@ textarea {
     box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
 
 }
+
+.toolbar {
+    background-color: #940f12 !important;
+    height: 2em;
+    z-index: 100000;
+    text-align: center !important;
+    font-size: small;
+}
+.toolbar-inner p{
+    text-align: center !important;
+    width: 100%;
+}
+
+
