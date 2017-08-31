@@ -23,10 +23,16 @@
 
 #map-canvas { height: 100% }
 
+.button-fill  {
+    background-color: #940f12 !important;
+    color: #fff ;
+}
+
 .boton {
     height: 10em !important;
-    color: #940f12 !important;
+    color: #fff !important;
     line-height: 1em !important;
+
 }
 
 .swiper-wrapper{
@@ -35,7 +41,7 @@
 .boton-chico {
 
     height: 3em !important;
-    color: #940f12 !important;
+    color: #fff !important;
 }
 
 .center img {
