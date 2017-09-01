@@ -242,24 +242,24 @@ function openPage(page){
 //FUNCION PARA VER NOTICIA COMPLETA
 function abrirNoticia(slide){
 
+    //console.dir(slide)
+
     var imagenURL;
 
-
-    $("#"+slide.clickedSlide.id).filter(function(){
-        imagenURL = $(this).css("background-image");
-    });
+    //console.dir(slide);
 
     //imagenURL = imagenURL.replace("url(\"","");
     //imagenURL = imagenURL.replace("\")","");
 
     var titulo = slide.clickedSlide.innerText;
     var letrasEnElTitulo = titulo.length;
+    $("#"+slide.clickedSlide.id).filter(function(){
+        imagenURL = $(this).css("background-image");
+    });
 
+    var texto = $(slide.clickedSlide).find(".overlay div");
 
-    var texto = slide.clickedSlide.textContent;
-
-
-    texto = texto.substring(letrasEnElTitulo-2);
+    //texto = texto.substring(letrasEnElTitulo-2);
 
     /*
         var popupHTML =
@@ -299,16 +299,15 @@ function abrirNoticia(slide){
                             '<div class="card">'+
                                 '<div class="card-content">'+
                                     '<div class="card-content-inner">'+
-                                    '<div id="cardImageBackground" class="card-header">'+
+                                        '<div id="cardImageBackground" class="card-header"></div>'+
                                     '</div>'+
                                 '</div>'+
-                            '</div>'+
 
-                            '<div id="noticia" class="background-light">'+ texto +'</div>'+
+                                '<div id="noticia" class="background-light">'+ texto[0].innerHTML +'</div>'+
+                            '</div>'+
                         '</div>'+
                     '</div>'+
-
-                '</div></div>';
+                '</div>';
 
 
 

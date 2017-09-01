@@ -226,10 +226,23 @@ textarea {
     background-position: center;
     height: 250px;
     width: 100%;
+    margin-bottom: 1em;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 
 }
 
 #noticia {
 
     color: white;
+}
+
+.card-content-inner {
+
+    background-color: #ddd;
+}
+
+.linkAyuda a {
+
+    color: #000 !important;
+    margin-left: 1em;
 }
