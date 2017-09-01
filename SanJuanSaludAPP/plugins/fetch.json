@@ -7,19 +7,6 @@
         "is_top_level": true,
         "variables": {}
     },
-    "cordova-sqlite-storage": {
-        "source": {
-            "type": "registry",
-            "id": "cordova-plugin-googlemaps@git+https://github.com/mapsplugin/cordova-plugin-googlemaps.git#multiple_maps"
-        },
-        "is_top_level": true,
-        "variables": {
-            "API_KEY_FOR_ANDROID": "AIzaSyC_LkjOstSW67FyZ2oABpMfZSG4STjiu7c",
-            "API_KEY_FOR_IOS": "AIzaSyBZK0bGv6wCVNOpLiLRLgV_hy8B-Y07pp4",
-            "LOCATION_WHEN_IN_USE_DESCRIPTION": "Show your location on the map",
-            "LOCATION_ALWAYS_USAGE_DESCRIPTION": "Trace your location on the map"
-        }
-    },
     "cordova-plugin-geolocation": {
         "source": {
             "type": "registry",
@@ -72,6 +59,30 @@
         "source": {
             "type": "registry",
             "id": "cordova-plugin-x-toast"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-sqlite-storage": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-sqlite-storage@^2.0.4"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-websql": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-websql@0.0.10"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-sqlite-2": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-sqlite-2@^1.0.4"
         },
         "is_top_level": true,
         "variables": {}

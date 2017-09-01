@@ -168,25 +168,12 @@ function setDptoId(id,page)
 
 function createDatabase()
 {
-    var db = null;
-    db = window.sqlitePlugin.openDatabase({name: 'demo.db', location: 'default'});
 
-    db.transaction(function(tx) {
-        tx.executeSql('DROP TABLE IF EXISTS MyTable');
-        tx.executeSql('CREATE TABLE MyTable (SampleColumn)');
-        tx.executeSql('INSERT INTO MyTable VALUES (?)', ['test-value'], function(tx, resultSet) {
-            console.log('resultSet.insertId: ' + resultSet.insertId);
-            console.log('resultSet.rowsAffected: ' + resultSet.rowsAffected);
-            alert(resultSet.insertId);
-            alert(resultSet.rowsAffected);
-        }, function(tx, error) {
-            console.log('INSERT error: ' + error.message);
+    var db = sqlitePlugin.openDatabase('mydb.db', '1.0', '', 1);
+    db.transaction(function (txn) {
+        txn.executeSql('SELECT 42 AS `answer`', [], function (tx, res) {
+            console.log(res.rows.item(0)); // {"answer": 42}
         });
-    }, function(error) {
-        console.log('transaction error: ' + error.message);
-    }, function() {
-        console.log('transaction ok');
-        alert("OK");
     });
 
 }
@@ -335,6 +322,8 @@ function abrirNoticia(slide){
 //FUNCION PARA OBTENER DEPARTAMENTOS
 function getDepartamento()
 {
+
+
     $.ajax({
 
         url: DepartamentosURL,

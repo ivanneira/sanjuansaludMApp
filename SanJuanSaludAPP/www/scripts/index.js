@@ -42,6 +42,7 @@ function requestPermissionGPS()
     "use strict";
 
     document.addEventListener( 'deviceready', onDeviceReady.bind( this ), false );
+    document.addEventListener("backbutton", onBackKeyDown, false);
 
 
     function onDeviceReady() {
@@ -49,7 +50,7 @@ function requestPermissionGPS()
 
         //FORZADO DE ACTIVACION DE GPS EN LAS PLATAFORMAS
         requestPermissionGPS();
-        //createDatabase();
+        createDatabase();
         //maps();
 
         // Controlar la pausa de Cordova y reanudar eventos

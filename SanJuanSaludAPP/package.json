@@ -11,6 +11,8 @@
         "cordova-plugin-googlemaps": "git+https://github.com/mapsplugin/cordova-plugin-googlemaps.git#multiple_maps",
         "cordova-plugin-googlemaps-sdk": "git+https://github.com/mapsplugin/cordova-plugin-googlemaps-sdk.git",
         "cordova-plugin-request-location-accuracy": "^2.2.2",
+        "cordova-plugin-sqlite-2": "^1.0.4",
+        "cordova-plugin-websql": "0.0.10",
         "cordova-plugin-whitelist": "1.2.2",
         "cordova-plugin-x-toast": "^2.6.0",
         "cordova-sqlite-storage": "^2.0.4",
@@ -37,7 +39,9 @@
                 "LOCATION_ALWAYS_USAGE_DESCRIPTION": "Trace your location on the map"
             },
             "cordova-plugin-request-location-accuracy": {},
-            "cordova-plugin-x-toast": {}
+            "cordova-plugin-x-toast": {},
+            "cordova-plugin-sqlite-2": {},
+            "cordova-plugin-websql": {}
         }
     }
 }
