@@ -81,7 +81,7 @@ function requestPermissionGPS()
     //
     function onBackKeyDown() {
 
-        alert("Füller trolo")
+        //alert("Füller trolo")
     }
 
 

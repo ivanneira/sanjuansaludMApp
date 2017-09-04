@@ -18,7 +18,6 @@ var optionsGPS = {
     maximumAge: 0
 };
 
-
 //FUNCION QUE DEVOLVERA LA POSICION ACTUAL DEL GPS
 function successGPS(pos) {
     var crd = pos.coords;
@@ -101,7 +100,7 @@ function GPS()
 
 
 
-            $("#googleMapt").html("<p style='font-weight: bold; color:#fff'>Centros de Salud  cercanos en un radio de 10 KM aproximados.</p>");
+            $("#googleMapt").html("<p style='font-weight: bold;'>Centros de Salud  cercanos en un radio de 10 KM aproximados.</p>");
             /**********************************************/
         },
         error: function (error) {
@@ -110,7 +109,6 @@ function GPS()
         }
     });
 }
-
 
 //FUNCION QUE DEVOLVERA UN MENSAJE DE ERROR EN CASO DE NO RESPONDER O NO TENER PERMISOS EN GPS
 function errorGPS(err) {
@@ -148,12 +146,11 @@ function keysrt(key,desc) {
 //FUNCION ALTERNATIVA A CUANDO LOS DATOS O CONECTIVIDAD DESDE EL DISPOSITIVO NO ESTAN DISPONIBLES
 function errorSlider(selector)
 {
-    var temp ='<div id="err1" class="swiper-slide" style="background: url(images/error.jpg) no-repeat center top;background-size:cover;">'+
-        '<div class="overlay">'+
-        '<p>'+
-        sinConexion+
-        '</p>'+
-        '</div>'+
+    var temp =
+        '<div id="err1" class="swiper-slide" style="background: url(images/error.jpg) no-repeat center top;background-size:cover;">'+
+            '<div class="overlay">'+
+                '<p>'+sinConexion+'</p>'+
+            '</div>'+
         '</div>';
 
 
@@ -216,15 +213,14 @@ function fillSlider(selector,json)
 
     for(var i=0; i<json.length;i++)
     {
-        var temp ='<div id="'+json[i].nid+'" class="swiper-slide" style="background: url(http://sanjuan.gov.ar/'+json[i].nf+') no-repeat center top;background-size:cover;">'+
-            '<div class="overlay">'+
-            '<p>'+
-            json[i].nt+
-            '</p>'+
-            '<div style="display:none" id="'+json[i].nid+'_full">' +
-            '<p>'+json[i].nd+'</p>'+
-            '</div>'+
-            '</div>'+
+        var temp =
+            '<div id="'+json[i].nid+'" class="swiper-slide" style="background: url(http://sanjuan.gov.ar/'+json[i].nf+') no-repeat center top;background-size:cover;">'+
+                '<div class="overlay">'+
+                    '<p>'+json[i].nt+ '</p>'+
+                    '<div style="display:none" id="'+json[i].nid+'_full">' +
+                        '<p>'+json[i].nd+'</p>'+
+                    '</div>'+
+                '</div>'+
             '</div>';
 
 
@@ -351,19 +347,26 @@ function getDepartamento()
                 if(response[i].Zona !== titleFlag ){
                     titleFlag = response[i].Zona;
 
-                    htmlTitle = '<div class="content-block-title blancaynegritag" >Zona Sanitaria '+titleFlag+'</div><ul>';
+                    htmlTitle = '<li class="list-group-title">'+ "Zona " + response[i].Zona +'</li>';
 
                 }else{
                     htmlTitle = '';
                 }
 
-                var htmlString = htmlTitle +
-                    '<li class="item-content">'+
-                    //'<div class="icon f7-icons" style="color:#fff; margin-right: 5px;">search</div>'+
-                    '<div class="item-inner background-light" onclick="javascript:setDptoId('+response[i].ID+',\'caps.html\')">'+
-                    '<div class="item-title">'+
-                    response[i].Nombre +
-                    '</div></div></li></ul>';
+                var htmlString =
+                '<div class="list-group">'+
+                    '<ul>'+
+                         htmlTitle +
+                        '<li class="item-content">'+
+                            //'<div class="icon f7-icons" style="color:#fff; margin-right: 5px;">search</div>'+
+                            '<div class="item-inner background-light" onclick="javascript:setDptoId('+response[i].ID+',\'caps.html\')">'+
+                                '<div class="item-title">'+
+                                response[i].Nombre +
+                                '</div>' +
+                            '</div>' +
+                        '</li>' +
+                    '</ul>'+
+                '</div>';
 
 
                 $("#dptos-container").append(htmlString);
@@ -412,8 +415,8 @@ function getCentroDeSalud(id)
         success: function (response) {
             //console.dir(response);
             $("#caps-tittle").html(response.Nombre);
-            $("#caps-basic").append(' <p><div class="icon f7-icons">home</div>' + "  " +response.Direccion + '</p>');
-            $("#caps-basic").append('<p><div class="icon f7-icons">phone</div>' + "  " +response.Telefono + "</p>");
+            $("#caps-basic").append(' <p><h4>Dirección</h4>'+ response.Direccion + '</p>');
+            $("#caps-basic").append('<p><h4>Teléfonos</h4><div class="icon f7-icons">phone</div>' + "  " +response.Telefono + "</p>");
             if(response.URLImagenDelCentroDeSalud != "No Disponible") {
                 $("#capsImg").append('<img src="' + response.URLImagenDelCentroDeSalud + '" height="250px">');
             }
@@ -514,7 +517,14 @@ function getCentroDeSaludxDpto(id)
                 if (response[i].DepartamentoID == id) {
                     tmp.push(response[i]);
 
-                    $("#caps-container").append('<li class="item-content"> <div class="icon f7-icons" style="color:#fff;margin-right: 5px;">info</div> <div class="item-inner" onclick="javascript:setCapsId('+response[i].ID+',\'capsDetail.html\')"><div class="item-title titluloListaBlanca">'+ response[i].Nombre +'</div></div></li>')
+                    $("#caps-container").append(
+                        '<li class="item-content"> ' +
+                            '<div class="item-inner background-ligh" onclick="javascript:setCapsId('+response[i].ID+',\'capsDetail.html\')">' +
+                                '<div class="item-title">'+
+                                    response[i].Nombre +
+                                '</div>' +
+                            '</div>' +
+                        '</li>');
                 }
             }
             //console.dir(tmp);
@@ -631,7 +641,11 @@ function getCentroDeSaludLC(id)
         dataType: "json",
         success: function (response) {
             //console.dir(response);
-            $("#caps-basic").append('<h3 class="color-h3">Líneas de Colectivo disponibles</h3><div id="caps-lc"></div> ');
+            $("#caps-basic").append(
+                '<h4 class="color-h3">Líneas de Colectivo disponibles</h4><div id="caps-lc"></div> ');
+
+
+
             if(response.length !=0) {
                 for (var i = 0; i < response.length; i++) {
 
