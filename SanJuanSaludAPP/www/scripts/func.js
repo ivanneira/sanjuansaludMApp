@@ -18,6 +18,7 @@ var optionsGPS = {
     maximumAge: 0
 };
 
+
 //FUNCION QUE DEVOLVERA LA POSICION ACTUAL DEL GPS
 function successGPS(pos) {
     var crd = pos.coords;
@@ -75,15 +76,18 @@ function GPS()
                                     lng: response[i].Longitud
                         };
 
-                         var marker = new google.maps.Marker({
+                        var marker = new google.maps.Marker({
                             position: pos,
                             icon: 'images/caps.png',
                             title: response[i].Nombre,
-                            map:map,
-                            animation: google.maps.Animation.DROP
+                            map: map,
+                            animation: google.maps.Animation.DROP,
                         });
 
+
+
                         google.maps.event.addListener(marker, 'click', (function (marker, i) {
+
                             return function () {
                                 infowindow.setContent(response[i].Nombre + "<br><br>" + '<a style="color:blue; font-weight: bold; text-align: center;" onclick="javascript:setCapsId('+response[i].ID+',\'capsDetail.html\');" href="#">Información Detallada</a>' );
                                 infowindow.open(map, marker);
@@ -91,11 +95,13 @@ function GPS()
                         })(marker, i));
                     }
                 }
+
+
             }
 
 
-            $("#googleMapt").html(
-                "<p>Centros de Salud  cercanos en un radio de 10 KM aproximados.</p>");
+
+            $("#googleMapt").html("<p style='font-weight: bold; color:#fff'>Centros de Salud  cercanos en un radio de 10 KM aproximados.</p>");
             /**********************************************/
         },
         error: function (error) {
@@ -104,6 +110,7 @@ function GPS()
         }
     });
 }
+
 
 //FUNCION QUE DEVOLVERA UN MENSAJE DE ERROR EN CASO DE NO RESPONDER O NO TENER PERMISOS EN GPS
 function errorGPS(err) {
@@ -141,11 +148,12 @@ function keysrt(key,desc) {
 //FUNCION ALTERNATIVA A CUANDO LOS DATOS O CONECTIVIDAD DESDE EL DISPOSITIVO NO ESTAN DISPONIBLES
 function errorSlider(selector)
 {
-    var temp =
-        '<div id="err1" class="swiper-slide" style="background: url(images/error.jpg) no-repeat center top;background-size:cover;">'+
-            '<div class="overlay">'+
-                '<p>'+sinConexion+'</p>'+
-            '</div>'+
+    var temp ='<div id="err1" class="swiper-slide" style="background: url(images/error.jpg) no-repeat center top;background-size:cover;">'+
+        '<div class="overlay">'+
+        '<p>'+
+        sinConexion+
+        '</p>'+
+        '</div>'+
         '</div>';
 
 
@@ -168,11 +176,13 @@ function setDptoId(id,page)
 
 function createDatabase()
 {
+    console.log("cd");
 
     var db = sqlitePlugin.openDatabase('mydb.db', '1.0', '', 1);
     db.transaction(function (txn) {
         txn.executeSql('SELECT 42 AS `answer`', [], function (tx, res) {
-            console.log(res.rows.item(0)); // {"answer": 42}
+            alert(res.rows.item(0).answer); // {"answer": 42}
+            console.log(res.rows.item(0).answer);
         });
     });
 
@@ -206,14 +216,15 @@ function fillSlider(selector,json)
 
     for(var i=0; i<json.length;i++)
     {
-        var temp =
-            '<div id="'+json[i].nid+'" class="swiper-slide" style="background: url(http://sanjuan.gov.ar/'+json[i].nf+') no-repeat center top;background-size:cover;">'+
-                '<div class="overlay">'+
-                    '<p>'+json[i].nt+ '</p>'+
-                    '<div style="display:none" id="'+json[i].nid+'_full">' +
-                        '<p>'+json[i].nd+'</p>'+
-                    '</div>'+
-                '</div>'+
+        var temp ='<div id="'+json[i].nid+'" class="swiper-slide" style="background: url(http://sanjuan.gov.ar/'+json[i].nf+') no-repeat center top;background-size:cover;">'+
+            '<div class="overlay">'+
+            '<p>'+
+            json[i].nt+
+            '</p>'+
+            '<div style="display:none" id="'+json[i].nid+'_full">' +
+            '<p>'+json[i].nd+'</p>'+
+            '</div>'+
+            '</div>'+
             '</div>';
 
 
@@ -340,26 +351,19 @@ function getDepartamento()
                 if(response[i].Zona !== titleFlag ){
                     titleFlag = response[i].Zona;
 
-                    htmlTitle = '<li class="list-group-title">'+ "Zona" + response[i].Zona +'</li>';
+                    htmlTitle = '<div class="content-block-title blancaynegritag" >Zona Sanitaria '+titleFlag+'</div><ul>';
 
                 }else{
                     htmlTitle = '';
                 }
 
-                var htmlString =
-                '<div class="list-group">'+
-                    '<ul>'+
-                         htmlTitle +
-                        '<li class="item-content">'+
-                            //'<div class="icon f7-icons" style="color:#fff; margin-right: 5px;">search</div>'+
-                            '<div class="item-inner background-light" onclick="javascript:setDptoId('+response[i].ID+',\'caps.html\')">'+
-                                '<div class="item-title">'+
-                                response[i].Nombre +
-                                '</div>' +
-                            '</div>' +
-                        '</li>' +
-                    '</ul>'+
-                '</div>';
+                var htmlString = htmlTitle +
+                    '<li class="item-content">'+
+                    //'<div class="icon f7-icons" style="color:#fff; margin-right: 5px;">search</div>'+
+                    '<div class="item-inner background-light" onclick="javascript:setDptoId('+response[i].ID+',\'caps.html\')">'+
+                    '<div class="item-title">'+
+                    response[i].Nombre +
+                    '</div></div></li></ul>';
 
 
                 $("#dptos-container").append(htmlString);
@@ -422,6 +426,12 @@ function getCentroDeSalud(id)
                 var mapProp = {
                     center: new google.maps.LatLng(pos),
                     zoom: 15,
+                    scrollwheel: true,
+                    navigationControl: true,
+                    mapTypeControl: true,
+                    scaleControl: true,
+                    draggable: false,
+                    disableDefaultUI: false,
 
                 };
                 var map = new google.maps.Map(document.getElementById("googleMapDetail"), mapProp);
@@ -445,12 +455,13 @@ function getCentroDeSalud(id)
                 };
 
                 directionsService.route(request, function (response, status) {
+                    console.dir(pos);
                     if (status == google.maps.DirectionsStatus.OK) {
                         directionsDisplay.setMap(map);
                         //directionsDisplay.setPanel($("#panel_ruta").get(0));
                         directionsDisplay.setDirections(response);
                         //alert(response.routes[0].legs[0].distance.value / 1000 + " KM");
-                        $("#Distancia").html("<p>Segun tu ubicación te encuentras a: "+ (response.routes[0].legs[0].distance.value / 1000).toFixed() + " KM aproximados." + "</p>");
+                        $("#Distancia").html("<p>Segun tu ubicación te encuentras a: "+ (response.routes[0].legs[0].distance.value / 1000).toFixed() + " KM aproximados." + "</p><a style='color:#000' href='javascript:navigate(["+myLat+","+myLong+"],["+pos.lat+","+pos.lng+"]);' ><div class='icon f7-icons'>navigation_fill</div>INDICACIONES COMO LLEGAR ?</a>");
                     } else {
                         $("#Distancia").html("No existen rutas disponibles entre su ubicación actual y " + capsNombre +".");
                     }
@@ -469,6 +480,23 @@ function getCentroDeSalud(id)
     });
 }
 
+function navigate(desde,hasta)
+{
+
+    /*
+    *
+     launchnavigator.navigate([50.279306, -5.163158], {
+     start: "50.342847, -4.749904"
+     };
+
+    * */
+
+    console.dir(hasta);
+    console.dir(desde);
+    launchnavigator.navigate([hasta[0], hasta[1]], {
+        start: ""+desde[0]+","+desde[1]+""
+    });
+}
 //FUNCION QUE DEVUELVE LA LISTA DE CENTROS DE SALUD EN UN DEPTO SELECCIONADO
 function getCentroDeSaludxDpto(id)
 {
@@ -486,14 +514,7 @@ function getCentroDeSaludxDpto(id)
                 if (response[i].DepartamentoID == id) {
                     tmp.push(response[i]);
 
-                    $("#caps-container").append(
-                        '<li class="item-content"> ' +
-                            '<div class="item-inner background-ligh" onclick="javascript:setCapsId('+response[i].ID+',\'capsDetail.html\')">' +
-                                '<div class="item-title">'+
-                                    response[i].Nombre +
-                                '</div>' +
-                            '</div>' +
-                        '</li>');
+                    $("#caps-container").append('<li class="item-content"> <div class="icon f7-icons" style="color:#fff;margin-right: 5px;">info</div> <div class="item-inner" onclick="javascript:setCapsId('+response[i].ID+',\'capsDetail.html\')"><div class="item-title titluloListaBlanca">'+ response[i].Nombre +'</div></div></li>')
                 }
             }
             //console.dir(tmp);
