@@ -13,7 +13,7 @@ var mainView = myApp.addView('.view-main', {
 
 function requestPermissionGPS()
 {
-    //if(typeof(cordova.plugins) != 'undefined') {
+    if(typeof(cordova.plugins) != 'undefined') {
         //cordova.plugins.locationAccuracy.canRequest(function (canRequest) {
             //if (canRequest) {
                 cordova.plugins.locationAccuracy.request(function () {
@@ -35,7 +35,7 @@ function requestPermissionGPS()
                 );
             //}
         //});
-    //}
+    }
 
 }
 (function () {
