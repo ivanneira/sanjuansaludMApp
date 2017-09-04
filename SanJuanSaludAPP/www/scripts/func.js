@@ -94,7 +94,8 @@ function GPS()
             }
 
 
-            $("#googleMapt").html("<p style='font-weight: bold; color:#fff'>Centros de Salud  cercanos en un radio de 10 KM aproximados.</p>");
+            $("#googleMapt").html(
+                "<p>Centros de Salud  cercanos en un radio de 10 KM aproximados.</p>");
             /**********************************************/
         },
         error: function (error) {
@@ -140,12 +141,11 @@ function keysrt(key,desc) {
 //FUNCION ALTERNATIVA A CUANDO LOS DATOS O CONECTIVIDAD DESDE EL DISPOSITIVO NO ESTAN DISPONIBLES
 function errorSlider(selector)
 {
-    var temp ='<div id="err1" class="swiper-slide" style="background: url(images/error.jpg) no-repeat center top;background-size:cover;">'+
-        '<div class="overlay">'+
-        '<p>'+
-        sinConexion+
-        '</p>'+
-        '</div>'+
+    var temp =
+        '<div id="err1" class="swiper-slide" style="background: url(images/error.jpg) no-repeat center top;background-size:cover;">'+
+            '<div class="overlay">'+
+                '<p>'+sinConexion+'</p>'+
+            '</div>'+
         '</div>';
 
 
@@ -206,15 +206,14 @@ function fillSlider(selector,json)
 
     for(var i=0; i<json.length;i++)
     {
-        var temp ='<div id="'+json[i].nid+'" class="swiper-slide" style="background: url(http://sanjuan.gov.ar/'+json[i].nf+') no-repeat center top;background-size:cover;">'+
-            '<div class="overlay">'+
-            '<p>'+
-            json[i].nt+
-            '</p>'+
-            '<div style="display:none" id="'+json[i].nid+'_full">' +
-            '<p>'+json[i].nd+'</p>'+
-            '</div>'+
-            '</div>'+
+        var temp =
+            '<div id="'+json[i].nid+'" class="swiper-slide" style="background: url(http://sanjuan.gov.ar/'+json[i].nf+') no-repeat center top;background-size:cover;">'+
+                '<div class="overlay">'+
+                    '<p>'+json[i].nt+ '</p>'+
+                    '<div style="display:none" id="'+json[i].nid+'_full">' +
+                        '<p>'+json[i].nd+'</p>'+
+                    '</div>'+
+                '</div>'+
             '</div>';
 
 
@@ -341,19 +340,26 @@ function getDepartamento()
                 if(response[i].Zona !== titleFlag ){
                     titleFlag = response[i].Zona;
 
-                    htmlTitle = '<div class="content-block-title blancaynegritag" >Zona Sanitaria '+titleFlag+'</div><ul>';
+                    htmlTitle = '<li class="list-group-title">'+ "Zona" + response[i].Zona +'</li>';
 
                 }else{
                     htmlTitle = '';
                 }
 
-                var htmlString = htmlTitle +
-                    '<li class="item-content">'+
-                    //'<div class="icon f7-icons" style="color:#fff; margin-right: 5px;">search</div>'+
-                    '<div class="item-inner background-light" onclick="javascript:setDptoId('+response[i].ID+',\'caps.html\')">'+
-                    '<div class="item-title">'+
-                    response[i].Nombre +
-                    '</div></div></li></ul>';
+                var htmlString =
+                '<div class="list-group">'+
+                    '<ul>'+
+                         htmlTitle +
+                        '<li class="item-content">'+
+                            //'<div class="icon f7-icons" style="color:#fff; margin-right: 5px;">search</div>'+
+                            '<div class="item-inner background-light" onclick="javascript:setDptoId('+response[i].ID+',\'caps.html\')">'+
+                                '<div class="item-title">'+
+                                response[i].Nombre +
+                                '</div>' +
+                            '</div>' +
+                        '</li>' +
+                    '</ul>'+
+                '</div>';
 
 
                 $("#dptos-container").append(htmlString);
@@ -480,7 +486,14 @@ function getCentroDeSaludxDpto(id)
                 if (response[i].DepartamentoID == id) {
                     tmp.push(response[i]);
 
-                    $("#caps-container").append('<li class="item-content"> <div class="icon f7-icons" style="color:#fff;margin-right: 5px;">info</div> <div class="item-inner" onclick="javascript:setCapsId('+response[i].ID+',\'capsDetail.html\')"><div class="item-title titluloListaBlanca">'+ response[i].Nombre +'</div></div></li>')
+                    $("#caps-container").append(
+                        '<li class="item-content"> ' +
+                            '<div class="item-inner background-ligh" onclick="javascript:setCapsId('+response[i].ID+',\'capsDetail.html\')">' +
+                                '<div class="item-title">'+
+                                    response[i].Nombre +
+                                '</div>' +
+                            '</div>' +
+                        '</li>');
                 }
             }
             //console.dir(tmp);
