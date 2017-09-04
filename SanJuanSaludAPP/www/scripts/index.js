@@ -13,9 +13,9 @@ var mainView = myApp.addView('.view-main', {
 
 function requestPermissionGPS()
 {
-    if(typeof(cordova.plugins) != 'undefined') {
-        cordova.plugins.locationAccuracy.canRequest(function (canRequest) {
-            if (canRequest) {
+    //if(typeof(cordova.plugins) != 'undefined') {
+        //cordova.plugins.locationAccuracy.canRequest(function (canRequest) {
+            //if (canRequest) {
                 cordova.plugins.locationAccuracy.request(function () {
                         //console.log("Request successful");
                         navigator.geolocation.getCurrentPosition(successGPS, errorGPS, optionsGPS);
@@ -33,9 +33,9 @@ function requestPermissionGPS()
                         }
                     }, cordova.plugins.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY // iOS will ignore this
                 );
-            }
-        });
-    }
+            //}
+        //});
+    //}
 
 }
 (function () {
@@ -50,7 +50,7 @@ function requestPermissionGPS()
 
         //FORZADO DE ACTIVACION DE GPS EN LAS PLATAFORMAS
         requestPermissionGPS();
-        createDatabase();
+        //createDatabase();
         //maps();
 
         // Controlar la pausa de Cordova y reanudar eventos
