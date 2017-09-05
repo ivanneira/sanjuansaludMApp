@@ -116,3 +116,8 @@ $$(document).on('DOMContentLoaded', function(){
 
 });
 
+
+$("#cardImageBackground").click(function(){
+
+    alert("ASDF")
+});

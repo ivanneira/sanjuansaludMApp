@@ -223,7 +223,6 @@ function fillSlider(selector,json)
                 '</div>'+
             '</div>';
 
-
         $(selector).append(temp);
     }
 
@@ -346,8 +345,28 @@ function getDepartamento()
 
                 if(response[i].Zona !== titleFlag ){
                     titleFlag = response[i].Zona;
+                    var romano = "";
 
-                    htmlTitle = '<li class="list-group-title">'+ "Zona " + response[i].Zona +'</li>';
+                    switch (response[i].Zona) {
+
+                        case 1:
+                            romano = 'I';
+                            break;
+                        case 2:
+                            romano = "II";
+                            break;
+                        case 3:
+                            romano = "III";
+                            break;
+                        case 4:
+                            romano = "IV";
+                            break;
+                        case 5:
+                            romano = "V";
+                            break;
+                    }
+
+                    htmlTitle = '<li class="list-group-title">'+ "Zona Sanitaria " + romano +'</li>';
 
                 }else{
                     htmlTitle = '';
@@ -417,6 +436,7 @@ function getCentroDeSalud(id)
             $("#caps-tittle").html(response.Nombre);
             $("#caps-basic").append(' <p><h4>Dirección</h4>'+ response.Direccion + '</p>');
             $("#caps-basic").append('<p><h4>Teléfonos</h4><div class="icon f7-icons">phone</div>' + "  " +response.Telefono + "</p>");
+
             if(response.URLImagenDelCentroDeSalud != "No Disponible") {
                 $("#capsImg").append('<img src="' + response.URLImagenDelCentroDeSalud + '" height="250px">');
             }
@@ -464,7 +484,20 @@ function getCentroDeSalud(id)
                         //directionsDisplay.setPanel($("#panel_ruta").get(0));
                         directionsDisplay.setDirections(response);
                         //alert(response.routes[0].legs[0].distance.value / 1000 + " KM");
-                        $("#Distancia").html("<p>Segun tu ubicación te encuentras a: "+ (response.routes[0].legs[0].distance.value / 1000).toFixed() + " KM aproximados." + "</p><a style='color:#000' href='javascript:navigate(["+myLat+","+myLong+"],["+pos.lat+","+pos.lng+"]);' ><div class='icon f7-icons'>navigation_fill</div>INDICACIONES COMO LLEGAR ?</a>");
+
+
+                        $("#Distancia").html(
+
+
+                            "<p>Segun tu ubicación te encuentras a: "+
+                                (response.routes[0].legs[0].distance.value / 1000).toFixed() +
+                                " KM aproximados." +
+                            "</p>" +
+                            "<a class='button button-fill button-raised boton boton-chico' href='javascript:navigate(["+myLat+","+myLong+"],["+pos.lat+","+pos.lng+"]);' >" +
+                                "<div class='icon f7-icons'>navigation_fill</div>INDICACIONES COMO LLEGAR ?" +
+                            "</a>");
+
+
                     } else {
                         $("#Distancia").html("No existen rutas disponibles entre su ubicación actual y " + capsNombre +".");
                     }
