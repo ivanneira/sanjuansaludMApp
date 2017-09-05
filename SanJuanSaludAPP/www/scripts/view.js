@@ -111,13 +111,6 @@ function load()
 }
 
 $$(document).on('DOMContentLoaded', function(){
-
     load();
-
 });
 
-
-$("#cardImageBackground").click(function(){
-
-    alert("ASDF")
-});

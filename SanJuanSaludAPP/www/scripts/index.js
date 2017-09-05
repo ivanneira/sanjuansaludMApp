@@ -80,8 +80,7 @@ function requestPermissionGPS()
     // Handle the back button
     //
     function onBackKeyDown() {
-
-        //alert("Füller trolo")
+        mainView.router.back();
     }
 
 

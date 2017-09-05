@@ -337,3 +337,7 @@ textarea {
     text-transform: uppercase;
     color: #940f12 !important;
 }
+
+.card{
+    margin:0;
+}
