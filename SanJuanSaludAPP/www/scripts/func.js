@@ -41,7 +41,63 @@ function GPS()
     var posx = {lat: myLat, lng: myLong};
     var mapPropx= {
         center:new google.maps.LatLng(posx),
-        zoom:10,
+        zoom:11,
+        mapTypeControl: false,
+        streetViewControl: false,
+        fullscreenControl: false,
+        styles: [
+            {
+                "featureType": "administrative.neighborhood",
+                "stylers": [
+                    {
+                        "visibility": "off"
+                    }
+                ]
+            },
+            {
+                "featureType": "poi",
+                "elementType": "labels.text",
+                "stylers": [
+                    {
+                        "visibility": "off"
+                    }
+                ]
+            },
+            {
+                "featureType": "poi.business",
+                "stylers": [
+                    {
+                        "visibility": "off"
+                    }
+                ]
+            },
+            {
+                "featureType": "road",
+                "elementType": "labels.icon",
+                "stylers": [
+                    {
+                        "visibility": "off"
+                    }
+                ]
+            },
+            {
+                "featureType": "transit",
+                "stylers": [
+                    {
+                        "visibility": "off"
+                    }
+                ]
+            },
+            {
+                "featureType": "water",
+                "elementType": "labels.text",
+                "stylers": [
+                    {
+                        "visibility": "off"
+                    }
+                ]
+            }
+        ]
     };
     var map=new google.maps.Map(document.getElementById("googleMap"),mapPropx);
     var markerx = new google.maps.Marker({position: posx,icon: 'images/device.png'});
@@ -114,7 +170,7 @@ function GPS()
 function errorGPS(err) {
     //alert("Disculpe, no pudimos obtener sus datos de ubicación.");
     window.plugins.toast.show("Disculpe, no pudimos obtener sus datos de ubicación.","3000","bottom");
-};
+}
 
 //FUNCION QUE DETECTA EL LLAMADO Y RESPUESTA DE AJAX PARA MOSTRAR UN PRELOADER
 $(document).ajaxStart(function() {
@@ -327,6 +383,8 @@ function abrirNoticia(slide){
 //FUNCION PARA OBTENER DEPARTAMENTOS
 function getDepartamento()
 {
+
+
     $.ajax({
 
         url: DepartamentosURL,
@@ -433,8 +491,18 @@ function getCentroDeSalud(id)
         success: function (response) {
             //console.dir(response);
             $("#caps-tittle").html(response.Nombre);
-            $("#caps-basic").append(' <p><h4 class="color-h4">Dirección</h4>'+ response.Direccion + '</p>');
-            $("#caps-basic").append('<p><h4 class="color-h4">Teléfonos</h4><div class="icon f7-icons">phone</div>' + "  " +response.Telefono + "</p>");
+            $("#caps-basic").append(
+                '<p>' +
+                    '<h4 class="color-h4">Dirección</h4>'+
+                    response.Direccion +
+                '</p>'+
+                '<p>' +
+                    '<h4 class="color-h4">Teléfonos</h4>' +
+                    '<div class="icon f7-icons color-red">phone_fill</div>' + "  " +
+                    response.Telefono +
+                "</p>"
+            );
+
             if(response.URLImagenDelCentroDeSalud != "No Disponible") {
                 $("#capsImg").append('<img src="' + response.URLImagenDelCentroDeSalud + '" height="250px">');
             }
@@ -491,8 +559,8 @@ function getCentroDeSalud(id)
                                 (response.routes[0].legs[0].distance.value / 1000).toFixed() +
                                 " KM aproximados." +
                             "</p>" +
-                            "<a class='button button-fill button-raised boton boton-chico' href='javascript:navigate(["+myLat+","+myLong+"],["+pos.lat+","+pos.lng+"]);' >" +
-                                "<div class='icon f7-icons'>navigation_fill</div>INDICACIONES COMO LLEGAR ?" +
+                            "<a class='button button-fill button-raised boton-navigation' href='javascript:navigate(["+myLat+","+myLong+"],["+pos.lat+","+pos.lng+"]);' >" +
+                                "<div class='icon f7-icons'>navigation_fill</div>Indicaciones para llegar" +
                             "</a>");
 
 
@@ -600,11 +668,10 @@ function getCentroDeSaludEyH(id)
                     //$("#caps-eyh").append("<p>Especialidad: " + response[i].Nombre + "</p>");
 
                     //agrega título
-                    htmlStringEsp += '<li class="accordion-item ">'+
+                    htmlStringEsp += '<li class="accordion-item">'+
                         '<a href="#" class="item-content item-link">'+
                         '<div class="item-inner">'+
                         ' <div class="item-title">'+
-                        '<div class="icon f7-icons iconList">more_vertical</div>' +
                         response[i].Nombre +
                         '</div></div></a>';
 
@@ -684,7 +751,7 @@ function getCentroDeSaludLC(id)
             if(response.length !=0) {
                 for (var i = 0; i < response.length; i++) {
 
-                    $("#caps-basic").append('<p><div class="icon f7-icons">navigation</div>  Línea número ' + response[i].Numero + "</p>");
+                    $("#caps-basic").append('<p><span class="icono-bus"> </span>  Línea número ' + response[i].Numero + "</p>");
                 }
             }
             else{
