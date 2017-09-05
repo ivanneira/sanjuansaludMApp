@@ -223,6 +223,7 @@ function fillSlider(selector,json)
                 '</div>'+
             '</div>';
 
+
         $(selector).append(temp);
     }
 
@@ -326,8 +327,6 @@ function abrirNoticia(slide){
 //FUNCION PARA OBTENER DEPARTAMENTOS
 function getDepartamento()
 {
-
-
     $.ajax({
 
         url: DepartamentosURL,
@@ -379,7 +378,7 @@ function getDepartamento()
                         '<li class="item-content">'+
                             //'<div class="icon f7-icons" style="color:#fff; margin-right: 5px;">search</div>'+
                             '<div class="item-inner background-light" onclick="javascript:setDptoId('+response[i].ID+',\'caps.html\')">'+
-                                '<div class="item-title">'+
+                                '<div id="Dpto_' + response[i].ID + '" class="item-title">'+
                                 response[i].Nombre +
                                 '</div>' +
                             '</div>' +
@@ -434,9 +433,8 @@ function getCentroDeSalud(id)
         success: function (response) {
             //console.dir(response);
             $("#caps-tittle").html(response.Nombre);
-            $("#caps-basic").append(' <p><h4>Dirección</h4>'+ response.Direccion + '</p>');
-            $("#caps-basic").append('<p><h4>Teléfonos</h4><div class="icon f7-icons">phone</div>' + "  " +response.Telefono + "</p>");
-
+            $("#caps-basic").append(' <p><h4 class="color-h4">Dirección</h4>'+ response.Direccion + '</p>');
+            $("#caps-basic").append('<p><h4 class="color-h4">Teléfonos</h4><div class="icon f7-icons">phone</div>' + "  " +response.Telefono + "</p>");
             if(response.URLImagenDelCentroDeSalud != "No Disponible") {
                 $("#capsImg").append('<img src="' + response.URLImagenDelCentroDeSalud + '" height="250px">');
             }
@@ -546,13 +544,17 @@ function getCentroDeSaludxDpto(id)
         dataType: "json",
         success: function (response) {
             response = response.sort(keysrt('Nombre'));
+
+            $("#caps-container").append('<div class="list-group"><ul><li class="list-group-title">'+ $("#Dpto_" + id).text() +'</li></ul></div>');
             for(var i=0;i<response.length;i++) {
                 if (response[i].DepartamentoID == id) {
                     tmp.push(response[i]);
 
                     $("#caps-container").append(
+
+
                         '<li class="item-content"> ' +
-                            '<div class="item-inner background-ligh" onclick="javascript:setCapsId('+response[i].ID+',\'capsDetail.html\')">' +
+                            '<div class="item-inner background-light" onclick="javascript:setCapsId('+response[i].ID+',\'capsDetail.html\')">' +
                                 '<div class="item-title">'+
                                     response[i].Nombre +
                                 '</div>' +
@@ -582,7 +584,7 @@ function getCentroDeSaludEyH(id)
         success: function (response) {
 
             //console.dir(response);
-            $("#caps-eyh").append('<h4 class="color-h3 ">Especialidades y Horarios:</h4>');
+            $("#caps-eyh").append('<h3 class="color-h3 ">Especialidades y Horarios</h3>');
 
             response  = response.sort(keysrt('Nombre'));
 
@@ -675,7 +677,7 @@ function getCentroDeSaludLC(id)
         success: function (response) {
             //console.dir(response);
             $("#caps-basic").append(
-                '<h4 class="color-h3">Líneas de Colectivo disponibles</h4><div id="caps-lc"></div> ');
+                '<h4 class="color-h4">Líneas de Colectivo disponibles</h4><div id="caps-lc"></div> ');
 
 
 

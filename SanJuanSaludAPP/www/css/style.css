@@ -323,3 +323,17 @@ textarea {
 .tituloBlanco {
     background-color: white;
 }
+
+.list-block{
+    font-size: inherit;
+}
+
+.color-h3, .color-h4
+{
+    color: #940f12;
+}
+
+.list-group-title{
+    text-transform: uppercase;
+    color: #940f12 !important;
+}
