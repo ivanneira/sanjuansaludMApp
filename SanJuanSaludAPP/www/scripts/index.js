@@ -79,10 +79,24 @@ function requestPermissionGPS()
 
     // Handle the back button
     //
-    function onBackKeyDown() {
+    /*function onBackKeyDown() {
         mainView.router.back();
-    }
+    }*/
+    //document.addEventListener("backbutton", onBackKeyDown, false);
+    //document.addEventListener("deviceready", onDeviceReady2, false);
 
+    function onBackKeyDown() {
+        var page=myApp.getCurrentView().activePage;
+        myApp.hidePreloader();
+        if(page.name=="index"){
+            myApp.confirm('¿Quiere salir de la aplicación?', 'Salir',function () {
+                navigator.app.clearHistory(); navigator.app.exitApp();
+            });
+        }
+        else{
+            mainView.router.back();
+        }
+    }
 
 
 } )();
