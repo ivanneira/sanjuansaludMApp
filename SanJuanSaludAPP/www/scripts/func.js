@@ -771,3 +771,32 @@ function getCentroDeSaludLC(id)
 
     });
 }
+
+function MoveTotop()
+{
+
+    /*
+    $('#proturForm').animate({ scrollTop: 0 }, 'slow');
+    $$('.page-content').scrollTop(0, 600);
+    return false;
+    */
+
+};
+
+$(document).on("click","input[type='text']", function() {
+
+    $$('.page-content').scrollTop(0, 600);
+    return false;
+});
+
+$(document).on("click","input[type='email']", function() {
+
+    $$('.page-content').scrollTop(0, 600);
+    return false;
+});
+
+$(document).on("click","textarea", function() {
+
+    $$('.page-content').scrollTop($(document).height(), 600);
+    return false;
+});
