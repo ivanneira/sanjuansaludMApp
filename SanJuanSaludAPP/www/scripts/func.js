@@ -772,3 +772,22 @@ function getCentroDeSaludLC(id)
 
     });
 }
+
+
+$(document).on("click","input[type='text']", function() {
+
+    $$('.page-content').scrollTop(0, 600);
+    return false;
+});
+
+$(document).on("click","input[type='email']", function() {
+
+    $$('.page-content').scrollTop(0, 600);
+    return false;
+});
+
+$(document).on("click","textarea", function() {
+
+    $$('.page-content').scrollTop($(document).height(), 600);
+    return false;
+});
