@@ -3,6 +3,7 @@ var ErrorAjax = "Ups! Hubo un problema con su conexión a internet.";
 var NoticiasURL = "http://"+server+"/AresApi/Api/Portal/Noticias";
 var DepartamentosURL = "http://"+server+"/AresApi/Api/Departamento";
 var CapsURL = "http://"+server+"/AresApi/Api/CentroDeSalud";
+var proturURL = "http://"+ server + "/AresApi/Api/Protur/Solicitud";
 //var portalUrl = "http://200.0.236.210/AresApi/Api/Portal/Noticias";
 var DptoID = 0;
 var CapsID = 0;

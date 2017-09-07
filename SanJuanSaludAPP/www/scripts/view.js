@@ -136,10 +136,11 @@ function validacionProtur (){
 
     if( mensajeVerificacion === "ok"){
 
-        console.log("ponele que se envía")
+        confirmarEnvio();
     }else {
 
-        console.log("ponele que no se envía " + mensajeVerificacion)
+        //console.log("NO se envía " + mensajeVerificacion)
+        window.plugins.toast.show(mensajeVerificacion,"3000","bottom");
     }
 
 
@@ -147,36 +148,109 @@ function validacionProtur (){
 
 function verificar(dataArray){
 
+    for(var index in dataArray){
 
-    var patternName = /^[a-z ,.'-]+$/i;
-
-    var flag = "ok";
-
-
-
-        if(dataArray[0].val()==""){
-
-            flag = "falla el nombre";
-
-            dataArray[0]
-                .parent()
-                .addClass("bg-red");
+        dataArray[index]
+            .parent()
+            .removeClass("campoErroneo");
+    }
 
 
-        }else{
+    var patternName = /^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/;
+    var patternPhone = /\b\d{6,10}/;
+    var patternMail = /^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/;
 
 
+    if(! patternName.test( dataArray[0].val())){
 
-            console.log(patternName.test( dataArray[0].val()));
+        dataArray[0]
+            .parent()
+            .addClass("campoErroneo");
 
-        }
+        return "El nombre es obligatorio, use solo letras";
 
+    }else if(! patternPhone.test(dataArray[2].val())){
 
+        dataArray[2]
+            .parent()
+            .addClass("campoErroneo");
 
-    return flag;
+        return "El teléfono es obligatorio, use solo números";
+    }
 
+    if(dataArray[1].val() !== "" && ! patternMail.test(dataArray[1].val())){
 
+        dataArray[1]
+            .parent()
+            .addClass("campoErroneo");
+
+        return "El mail NO es obligatorio, pero está mal ingresado";
+    }
+
+    if(dataArray[3].val() !== "" && ! patternPhone.test(dataArray[3].val())){
+
+        dataArray[3]
+            .parent()
+            .addClass("campoErroneo");
+
+        return "NO es obligatorio poner el segundo teléfono, pero está mal ingresado";
+    }
+    
+    return "ok";
 }
 
 
+function confirmarEnvio(){
 
+    myApp.confirm(
+        '<ul>' +
+            '<li>' +
+                '<div>Para programar el turno tiene que esperar la llamada de un PROTUR.</div>'+
+            '</li>'+
+            '<li>' +
+                '<div>Si solicita una especialidad necesita una derivación.</div>'+
+            '</li>'+
+        '</ul> ',
+        'Tenga en cuenta:',function () {
+        
+            enviarDatos();
+    });
+}
+
+function enviarDatos(){
+
+    var timestamp = new Date();
+
+    var data =  {
+
+        "Nombre": $("#nya").val(),
+
+        "DepId": $("#depto").val(),
+        "Telefono1": $("#tel1").val(),
+        "Telefono2": $("#tel2").val(),
+        "Email": $("#mail").val(),
+        "Comentarios": $("#coment").val(),
+        "Fecha": timestamp,
+        "Direccion": $("#dir").val()
+
+    };
+
+    $.ajax({
+        type: "POST",
+        url: proturURL,
+        data: data,
+        success: function(response){
+
+            console.log(response);
+            myApp.alert("Se enviaron los datos correctamente");
+        },
+        error: function(response){
+
+            console.log(response);
+            myApp.alert("Se produjo un error, intente nuevamente mas tarde");
+        },
+        dataType: "json"
+    });
+    
+    
+}

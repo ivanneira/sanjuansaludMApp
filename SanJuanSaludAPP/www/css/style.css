@@ -221,3 +221,8 @@
 .statusbar-overlay {
     background: #940f12 !important;
 }
+
+.campoErroneo {
+
+    box-shadow: 0px 0px 18px 6px rgba(255,0,0,1);
+}
