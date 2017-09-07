@@ -560,7 +560,9 @@ function getCentroDeSalud(id)
                                 " KM aproximados." +
                             "</p>" +
                             "<a class='button button-fill button-raised boton-navigation' href='javascript:navigate(["+myLat+","+myLong+"],["+pos.lat+","+pos.lng+"]);' >" +
-                                "<div class='icon f7-icons'>navigation_fill</div>Indicaciones para llegar" +
+                               // "<div class='icon f7-icons'>navigation_fill</div>Indicaciones para llegar" +
+                                //"<div style='align-content: center'><span><img src='../images/direcciones.svg' style='width: 20px;' alt=''></span> Indicaciones para llegar</div>" +
+                                'Indicaciones para llegar' +
                             "</a>");
 
 

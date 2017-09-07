@@ -114,3 +114,69 @@ $$(document).on('DOMContentLoaded', function(){
     load();
 });
 
+function validacionProtur (){
+
+    var campos = [];
+
+    campos[0] = $("#nya");
+
+    campos[1] = $("#mail");
+
+    campos[2] = $("#tel1");
+
+    campos[3] = $("#tel2");
+
+    campos[4] = $("#depto");
+
+    campos[5] = $("#dir");
+
+    campos[6] = $("#coment");
+
+    var mensajeVerificacion = verificar(campos);
+
+    if( mensajeVerificacion === "ok"){
+
+        console.log("ponele que se envía")
+    }else {
+
+        console.log("ponele que no se envía " + mensajeVerificacion)
+    }
+
+
+}
+
+function verificar(dataArray){
+
+
+    var patternName = /^[a-z ,.'-]+$/i;
+
+    var flag = "ok";
+
+
+
+        if(dataArray[0].val()==""){
+
+            flag = "falla el nombre";
+
+            dataArray[0]
+                .parent()
+                .addClass("bg-red");
+
+
+        }else{
+
+
+
+            console.log(patternName.test( dataArray[0].val()));
+
+        }
+
+
+
+    return flag;
+
+
+}
+
+
+

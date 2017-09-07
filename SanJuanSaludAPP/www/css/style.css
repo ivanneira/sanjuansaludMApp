@@ -217,3 +217,7 @@
 .theme-white .modal-button{
     background-color: #940f12;
 }
+
+.statusbar-overlay {
+    background: #940f12 !important;
+}
