@@ -14,11 +14,9 @@
     <allow-intent href="sms:*" />
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
-    <preference name="SplashScreen" value="foo" />
     <preference name="SplashScreenDelay" value="3000" />
     <preference name="loadUrlTimeoutValue" value="60000" />
     <preference name="fullscreen" value="false" />
-    <preference name="android-windowSoftInputMode" value="stateHidden|adjustPan" />
     <hook src="scripts/appBeforeBuild.js" type="before_build" />
     <platform name="android">
         <preference name="android-manifest/application/activity/@android:windowSoftInputMode" value="adjustResize" />
@@ -66,15 +64,16 @@
         <icon height="150" src="res/icons/windows/Wide310x150Logo.scale-100.png" width="310" />
         <icon height="360" src="res/icons/windows/Wide310x150Logo.scale-240.png" width="744" />
     </platform>
-    <platform name="android">
-        <splash density="land-hdpi" src="res/screens/android/screen-hdpi-landscape.png" />
-        <splash density="land-ldpi" src="res/screens/android/screen-ldpi-landscape.png" />
-        <splash density="land-mdpi" src="res/screens/android/screen-mdpi-landscape.png" />
-        <splash density="land-xhdpi" src="res/screens/android/screen-xhdpi-landscape.png" />
-        <splash density="port-hdpi" src="res/screens/android/screen-hdpi-portrait.png" />
-        <splash density="port-ldpi" src="res/screens/android/screen-ldpi-portrait.png" />
-        <splash density="port-mdpi" src="res/screens/android/screen-mdpi-portrait.png" />
-        <splash density="port-xhdpi" src="res/screens/android/screen-xhdpi-portrait.png" />
+    <platform name="android"> <!--Splash Screen-->
+        <splash src="res/screens/android/splash-land-hdpi.png" density="land-hdpi"/>
+        <splash src="res/screens/android/splash-land-ldpi.png" density="land-ldpi"/>
+        <splash src="res/screens/android/splash-land-mdpi.png" density="land-mdpi"/>
+        <splash src="res/screens/android/splash-land-xhdpi.png" density="land-xhdpi"/>
+
+        <splash src="res/screens/android/splash-port-hdpi.png" density="port-hdpi"/>
+        <splash src="res/screens/android/splash-port-ldpi.png" density="port-ldpi"/>
+        <splash src="res/screens/android/splash-port-mdpi.png" density="port-mdpi"/>
+        <splash src="res/screens/android/splash-port-xhdpi.png" density="port-xhdpi"/>
     </platform>
     <platform name="ios">
         <splash height="480" src="res/screens/ios/screen-iphone-portrait.png" width="320" />

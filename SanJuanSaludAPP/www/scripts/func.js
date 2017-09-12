@@ -792,5 +792,4 @@ $(document).on("click","textarea", function() {
     $$('.page-content').scrollTop($(document).height(), 600);
 },800);
     $(this).focus();
-
 });
