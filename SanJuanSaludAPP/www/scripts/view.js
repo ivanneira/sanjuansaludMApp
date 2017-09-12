@@ -254,3 +254,35 @@ function enviarDatos(){
     
     
 }
+
+function enviarComentario(){
+
+    var comentario = $("#textareaComentario").val();
+
+    console.log(comentario);
+
+    if(comentario.length < 10){
+
+        myApp.alert("Escriba un comentario mas largo por favor","Atención!");
+
+    }else {
+
+        $.ajax({
+            type: "POST",
+            url: comentarioURL,
+            data: comentario,
+            success: function (response) {
+
+                console.log(response);
+                myApp.alert("Se envió su comentario correctamente","Excelente!");
+            },
+            error: function (response) {
+
+                console.log(response);
+                myApp.alert("Se produjo un error, intente nuevamente mas tarde","Ups!");
+            },
+            dataType: "json"
+        });
+    }
+
+}

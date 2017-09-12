@@ -220,9 +220,22 @@
 
 .statusbar-overlay {
     background: #940f12 !important;
+
 }
 
 .campoErroneo {
 
-    box-shadow: 0px 0px 18px 6px rgba(255,0,0,1);
+    /*box-shadow: 0px 0px 18px 6px rgba(255,0,0,1);*/
+    border: dashed 2px red;
+    border-radius: 3px;
+}
+
+.link-azul {
+
+    color: blue !important;
+}
+
+textarea {
+    resize: none;
+    width: 99%;
 }
