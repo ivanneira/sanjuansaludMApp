@@ -42,7 +42,7 @@ function requestPermissionGPS()
     "use strict";
 
     document.addEventListener( 'deviceready', onDeviceReady.bind( this ), false );
-    document.addEventListener("backbutton", onBackKeyDown, false);
+
 
 
 
@@ -51,6 +51,7 @@ function requestPermissionGPS()
     function onDeviceReady() {
 
 
+        document.addEventListener("backbutton", onBackKeyDown, false);
 
         //FORZADO DE ACTIVACION DE GPS EN LAS PLATAFORMAS
         requestPermissionGPS();
@@ -100,6 +101,8 @@ function requestPermissionGPS()
         else{
             mainView.router.back();
         }
+
+
     }
 
 
