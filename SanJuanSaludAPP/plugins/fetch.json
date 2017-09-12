@@ -112,5 +112,29 @@
         },
         "is_top_level": false,
         "variables": {}
+    },
+    "cordova-plugin-splashscreen": {
+        "source": {
+            "type": "registry",
+            "id": "https://github.com/apache/cordova-plugin-splashscreen.git"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-custom-config": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-custom-config"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-android-softinputmode": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-android-softinputmode@^0.2.1"
+        },
+        "is_top_level": true,
+        "variables": {}
     }
 }

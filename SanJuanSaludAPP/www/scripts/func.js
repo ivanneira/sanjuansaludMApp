@@ -230,13 +230,13 @@ function setDptoId(id,page)
 
 function createDatabase()
 {
-    console.log("cd");
+    //console.log("cd");
 
     var db = sqlitePlugin.openDatabase('mydb.db', '1.0', '', 1);
     db.transaction(function (txn) {
         txn.executeSql('SELECT 42 AS `answer`', [], function (tx, res) {
             alert(res.rows.item(0).answer); // {"answer": 42}
-            console.log(res.rows.item(0).answer);
+            //console.log(res.rows.item(0).answer);
         });
     });
 
@@ -545,7 +545,7 @@ function getCentroDeSalud(id)
                 };
 
                 directionsService.route(request, function (response, status) {
-                    console.dir(pos);
+                    //console.dir(pos);
                     if (status == google.maps.DirectionsStatus.OK) {
                         directionsDisplay.setMap(map);
                         //directionsDisplay.setPanel($("#panel_ruta").get(0));
@@ -596,8 +596,8 @@ function navigate(desde,hasta)
 
     * */
 
-    console.dir(hasta);
-    console.dir(desde);
+    //console.dir(hasta);
+    //console.dir(desde);
     launchnavigator.navigate([hasta[0], hasta[1]], {
         start: ""+desde[0]+","+desde[1]+""
     });
@@ -776,18 +776,21 @@ function getCentroDeSaludLC(id)
 
 $(document).on("click","input[type='text']", function() {
 
-    $$('.page-content').scrollTop(0, 600);
-    return false;
+    $$('.page-content').scrollTop($(this).offset().top-20, 600);
+    $(this).focus();
 });
 
 $(document).on("click","input[type='email']", function() {
 
-    $$('.page-content').scrollTop(0, 600);
-    return false;
+    $$('.page-content').scrollTop($(this).offset().top-20, 600);
+    $(this).focus();
 });
 
 $(document).on("click","textarea", function() {
 
+    setTimeout(function(){
     $$('.page-content').scrollTop($(document).height(), 600);
-    return false;
+},1000);
+    $(this).focus();
+
 });

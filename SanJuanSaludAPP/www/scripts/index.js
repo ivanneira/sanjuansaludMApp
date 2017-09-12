@@ -45,7 +45,11 @@ function requestPermissionGPS()
     document.addEventListener("backbutton", onBackKeyDown, false);
 
 
+
+
+
     function onDeviceReady() {
+
 
 
         //FORZADO DE ACTIVACION DE GPS EN LAS PLATAFORMAS

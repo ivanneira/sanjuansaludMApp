@@ -14,8 +14,14 @@
     <allow-intent href="sms:*" />
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
+    <preference name="SplashScreen" value="foo" />
+    <preference name="SplashScreenDelay" value="3000" />
     <preference name="loadUrlTimeoutValue" value="60000" />
+    <preference name="fullscreen" value="false" />
+    <preference name="android-windowSoftInputMode" value="stateHidden|adjustPan" />
+    <hook src="scripts/appBeforeBuild.js" type="before_build" />
     <platform name="android">
+        <preference name="android-manifest/application/activity/@android:windowSoftInputMode" value="adjustResize" />
         <allow-intent href="market:*" />
     </platform>
     <platform name="ios">
@@ -91,6 +97,8 @@
     <engine name="browser" spec="^4.1.0" />
     <engine name="ios" spec="4.2.0" />
     <engine name="windows" spec="4.4.2" />
+    <plugin name="cordova-custom-config" spec="^4.0.2" />
+    <plugin name="cordova-plugin-android-softinputmode" spec="^0.2.1" />
     <plugin name="cordova-plugin-geolocation" spec="^2.4.3">
         <variable name="GEOLOCATION_USAGE_DESCRIPTION" value=" " />
     </plugin>
@@ -101,6 +109,7 @@
         <variable name="LOCATION_ALWAYS_USAGE_DESCRIPTION" value="Trace your location on the map" />
     </plugin>
     <plugin name="cordova-plugin-request-location-accuracy" spec="^2.2.2" />
+    <plugin name="cordova-plugin-splashscreen" spec="^4.0.3" />
     <plugin name="cordova-plugin-sqlite-2" spec="^1.0.4" />
     <plugin name="cordova-plugin-websql" spec="0.0.10" />
     <plugin name="cordova-plugin-whitelist" spec="1.2.2" />
