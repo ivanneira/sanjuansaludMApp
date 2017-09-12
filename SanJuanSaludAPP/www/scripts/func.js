@@ -790,7 +790,7 @@ $(document).on("click","textarea", function() {
 
     setTimeout(function(){
     $$('.page-content').scrollTop($(document).height(), 600);
-},1000);
+},800);
     $(this).focus();
 
 });
