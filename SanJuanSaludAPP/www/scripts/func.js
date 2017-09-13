@@ -205,7 +205,7 @@ function keysrt(key,desc) {
 function errorSlider(selector)
 {
     var temp =
-        '<div id="err1" class="swiper-slide" style="background: url(images/error.jpg) no-repeat center top;background-size:cover;">'+
+        '<div id="err1" class="swiper-slide" style="background: url(images/error.svg) no-repeat center top;background-size:cover;">'+
             '<div class="overlay">'+
                 '<p>'+sinConexion+'</p>'+
             '</div>'+
