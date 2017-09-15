@@ -205,10 +205,13 @@ function confirmarEnvio(){
     myApp.confirm(
         '<ul>' +
             '<li>' +
-                '<div>Para programar el turno tiene que esperar la llamada de un PROTUR.</div>'+
+                '<div>Debe esperar que un PROTUR se contacte con usted para que le asigne un turno.</div>'+
             '</li>'+
             '<li>' +
-                '<div>Si solicita una especialidad necesita una derivación.</div>'+
+                '<div>Si solicita una especialidad debe contar con la derivación de un profesional.</div>'+
+            '</li>'+
+            '<li>' +
+                '<div>Para su rápida atención, escriba en el comentario cualquier duda o particularidad.</div>'+
             '</li>'+
         '</ul> ',
         'Tenga en cuenta:',function () {
