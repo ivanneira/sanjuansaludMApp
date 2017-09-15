@@ -258,19 +258,27 @@ function enviarDatos(){
 function enviarComentario(){
 
     var comentario = $("#textareaComentario").val();
+    var patternMail = /^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/;
 
-    console.log(comentario);
 
     if(comentario.length < 10){
 
-        myApp.alert("Escriba un comentario mas largo por favor","Atención!");
+        myApp.alert("Escriba un comentario mas completo por favor","Atención!");
+
+    }else if($("#cemail").val() !== "" && ! patternMail.test($("#cemail").val())){
+
+
+        myApp.alert("El mail está mal ingresado","Error");
 
     }else {
 
         $.ajax({
             type: "POST",
             url: comentarioURL,
-            data: comentario,
+            data: {
+                'mail': $('#cemail').val(),
+                'comentario': comentario
+            },
             success: function (response) {
 
                 console.log(response);
@@ -284,5 +292,7 @@ function enviarComentario(){
             dataType: "json"
         });
     }
+
+    console.log($('#cemail').val() + " " + comentario)
 
 }

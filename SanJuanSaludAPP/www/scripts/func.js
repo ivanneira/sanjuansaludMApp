@@ -5,7 +5,7 @@ var DepartamentosURL = "http://"+server+"/AresApi/Api/Departamento";
 var CapsURL = "http://"+server+"/AresApi/Api/CentroDeSalud";
 var proturURL = "http://"+ server + "/AresApi/Api/Protur/Solicitud";
 //var proturURL = "http://10.64.64.218:1941/api/Protur/Solicitud";
-var comentarioURL = "http://"+ server + "/AresApi/Api/Comentarios";
+var comentarioURL = "http://"+ server + "/AresApi/Api/Contacto";
 var DptoID = 0;
 var CapsID = 0;
 var sinConexion = 'El conenido online no esta disponible momentaneamente.';
@@ -519,10 +519,65 @@ function getCentroDeSalud(id)
                     zoom: 15,
                     scrollwheel: true,
                     navigationControl: true,
-                    mapTypeControl: true,
                     scaleControl: true,
-                    draggable: false,
+                    //draggable: false,
+                    mapTypeControl: false,
+                    streetViewControl: false,
+                    fullscreenControl: false,
                     disableDefaultUI: false,
+                    styles: [
+                        {
+                            "featureType": "administrative.neighborhood",
+                            "stylers": [
+                                {
+                                    "visibility": "off"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "poi",
+                            "elementType": "labels.text",
+                            "stylers": [
+                                {
+                                    "visibility": "off"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "poi.business",
+                            "stylers": [
+                                {
+                                    "visibility": "off"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "road",
+                            "elementType": "labels.icon",
+                            "stylers": [
+                                {
+                                    "visibility": "off"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "transit",
+                            "stylers": [
+                                {
+                                    "visibility": "off"
+                                }
+                            ]
+                        },
+                        {
+                            "featureType": "water",
+                            "elementType": "labels.text",
+                            "stylers": [
+                                {
+                                    "visibility": "off"
+                                }
+                            ]
+                        }
+                    ]
 
                 };
                 var map = new google.maps.Map(document.getElementById("googleMapDetail"), mapProp);
