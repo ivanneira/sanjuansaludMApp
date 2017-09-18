@@ -144,8 +144,6 @@ function GPS()
                         })(marker, i));
                     }
                 }
-
-
             }
 
 

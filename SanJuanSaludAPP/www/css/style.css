@@ -70,7 +70,6 @@
 
 #sombraSlide {
     box-shadow:0px 7px 6px 0px rgba(0,0,0,0.22);
-
 }
 
 @font-face {
@@ -108,7 +107,6 @@
 .buttons-row a img{
 
     height: 5em;
-
 }
 
 .popup p {
@@ -124,7 +122,6 @@
 
 .navbarMenu {
     font-size: smaller !important;
-
 }
 
 .navbarMenu p {
@@ -138,6 +135,7 @@
     border-radius: 2px;
     box-shadow:0px 7px 6px 0px rgba(0,0,0,0.22);
 }
+
 .list-block .accordion-item .content-block, .list-block .accordion-item .list-block{
     padding-left: 50px;
 }
@@ -173,7 +171,6 @@
 }
 
 .list-block .item-content {
-
     padding-left: 0px !important;
 }
 
@@ -190,7 +187,6 @@
 .icono-bus {
 
     background: url("../images/bus.svg");
-
     display: inline-block;
     height: 25px;
     width: 25px;
@@ -221,18 +217,15 @@
 
 .statusbar-overlay {
     background: #940f12 !important;
-
 }
 
 .campoErroneo {
 
-    /*box-shadow: 0px 0px 18px 6px rgba(255,0,0,1);*/
     border: dashed 2px red;
     border-radius: 3px;
 }
 
 .link-azul {
-
     color: blue !important;
 }
 
