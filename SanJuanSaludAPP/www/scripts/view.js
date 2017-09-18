@@ -8,7 +8,6 @@ myApp.onPageInit('departamentos', function (page) {
 myApp.onPageInit('caps', function (page) {
 
     getCentroDeSaludxDpto(DptoID);
-    //navigator.geolocation.getCurrentPosition(successGPS, errorGPS, optionsGPS);
 
 });
 
@@ -22,7 +21,7 @@ myApp.onPageInit('caps-detail', function (page) {
 });
 
 myApp.onPageInit('index', function (page) {
-    //requestPermissionGPS();
+
     load();
 });
 
@@ -38,30 +37,6 @@ myApp.onPageInit('mapa', function (page) {
 function load()
 {
     getSlider();
-    /*
-    $("#btnAyuda").click(function(){
-
-        $.ajax({
-            url:"ayuda.html"
-
-        }).done(function(data){
-            myApp.popup(data);
-        });
-
-
-    });
-
-    $("#btnProtur").click(function(){
-
-        $.ajax({
-            url:"formularioProtur.html"
-
-        }).done(function(data){
-            myApp.popup(data);
-        });
-
-
-    });*/
 
     $("#btnAyuda").click(function(){
 
@@ -138,8 +113,7 @@ function validacionProtur (){
 
         confirmarEnvio();
     }else {
-
-        //console.log("NO se envía " + mensajeVerificacion)
+        
         window.plugins.toast.show(mensajeVerificacion,"3000","bottom");
     }
 
@@ -155,9 +129,11 @@ function verificar(dataArray){
             .removeClass("campoErroneo");
     }
 
-
+    /*nombre sin números*/
     var patternName = /^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/;
+    /*teléfono entre 6 y 10 caracteres*/
     var patternPhone = /\b\d{6,10}/;
+    /*mail*/
     var patternMail = /^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/;
 
 
@@ -199,7 +175,7 @@ function verificar(dataArray){
     return "ok";
 }
 
-
+/*Muestra un popup informativo antes de confirmar el envío de la solicitud*/
 function confirmarEnvio(){
 
     myApp.confirm(
@@ -220,6 +196,7 @@ function confirmarEnvio(){
     });
 }
 
+/*Envía los datos a la API*/
 function enviarDatos(){
 
     var timestamp = new Date();
@@ -244,12 +221,11 @@ function enviarDatos(){
         data: data,
         success: function(response){
 
-            console.log(response);
             myApp.alert("Se enviaron los datos correctamente");
         },
         error: function(response){
 
-            console.log(response);
+
             myApp.alert("Se produjo un error, intente nuevamente mas tarde");
         },
         dataType: "json"
@@ -258,12 +234,14 @@ function enviarDatos(){
     
 }
 
+/*Envía los comentarios de la página de preguntas o sugerencias*/
 function enviarComentario(){
 
     var comentario = $("#textareaComentario").val();
+    /*regex de email*/
     var patternMail = /^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/;
 
-
+    /*Para evitar que boludeen pongo que al menos tenga 10 caracteres el comentario*/
     if(comentario.length < 10){
 
         myApp.alert("Escriba un comentario mas completo por favor","Atención!");
@@ -284,18 +262,14 @@ function enviarComentario(){
             },
             success: function (response) {
 
-                console.log(response);
                 myApp.alert("Se envió su comentario correctamente","Excelente!");
             },
             error: function (response) {
 
-                console.log(response);
                 myApp.alert("Se produjo un error, intente nuevamente mas tarde","Ups!");
             },
             dataType: "json"
         });
     }
-
-    console.log($('#cemail').val() + " " + comentario)
 
 }

@@ -23,18 +23,10 @@ var optionsGPS = {
 //FUNCION QUE DEVOLVERA LA POSICION ACTUAL DEL GPS
 function successGPS(pos) {
     var crd = pos.coords;
-
-    /*
-    console.log('Your current position is:');
-    console.log('Latitude : ' + crd.latitude);
-    console.log('Longitude: ' + crd.longitude);
-    console.log('More or less ' + crd.accuracy + ' meters.');
-    */
-
     myLat = crd.latitude;
     myLong = crd.longitude;
 
-};
+}
 
 
 //FUNCION QUE BUSCA CENTROS DE SALUD EN UN RADIO DE 10KM
@@ -138,7 +130,7 @@ function GPS()
                             icon: 'images/caps.png',
                             title: response[i].Nombre,
                             map: map,
-                            animation: google.maps.Animation.DROP,
+                            animation: google.maps.Animation.DROP
                         });
 
 
@@ -161,7 +153,7 @@ function GPS()
             $("#googleMapt").html("<p style='font-weight: bold;'>Centros de Salud  cercanos en un radio de 10 KM aproximados.</p>");
             /**********************************************/
         },
-        error: function (error) {
+        error: function () {
             //alert(ErrorAjax);
             window.plugins.toast.show(ErrorAjax,"3000","bottom");
         }
@@ -170,7 +162,7 @@ function GPS()
 
 //FUNCION QUE DEVOLVERA UN MENSAJE DE ERROR EN CASO DE NO RESPONDER O NO TENER PERMISOS EN GPS
 function errorGPS(err) {
-    //alert("Disculpe, no pudimos obtener sus datos de ubicación.");
+
     window.plugins.toast.show("Disculpe, no pudimos obtener sus datos de ubicación.","3000","bottom");
 }
 
@@ -184,7 +176,7 @@ $(document).ajaxStart(function() {
 //FUNCION PARA CALCULAR DISTANCIA ENTREW DOS PUNTOS
 function DistanciaKM(lat1,lon1,lat2,lon2)
 {
-    rad = function(x) {return x*Math.PI/180;}
+    rad = function(x) {return x*Math.PI/180};
     var R = 6378.137; //Radio de la tierra en km
     var dLat = rad( lat2 - lat1 );
     var dLong = rad( lon2 - lon1 );
@@ -205,7 +197,7 @@ function keysrt(key,desc) {
 function errorSlider(selector)
 {
     var temp =
-        '<div id="err1" class="swiper-slide" style="background: url(images/error.svg) no-repeat center top;background-size:cover;">'+
+        '<div id="err1" class="swiper-slide" style="background: url(../images/error.svg) no-repeat center top;background-size:cover;">'+
             '<div class="overlay">'+
                 '<p>'+sinConexion+'</p>'+
             '</div>'+
@@ -231,13 +223,13 @@ function setDptoId(id,page)
 
 function createDatabase()
 {
-    //console.log("cd");
+
 
     var db = sqlitePlugin.openDatabase('mydb.db', '1.0', '', 1);
     db.transaction(function (txn) {
         txn.executeSql('SELECT 42 AS `answer`', [], function (tx, res) {
             alert(res.rows.item(0).answer); // {"answer": 42}
-            //console.log(res.rows.item(0).answer);
+
         });
     });
 
@@ -256,7 +248,7 @@ function getSlider()
         success: function (response) {
             fillSlider($("#slide"), response);
         },
-        error: function (error) {
+        error: function () {
             //alert(ErrorAjax);
             errorSlider($("#slide"));
         }
@@ -306,15 +298,7 @@ function openPage(page){
 //FUNCION PARA VER NOTICIA COMPLETA
 function abrirNoticia(slide){
 
-    //console.dir(slide)
-
     var imagenURL;
-
-    //console.dir(slide);
-
-    //imagenURL = imagenURL.replace("url(\"","");
-    //imagenURL = imagenURL.replace("\")","");
-
     var titulo = slide.clickedSlide.innerText;
     var letrasEnElTitulo = titulo.length;
     $("#"+slide.clickedSlide.id).filter(function(){
@@ -322,20 +306,6 @@ function abrirNoticia(slide){
     });
 
     var texto = $(slide.clickedSlide).find(".overlay div");
-
-    //texto = texto.substring(letrasEnElTitulo-2);
-
-    /*
-        var popupHTML =
-
-        '<div class="popup tablet-fullscreen">'+
-        '<div class="content-block background-light-noticia">'+
-        '<h3>'+titulo+'</h3>'+
-        '<p class="textoNoticia">'+texto+'</p>'+
-        '<p><a href="#" class="close-popup">Volver</a></p>'+
-        '</div>'+
-        '</div>';
-*/
 
     var pageHTML =
 
@@ -369,13 +339,12 @@ function abrirNoticia(slide){
 
                                 '<div id="noticia" class="background-light">'+ texto[0].innerHTML +'</div>'+
                             '</div>'+
+                            '<br><br>'+
                         '</div>'+
                     '</div>'+
                 '</div>';
 
 
-
-    //myApp.popup(popupHTML);
 
     mainView.router.loadContent(pageHTML);
 
@@ -450,8 +419,8 @@ function getDepartamento()
                 $("#dptos-container").append(htmlString);
             }
         },
-        error: function (error) {
-            //alert(ErrorAjax);
+        error: function () {
+
             window.plugins.toast.show(ErrorAjax,"3000","bottom");
         }
 
@@ -469,11 +438,9 @@ function getCentrosDeSalud()
         dataType: "json",
         success: function (response) {
 
-            //fillSlider($("#slider"), response);
-            //console.dir(response);
         },
         error: function (error) {
-            //alert(ErrorAjax);
+
             window.plugins.toast.show(ErrorAjax,"3000","bottom");
         }
 
@@ -491,7 +458,7 @@ function getCentroDeSalud(id)
         type: 'get',
         dataType: "json",
         success: function (response) {
-            //console.dir(response);
+
             $("#caps-tittle").html(response.Nombre);
             $("#caps-basic").append(
                 '<p>' +
@@ -601,12 +568,11 @@ function getCentroDeSalud(id)
                 };
 
                 directionsService.route(request, function (response, status) {
-                    //console.dir(pos);
+
                     if (status == google.maps.DirectionsStatus.OK) {
                         directionsDisplay.setMap(map);
-                        //directionsDisplay.setPanel($("#panel_ruta").get(0));
                         directionsDisplay.setDirections(response);
-                        //alert(response.routes[0].legs[0].distance.value / 1000 + " KM");
+
 
 
                         $("#Distancia").html(
@@ -617,9 +583,7 @@ function getCentroDeSalud(id)
                                 " KM aproximados." +
                             "</p>" +
                             "<a class='button button-fill button-raised boton-navigation' href='javascript:navigate(["+myLat+","+myLong+"],["+pos.lat+","+pos.lng+"]);' >" +
-                               // "<div class='icon f7-icons'>navigation_fill</div>Indicaciones para llegar" +
-                                //"<div style='align-content: center'><span><img src='../images/direcciones.svg' style='width: 20px;' alt=''></span> Indicaciones para llegar</div>" +
-                                'Indicaciones para llegar' +
+                                  'Indicaciones para llegar' +
                             "</a>");
 
 
@@ -633,8 +597,8 @@ function getCentroDeSalud(id)
 
             }
         },
-        error: function (error) {
-            //alert(ErrorAjax);
+        error: function () {
+
             window.plugins.toast.show(ErrorAjax,"3000","bottom");
         }
 
@@ -644,16 +608,6 @@ function getCentroDeSalud(id)
 function navigate(desde,hasta)
 {
 
-    /*
-    *
-     launchnavigator.navigate([50.279306, -5.163158], {
-     start: "50.342847, -4.749904"
-     };
-
-    * */
-
-    //console.dir(hasta);
-    //console.dir(desde);
     launchnavigator.navigate([hasta[0], hasta[1]], {
         start: ""+desde[0]+","+desde[1]+""
     });
@@ -689,10 +643,10 @@ function getCentroDeSaludxDpto(id)
                         '</li>');
                 }
             }
-            //console.dir(tmp);
+
         },
-        error: function (error) {
-            //alert(ErrorAjax);
+        error: function () {
+
             window.plugins.toast.show(ErrorAjax,"3000","bottom");
         }
 
@@ -710,12 +664,10 @@ function getCentroDeSaludEyH(id)
         dataType: "json",
         success: function (response) {
 
-            //console.dir(response);
+
             $("#caps-eyh").append('<h3 class="color-h3 ">Especialidades y Horarios</h3>');
 
             response  = response.sort(keysrt('Nombre'));
-
-            //console.dir(response)
 
             if(response.length !=0) {
 
@@ -724,7 +676,7 @@ function getCentroDeSaludEyH(id)
 
 
                 for (var i = 0; i < response.length; i++) {
-                    //$("#caps-eyh").append("<p>Especialidad: " + response[i].Nombre + "</p>");
+
 
                     //agrega título
                     htmlStringEsp += '<li class="accordion-item">'+
@@ -733,20 +685,6 @@ function getCentroDeSaludEyH(id)
                         ' <div class="item-title">'+
                         response[i].Nombre +
                         '</div></div></a>';
-
-
-
-                   /* for(var j=0; j<response[i].Horarios.length; j++)
-                    {
-
-                        htmlStringEsp += '<div class="accordion-item-content">'+
-                            '<div class="content-block"><p>'+
-                            response[i].Horarios[j].Dia+
-                            ': ' + response[i].Horarios[j].HorarioEntrada +
-                            ' - ' + response[i].Horarios[j].HorarioSalida +
-                            '</p></div></div>';
-
-                    }*/
 
 
                     var HorariosDia = [];
@@ -801,7 +739,7 @@ function getCentroDeSaludLC(id)
         type: 'get',
         dataType: "json",
         success: function (response) {
-            //console.dir(response);
+
             $("#caps-basic").append(
                 '<h4 class="color-h4">Líneas de Colectivo disponibles</h4><div id="caps-lc"></div> ');
 
@@ -821,7 +759,6 @@ function getCentroDeSaludLC(id)
         },
         error: function (error) {
 
-            //alert(ErrorAjax);
             window.plugins.toast.show(ErrorAjax,"3000","bottom");
 
         }
