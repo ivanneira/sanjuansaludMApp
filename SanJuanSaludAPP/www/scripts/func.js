@@ -96,16 +96,20 @@ function GPS()
     var map=new google.maps.Map(document.getElementById("googleMap"),mapPropx);
     var icon = {
         url: "images/device.png", // url
+        /*
         scaledSize: new google.maps.Size(35, 55), // scaled size
         origin: new google.maps.Point(0,0), // origin
         anchor: new google.maps.Point(0, 0) // anchor
+        */
     };
 
     var icon2 = {
         url: "images/caps.png", // url
+        /*
         scaledSize: new google.maps.Size(35, 55), // scaled size
         origin: new google.maps.Point(0,0), // origin
         anchor: new google.maps.Point(0, 0) // anchor
+        */
     };
     var markerx = new google.maps.Marker({position: posx,icon: icon});
     var infowindowx = new google.maps.InfoWindow({
