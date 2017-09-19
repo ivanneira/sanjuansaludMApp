@@ -69,6 +69,16 @@
         <splash height="1920" src="res/screens/windows/SplashScreen.scale-240.png" width="1152" />
         <splash height="1920" src="res/screens/windows/SplashScreenPhone.scale-240.png" width="1152" />
     </platform>
+    <platform name="android">
+        <splash density="land-hdpi" src="res/screens/android/screen.png" />
+        <splash density="land-ldpi" src="res/screens/android/screen.png" />
+        <splash density="land-mdpi" src="res/screens/android/screen.png" />
+        <splash density="land-xhdpi" src="res/screens/android/screen.png" />
+        <splash density="port-hdpi" src="res/screens/android/screen.png" />
+        <splash density="port-ldpi" src="res/screens/android/screen.png" />
+        <splash density="port-mdpi" src="res/screens/android/screen.png" />
+        <splash density="port-xhdpi" src="res/screens/android/screen.png" />
+    </platform>
     <engine name="android" spec="^6.2.3" />
     <engine name="browser" spec="^4.1.0" />
     <engine name="ios" spec="4.2.0" />

@@ -16,7 +16,7 @@ var myLong = -68.536976;
 //PARAMETROS DE CONFIGURACION PARA EL GPS
 var optionsGPS = {
     enableHighAccuracy: true,
-    timeout: 5000,
+    timeout: 150000,
     maximumAge: 0
 };
 
@@ -94,9 +94,22 @@ function GPS()
         ]
     };
     var map=new google.maps.Map(document.getElementById("googleMap"),mapPropx);
-    var markerx = new google.maps.Marker({position: posx,icon: 'images/device.png'});
+    var icon = {
+        url: "images/device.png", // url
+        scaledSize: new google.maps.Size(35, 55), // scaled size
+        origin: new google.maps.Point(0,0), // origin
+        anchor: new google.maps.Point(0, 0) // anchor
+    };
+
+    var icon2 = {
+        url: "images/caps.png", // url
+        scaledSize: new google.maps.Size(35, 55), // scaled size
+        origin: new google.maps.Point(0,0), // origin
+        anchor: new google.maps.Point(0, 0) // anchor
+    };
+    var markerx = new google.maps.Marker({position: posx,icon: icon});
     var infowindowx = new google.maps.InfoWindow({
-        content: "Estas aquí"
+        content: "Estas aquí",
     });
 
     infowindowx.open(map,markerx);
@@ -132,7 +145,7 @@ function GPS()
 
                         var marker = new google.maps.Marker({
                             position: pos,
-                            icon: 'images/caps.png',
+                            icon: icon2,
                             title: response[i].Nombre,
                             map: map,
                             animation: google.maps.Animation.DROP
