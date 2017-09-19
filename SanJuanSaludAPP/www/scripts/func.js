@@ -114,6 +114,8 @@ function GPS()
 
             /**********************************************/
             var infowindow = new google.maps.InfoWindow();
+            var markers = [];
+
             for(var i=0;i<response.length; i++) {
 
                 if(response[i].Latitud != "0" || response[i].Longitud != "0")
@@ -125,6 +127,9 @@ function GPS()
                                     lng: response[i].Longitud
                         };
 
+
+
+
                         var marker = new google.maps.Marker({
                             position: pos,
                             icon: 'images/caps.png',
@@ -133,6 +138,8 @@ function GPS()
                             animation: google.maps.Animation.DROP
                         });
 
+                        markers.push(marker);
+
 
 
                         google.maps.event.addListener(marker, 'click', (function (marker, i) {
@@ -140,12 +147,15 @@ function GPS()
                             return function () {
                                 infowindow.setContent(response[i].Nombre + "<br><br>" + '<a style="color:blue; font-weight: bold; text-align: center;" onclick="javascript:setCapsId('+response[i].ID+',\'capsDetail.html\');" href="#">Información Detallada</a>' );
                                 infowindow.open(map, marker);
+
                             }
                         })(marker, i));
+
+
                     }
                 }
             }
-
+            var markerCluster = new MarkerClusterer(map, markers);
 
 
             $("#googleMapt").html("<p style='font-weight: bold;'>Centros de Salud  cercanos en un radio de 10 KM aproximados.</p>");
