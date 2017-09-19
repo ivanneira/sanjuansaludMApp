@@ -96,7 +96,7 @@ function GPS()
     var map=new google.maps.Map(document.getElementById("googleMap"),mapPropx);
     var markerx = new google.maps.Marker({position: posx,icon: 'images/device.png'});
     var infowindowx = new google.maps.InfoWindow({
-        content: "Ubicación Actual"
+        content: "Estas aquí"
     });
 
     infowindowx.open(map,markerx);
@@ -155,7 +155,7 @@ function GPS()
                     }
                 }
             }
-            var markerCluster = new MarkerClusterer(map, markers);
+            var markerCluster = new MarkerClusterer(map, markers,{imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
 
 
             $("#googleMapt").html("<p style='font-weight: bold;'>Centros de Salud  cercanos en un radio de 10 KM aproximados.</p>");
@@ -794,3 +794,14 @@ $(document).on("click","textarea", function() {
 },800);
     $(this).focus();
 });
+
+
+function ShareOnFB()
+{
+    navigator.app.loadUrl('https://www.facebook.com/sharer/sharer.php?u=www.salud.sanjuan.gob.ar', { openExternal:true } );
+}
+
+function ShareOnTW()
+{
+    navigator.app.loadUrl('https://twitter.com/home?status=www.salud.sanjuan.gob.ar', { openExternal:true } );
+}
