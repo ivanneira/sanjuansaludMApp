@@ -4,6 +4,7 @@ var NoticiasURL = "http://"+server+"/AresApi/Api/Portal/Noticias";
 var DepartamentosURL = "http://"+server+"/AresApi/Api/Departamento";
 var CapsURL = "http://"+server+"/AresApi/Api/CentroDeSalud";
 var proturURL = "http://"+ server + "/AresApi/Api/Protur/Solicitud";
+var csListURL = "http://"+ server + "/AresApi/Api/CentroDeSalud";
 //var proturURL = "http://10.64.64.218:1941/api/Protur/Solicitud";
 var comentarioURL = "http://"+ server + "/AresApi/Api/Contacto";
 var DptoID = 0;
@@ -28,6 +29,48 @@ function successGPS(pos) {
 
 }
 
+
+function csBuscarList()
+{
+
+    $.ajax({
+
+        url: CapsURL,
+        cache: false,
+        type: 'get',
+        dataType: "json",
+        success: function (response) {
+
+            console.dir(response);
+            for(i=0;i<response.length;i++)
+            {
+                var tmp = '<li class="item-content" data-id="'+ response[i].ID +'">'+
+                            '<div class="item-inner">'+
+                                '<div style="width: 100%;" id="item-title_cs"+i class="item-title"><b>'+response[i].Nombre+
+                                '</b> <div class="chip">' +
+                                '<div  class="chip-label"><u> Teléfono:</u> '+
+                                    response[i].Telefono +
+                                '</div>' +
+                                '</div>' +
+                                '<div  ><u>Dirección:</u> '+ response[i].Direccion+'</div>'+
+                        '</div>'+
+                            '</div>'+
+                           '</li>';
+
+                $("#csDatalist").append(tmp);
+            }
+
+            $(".item-content").click(function(){
+                setCapsId($(this).data('id'),'capsDetail.html');
+            });
+        },
+        error: function (error) {
+
+            window.plugins.toast.show(ErrorAjax,"3000","bottom");
+        }
+
+    });
+}
 
 //FUNCION QUE BUSCA CENTROS DE SALUD EN UN RADIO DE 10KM
 function GPS()

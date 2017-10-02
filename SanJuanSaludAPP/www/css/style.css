@@ -1,6 +1,12 @@
 ﻿.body{
     min-height: 100%;
 }
+
+
+.page > .searchbar{
+    background-color: #940f12 !important;
+}
+
 .page{
     background-color: #ccc;
 }
