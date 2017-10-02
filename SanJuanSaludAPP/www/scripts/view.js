@@ -58,14 +58,21 @@ function load()
                 label: true
             },
             {
-                text: 'Buscar con mi dispositivo móvil',
+                text: 'Centros de Salud Cercanos',
                 bold: true,
                 onClick: function(){
                     mainView.router.loadPage("GPS.html");
                 }
             },
             {
-                text: 'Buscar por departamento',
+                text: 'Buscar Centros de Salud',
+                bold: true,
+                onClick: function(){
+                    mainView.router.loadPage("buscar.html");
+                }
+            },
+            {
+                text: 'Buscar por Departamento',
                 bold: true,
                 onClick: function(){
                     mainView.router.loadPage("departamentos.html");

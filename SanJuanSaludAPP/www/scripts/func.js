@@ -175,6 +175,10 @@ function GPS()
             var markerCluster = new MarkerClusterer(map, markers,{imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
 
 
+            google.maps.event.addListener(markerCluster, "mouseover", function (c) {
+                $(c.clusterIcon_.div_).effect( 'bounce', { times: 3 }, 'slow');
+            });
+
             $("#googleMapt").html("<p style='font-weight: bold;'>Centros de Salud  cercanos en un radio de 10 KM aproximados.</p>");
             /**********************************************/
         },
