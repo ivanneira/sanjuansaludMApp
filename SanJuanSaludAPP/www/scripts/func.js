@@ -46,7 +46,7 @@ function csBuscarList()
             {
                 var tmp = '<li class="item-content" data-id="'+ response[i].ID +'">'+
                             '<div class="item-inner">'+
-                                '<div style="width: 100%;" id="item-title_cs"+i class="item-title"><b>'+response[i].Nombre+
+                                '<div  id="item-title_cs"+i class="item-title"><b>'+response[i].Nombre+
                                 '</b> <div class="chip">' +
                                 '<div  class="chip-label"><u> Teléfono:</u> '+
                                     response[i].Telefono +

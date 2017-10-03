@@ -3,8 +3,16 @@
 }
 
 
+.list-block ul{
+    padding: 3% !important;
+}
+
 .page > .searchbar{
     background-color: #940f12 !important;
+}
+
+.list-block .item-title{
+ white-space: normal !important;
 }
 
 .page{
