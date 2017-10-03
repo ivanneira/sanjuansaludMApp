@@ -41,10 +41,12 @@ function csBuscarList()
         dataType: "json",
         success: function (response) {
 
-            console.dir(response);
-            for(i=0;i<response.length;i++)
+
+            //console.dir(response);
+            for(var i=0;i<response.length;i++)
             {
-                var tmp = '<li class="item-content" data-id="'+ response[i].ID +'">'+
+                /*
+                 var tmp = '<div><li class="item-content" data-id="'+ response[i].ID +'">'+
                             '<div class="item-inner">'+
                                 '<div  id="item-title_cs"+i class="item-title"><b>'+response[i].Nombre+
                                 '</b> <div class="chip">' +
@@ -55,14 +57,32 @@ function csBuscarList()
                                 '<div  ><u>Dirección:</u> '+ response[i].Direccion+'</div>'+
                         '</div>'+
                             '</div>'+
-                           '</li>';
+                           '</li></div>';
+                */
+
+                var tmp =
+                    '<li class="item-content"  data-id="'+ response[i].ID +'">'+
+                        '<div class="item-inner">'+
+                            '<div class="item-title"><div><b>'+ response[i].Nombre +
+                                '</b><br>'+
+                                '<div class="chip">' +
+                                    '<div class="chip-label"><u> Teléfono:</u>'+response[i].Telefono+'</div>' +
+                                '</div>' +
+                            '</div><div><u>Dirección:</u> '+ response[i].Direccion+'</div>'+
+                        '</div>'+
+                    '</li>';
 
                 $("#csDatalist").append(tmp);
+
             }
+
+
+
 
             $(".item-content").click(function(){
                 setCapsId($(this).data('id'),'capsDetail.html');
             });
+
         },
         error: function (error) {
 

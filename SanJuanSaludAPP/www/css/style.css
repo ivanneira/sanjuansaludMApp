@@ -2,13 +2,27 @@
     min-height: 100%;
 }
 
+.searchbar .searchbar-input{
+    height: auto;
+}
+
+#csDatalist{
+
+    margin: 58px 8px;
+}
 
 .list-block ul{
-    padding: 3% !important;
+    /*padding: 3% !important;
+    margin: 56px 0;*/
+}
+
+.content-block-inner{
+    margin: 56px 0 !important;
 }
 
 .page > .searchbar{
     background-color: #940f12 !important;
+    margin: 56px 0 !important;
 }
 
 .list-block .item-title{

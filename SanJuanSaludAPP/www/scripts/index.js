@@ -8,6 +8,8 @@ var $$ = Dom7;
 var mainView = myApp.addView('.view-main', {
     main: true,
     material: true,
+    fastClicks: false,
+    animateNavBackIcon:true,
 });
 
 

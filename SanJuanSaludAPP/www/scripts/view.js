@@ -18,7 +18,6 @@ myApp.onPageInit('buscar' , function(page){
 myApp.onPageInit('caps', function (page) {
 
     getCentroDeSaludxDpto(DptoID);
-
 });
 
 myApp.onPageInit('caps-detail', function (page) {
@@ -27,6 +26,7 @@ myApp.onPageInit('caps-detail', function (page) {
     getCentroDeSalud(CapsID);
     getCentroDeSaludEyH(CapsID);
     getCentroDeSaludLC(CapsID);
+    console.log("caps-detail");
 
 });
 
