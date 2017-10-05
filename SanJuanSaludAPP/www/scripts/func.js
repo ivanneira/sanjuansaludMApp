@@ -59,19 +59,20 @@ function csBuscarList()
                             '</div>'+
                            '</li></div>';
                 */
-
-                var tmp =
-                    '<li class="item-content"  data-id="'+ response[i].ID +'">'+
-                        '<div class="item-inner">'+
-                            '<div class="item-title"><div><b>'+ response[i].Nombre +
-                                '</b><br>'+
-                                '<div class="chip">' +
-                                    '<div class="chip-label"><u> Teléfono:</u>'+response[i].Telefono+'</div>' +
-                                '</div>' +
-                            '</div><div><u>Dirección:</u> '+ response[i].Direccion+'</div>'+
-                        '</div>'+
-                    '</li>';
-
+                if(response[i].ID != 590 && response[i].ID != 591)
+                {
+                    var tmp =
+                        '<li class="item-content"  data-id="' + response[i].ID + '">' +
+                        '<div class="item-inner">' +
+                        '<div class="item-title"><div><b>' + response[i].Nombre +
+                        '</b><br>' +
+                        '<div class="chip">' +
+                        '<div class="chip-label"><u> Teléfono:</u>' + response[i].Telefono + '</div>' +
+                        '</div>' +
+                        '</div><div><u>Dirección:</u> ' + response[i].Direccion + '</div>' +
+                        '</div>' +
+                        '</li>';
+                }
                 $("#csDatalist").append(tmp);
 
             }
@@ -197,41 +198,38 @@ function GPS()
             var markers = [];
 
             for(var i=0;i<response.length; i++) {
+                if(response[i].ID != 590 && response[i].ID != 591) {
 
-                if(response[i].Latitud != "0" || response[i].Longitud != "0")
-                {
-                    if ((DistanciaKM(myLat, myLong, response[i].Latitud, response[i].Longitud)) <= 10)
-                    {
-                        var pos = {
-                                    lat: response[i].Latitud,
-                                    lng: response[i].Longitud
-                        };
-
+                    if (response[i].Latitud != "0" || response[i].Longitud != "0") {
+                        if ((DistanciaKM(myLat, myLong, response[i].Latitud, response[i].Longitud)) <= 10) {
+                            var pos = {
+                                lat: response[i].Latitud,
+                                lng: response[i].Longitud
+                            };
 
 
+                            var marker = new google.maps.Marker({
+                                position: pos,
+                                icon: icon2,
+                                title: response[i].Nombre,
+                                map: map,
+                                animation: google.maps.Animation.DROP
+                            });
 
-                        var marker = new google.maps.Marker({
-                            position: pos,
-                            icon: icon2,
-                            title: response[i].Nombre,
-                            map: map,
-                            animation: google.maps.Animation.DROP
-                        });
-
-                        markers.push(marker);
-
+                            markers.push(marker);
 
 
-                        google.maps.event.addListener(marker, 'click', (function (marker, i) {
+                            google.maps.event.addListener(marker, 'click', (function (marker, i) {
 
-                            return function () {
-                                infowindow.setContent(response[i].Nombre + "<br><br>" + '<a style="color:blue; font-weight: bold; text-align: center;" onclick="javascript:setCapsId('+response[i].ID+',\'capsDetail.html\');" href="#">Información Detallada</a>' );
-                                infowindow.open(map, marker);
+                                return function () {
+                                    infowindow.setContent(response[i].Nombre + "<br><br>" + '<a style="color:blue; font-weight: bold; text-align: center;" onclick="javascript:setCapsId(' + response[i].ID + ',\'capsDetail.html\');" href="#">Información Detallada</a>');
+                                    infowindow.open(map, marker);
 
-                            }
-                        })(marker, i));
+                                }
+                            })(marker, i));
 
 
+                        }
                     }
                 }
             }
@@ -519,25 +517,7 @@ function getDepartamento()
     });
 }
 
-//FUNCION PARA OBTENER CENTROS DE SALUD
-function getCentrosDeSalud()
-{
-    $.ajax({
 
-        url: CapsURL,
-        cache: false,
-        type: 'get',
-        dataType: "json",
-        success: function (response) {
-
-        },
-        error: function (error) {
-
-            window.plugins.toast.show(ErrorAjax,"3000","bottom");
-        }
-
-    });
-}
 
 //FUNCION PARA OBTENER UN CENTRO DE SALUD
 function getCentroDeSalud(id)
@@ -720,19 +700,19 @@ function getCentroDeSaludxDpto(id)
 
             $("#caps-container").append('<div class="list-group"><ul><li class="list-group-title">'+ $("#Dpto_" + id).text() +'</li></ul></div>');
             for(var i=0;i<response.length;i++) {
-                if (response[i].DepartamentoID == id) {
-                    tmp.push(response[i]);
+                if(response[i].ID != 590 && response[i].ID != 591) {
+                    if (response[i].DepartamentoID == id) {
+                        tmp.push(response[i]);
 
-                    $("#caps-container").append(
-
-
-                        '<li class="item-content"> ' +
-                            '<div class="item-inner background-light" onclick="javascript:setCapsId('+response[i].ID+',\'capsDetail.html\')">' +
-                                '<div class="item-title">'+
-                                    response[i].Nombre +
-                                '</div>' +
+                        $("#caps-container").append(
+                            '<li class="item-content"> ' +
+                            '<div class="item-inner background-light" onclick="javascript:setCapsId(' + response[i].ID + ',\'capsDetail.html\')">' +
+                            '<div class="item-title">' +
+                            response[i].Nombre +
                             '</div>' +
-                        '</li>');
+                            '</div>' +
+                            '</li>');
+                    }
                 }
             }
 
