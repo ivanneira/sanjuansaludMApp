@@ -41,6 +41,7 @@ function csBuscarList()
         dataType: "json",
         success: function (response) {
 
+            console.dir(response);
 
             //console.dir(response);
             for(var i=0;i<response.length;i++)
@@ -72,8 +73,10 @@ function csBuscarList()
                         '</div><div><u>Dirección:</u> ' + response[i].Direccion + '</div>' +
                         '</div>' +
                         '</li>';
+
+                        $("#csDatalist").append(tmp);
                 }
-                $("#csDatalist").append(tmp);
+
 
             }
 
