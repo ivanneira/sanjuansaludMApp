@@ -24,8 +24,8 @@ var optionsGPS = {
 //FUNCION QUE DEVOLVERA LA POSICION ACTUAL DEL GPS
 function successGPS(pos) {
     var crd = pos.coords;
-    myLat = crd.latitude;
-    myLong = crd.longitude;
+    myLat = parseFloat(crd.latitude);
+    myLong = parseFloat(crd.longitude);
 
 }
 
@@ -197,14 +197,15 @@ function GPS()
             var infowindow = new google.maps.InfoWindow();
             var markers = [];
 
+                console.dir(response);
             for(var i=0;i<response.length; i++) {
                 if(response[i].ID != 590 && response[i].ID != 591) {
 
                     if (response[i].Latitud != "0" || response[i].Longitud != "0") {
-                        if ((DistanciaKM(myLat, myLong, response[i].Latitud, response[i].Longitud)) <= 10) {
+                        if ((DistanciaKM(myLat, myLong, parseFloat(response[i].Latitud), parseFloat(response[i].Longitud))) <= 10) {
                             var pos = {
-                                lat: response[i].Latitud,
-                                lng: response[i].Longitud
+                                lat: parseFloat(response[i].Latitud),
+                                lng: parseFloat(response[i].Longitud)
                             };
 
 
@@ -552,7 +553,7 @@ function getCentroDeSalud(id)
 
 
             if(response.Latitud != 0 || response.Longitud != 0) {
-                var pos = {lat: response.Latitud, lng: response.Longitud};
+                var pos = {lat: parseFloat(response.Latitud), lng: parseFloat(response.Longitud)};
                 var mapProp = {
                     center: new google.maps.LatLng(pos),
                     zoom: 15,
