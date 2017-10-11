@@ -26,7 +26,6 @@ myApp.onPageInit('caps-detail', function (page) {
     getCentroDeSalud(CapsID);
     getCentroDeSaludEyH(CapsID);
     getCentroDeSaludLC(CapsID);
-    console.log("caps-detail");
 
 });
 
@@ -68,21 +67,21 @@ function load()
                 label: true
             },
             {
-                text: 'Centros de Salud Cercanos',
+                text: 'Centros de Salud Cercanos (a tu posición actual)',
                 bold: true,
                 onClick: function(){
                     mainView.router.loadPage("GPS.html");
                 }
             },
             {
-                text: 'Buscar Centros de Salud',
+                text: 'Por Nombre',
                 bold: true,
                 onClick: function(){
                     mainView.router.loadPage("buscar.html");
                 }
             },
             {
-                text: 'Buscar por Departamento',
+                text: 'Por Departamento',
                 bold: true,
                 onClick: function(){
                     mainView.router.loadPage("departamentos.html");

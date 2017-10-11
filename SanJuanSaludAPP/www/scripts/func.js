@@ -41,7 +41,7 @@ function csBuscarList()
         dataType: "json",
         success: function (response) {
 
-            console.dir(response);
+
 
             //console.dir(response);
             for(var i=0;i<response.length;i++)
