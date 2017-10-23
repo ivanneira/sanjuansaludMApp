@@ -200,7 +200,7 @@ function GPS()
             var infowindow = new google.maps.InfoWindow();
             var markers = [];
 
-                console.dir(response);
+
             for(var i=0;i<response.length; i++) {
                 if(response[i].ID != 590 && response[i].ID != 591) {
 
@@ -231,18 +231,15 @@ function GPS()
 
                                 }
                             })(marker, i));
-
-
                         }
                     }
                 }
             }
+
+
             var markerCluster = new MarkerClusterer(map, markers,{imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
 
 
-            google.maps.event.addListener(markerCluster, "mouseover", function (c) {
-                $(c.clusterIcon_.div_).effect( 'bounce', { times: 3 }, 'slow');
-            });
 
             $("#googleMapt").html("<p style='font-weight: bold;'>Centros de Salud  cercanos en un radio de 10 KM aproximados.</p>");
             /**********************************************/
