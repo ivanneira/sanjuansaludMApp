@@ -234,15 +234,16 @@ function enviarDatos(){
     $.ajax({
         type: "POST",
         url: proturURL,
-        data: data,
+        data: JSON.stringify( data ),
         success: function(response){
 
-            myApp.alert("Se enviaron los datos correctamente");
+            var htmlAlert = '<p>Se enviaron los datos</p><p>Anote y guarde el siguiente número para referencias:</p><h4>'+ response.NuevoID +'</h4>';
+            myApp.alert(htmlAlert ,"Correcto!");
         },
         error: function(response){
 
 
-            myApp.alert("Se produjo un error, intente nuevamente mas tarde");
+            myApp.alert("Se produjo un error, intente nuevamente mas tarde","Error");
         },
         dataType: "json"
     });
