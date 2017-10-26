@@ -215,30 +215,39 @@ function confirmarEnvio(){
 /*Envía los datos a la API*/
 function enviarDatos(){
 
-    var timestamp = new Date();
+   // var timestamp = new Date();
 
     var data =  {
 
         "Nombre": $("#nya").val(),
-
         "DepId": $("#depto").val(),
         "Telefono1": $("#tel1").val(),
         "Telefono2": $("#tel2").val(),
         "Email": $("#mail").val(),
         "Comentarios": $("#coment").val(),
-        "Fecha": timestamp,
+        //"Fecha": timestamp,
         "Direccion": $("#dir").val()
 
     };
 
     $.ajax({
         type: "POST",
-        url: proturURL,
-        data: JSON.stringify( data ),
+        //url: proturURL,
+        url: "http://localhost:1941/Api/Protur/Solicitud",
+        data: data ,
         success: function(response){
 
             var htmlAlert = '<p>Se enviaron los datos</p><p>Anote y guarde el siguiente número para referencias:</p><h4>'+ response.NuevoID +'</h4>';
             myApp.alert(htmlAlert ,"Correcto!");
+
+            $("#nya").val(""),
+
+            $("#depto").val("");
+            $("#tel1").val("");
+            $("#tel2").val("");
+            $("#mail").val("");
+            $("#coment").val("");
+            $("#dir").val("");
         },
         error: function(response){
 
