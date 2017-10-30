@@ -237,17 +237,26 @@ function enviarDatos(){
         data: data ,
         success: function(response){
 
-            var htmlAlert = '<p>Se enviaron los datos</p><p>Anote y guarde el siguiente número para referencias:</p><h4>'+ response.NuevoID +'</h4>';
-            myApp.alert(htmlAlert ,"Correcto!");
+            console.dir(response)
 
-            $("#nya").val(""),
+            if(response.ok == 0){
 
-            $("#depto").val("");
-            $("#tel1").val("");
-            $("#tel2").val("");
-            $("#mail").val("");
-            $("#coment").val("");
-            $("#dir").val("");
+                myApp.alert("Se produjo un error, intente nuevamente mas tarde","Error");
+            }else{
+
+
+                var htmlAlert = '<p>Se enviaron los datos</p><p>Anote y guarde el siguiente número para referencias:</p><h4>'+ response.NuevoID +'</h4>';
+                myApp.alert(htmlAlert ,"Correcto!");
+
+                $("#nya").val("");
+
+                $("#depto").val("");
+                $("#tel1").val("");
+                $("#tel2").val("");
+                $("#mail").val("");
+                $("#coment").val("");
+                $("#dir").val("");
+            }
         },
         error: function(response){
 
