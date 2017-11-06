@@ -232,8 +232,7 @@ function enviarDatos(){
 
     $.ajax({
         type: "POST",
-        //url: proturURL,
-        url: "http://localhost:1941/Api/Protur/Solicitud",
+        url: proturURL,
         data: data ,
         success: function(response){
 
