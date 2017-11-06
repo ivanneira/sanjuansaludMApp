@@ -58,6 +58,12 @@ function load()
         
     });
 
+    $("#btn1000dias").click(function(){
+
+        mainView.router.loadPage("1000dias.html");
+
+    });
+
 
     //- Two groups
     $$('.ac-3').on('click', function () {
