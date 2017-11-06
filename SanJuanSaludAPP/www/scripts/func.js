@@ -13,7 +13,7 @@ var sinConexion = 'El conenido online no esta disponible momentaneamente.';
 var myLat = -31.536395;
 var myLong = -68.536976;
 
-//-31.536395, -68.536976
+//-31.536395, -68.536976 
 //PARAMETROS DE CONFIGURACION PARA EL GPS
 var optionsGPS = {
     enableHighAccuracy: true,

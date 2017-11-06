@@ -20,7 +20,7 @@
     "cordova-plugin-compat": {
         "source": {
             "type": "registry",
-            "id": "cordova-plugin-compat@^1.0.0"
+            "id": "cordova-plugin-compat"
         },
         "is_top_level": false,
         "variables": {}
@@ -58,7 +58,7 @@
     "cordova-plugin-x-toast": {
         "source": {
             "type": "registry",
-            "id": "cordova-plugin-x-toast"
+            "id": "cordova-plugin-x-toast@^2.6.0"
         },
         "is_top_level": true,
         "variables": {}
@@ -100,7 +100,7 @@
     "cordova-plugin-actionsheet": {
         "source": {
             "type": "registry",
-            "id": "cordova-plugin-actionsheet@2"
+            "id": "cordova-plugin-actionsheet"
         },
         "is_top_level": false,
         "variables": {}
@@ -108,7 +108,7 @@
     "cordova-plugin-dialogs": {
         "source": {
             "type": "registry",
-            "id": "cordova-plugin-dialogs@1"
+            "id": "cordova-plugin-dialogs"
         },
         "is_top_level": false,
         "variables": {}
@@ -116,7 +116,7 @@
     "cordova-plugin-splashscreen": {
         "source": {
             "type": "registry",
-            "id": "https://github.com/apache/cordova-plugin-splashscreen.git"
+            "id": "cordova-plugin-splashscreen@^4.0.3"
         },
         "is_top_level": true,
         "variables": {}
@@ -124,7 +124,7 @@
     "cordova-custom-config": {
         "source": {
             "type": "registry",
-            "id": "cordova-custom-config"
+            "id": "cordova-custom-config@^4.0.2"
         },
         "is_top_level": true,
         "variables": {}
