@@ -3,6 +3,7 @@
     "version": "1.0.0",
     "private": true,
     "dependencies": {
+        "call-number": "git+https://github.com/Rohfosho/CordovaCallNumberPlugin.git",
         "cordova-android": "^6.2.3",
         "cordova-browser": "^4.1.0",
         "cordova-custom-config": "^4.0.2",
@@ -51,7 +52,8 @@
             },
             "cordova-plugin-splashscreen": {},
             "cordova-plugin-android-softinputmode": {},
-            "cordova-custom-config": {}
+            "cordova-custom-config": {},
+            "call-number": {}
         }
     }
 }

@@ -870,3 +870,15 @@ function ShareOnTW()
 {
     navigator.app.loadUrl('https://twitter.com/home?status=www.salud.sanjuan.gob.ar', { openExternal:true } );
 }
+
+function onSuccess(result){
+    console.log("Success:"+result);
+}
+
+function onError(result) {
+    console.log("Error:"+result);
+}
+
+function CallPhone(number) {
+    window.plugins.CallNumber.callNumber(onSuccess, onError, number, true);
+}
