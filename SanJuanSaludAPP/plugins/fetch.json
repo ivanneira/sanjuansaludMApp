@@ -129,18 +129,18 @@
         "is_top_level": true,
         "variables": {}
     },
-    "cordova-plugin-android-softinputmode": {
-        "source": {
-            "type": "registry",
-            "id": "cordova-plugin-android-softinputmode@^0.2.1"
-        },
-        "is_top_level": true,
-        "variables": {}
-    },
     "call-number": {
         "source": {
             "type": "registry",
             "id": "https://github.com/Rohfosho/CordovaCallNumberPlugin.git"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-android-softinputmode": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-android-softinputmode"
         },
         "is_top_level": true,
         "variables": {}

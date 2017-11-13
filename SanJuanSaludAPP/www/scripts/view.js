@@ -59,6 +59,15 @@ function load()
     });
 
 
+    $("#btn1000dias").click(function(){
+
+        mainView.router.loadPage("formulario1000dias.html");
+
+    });
+
+
+
+
     //- Two groups
     $$('.ac-3').on('click', function () {
         var buttons = [

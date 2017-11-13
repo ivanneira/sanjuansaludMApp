@@ -15,7 +15,7 @@
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
     <preference name="SplashScreenDelay" value="3000" />
-    <preference name="loadUrlTimeoutValue" value="60000" />
+    <preference name="loadUrlTimeoutValue" value="0" />
     <preference name="ShowSplashScreenSpinner" value="false" />
     <preference name="fullscreen" value="false" />
     <hook src="scripts/appBeforeBuild.js" type="before_build" />
@@ -86,7 +86,7 @@
     <engine name="windows" spec="4.4.2" />
     <plugin name="call-number" spec="git+https://github.com/Rohfosho/CordovaCallNumberPlugin.git" />
     <plugin name="cordova-custom-config" spec="^4.0.2" />
-    <plugin name="cordova-plugin-android-softinputmode" spec="^0.2.1" />
+    <plugin name="cordova-plugin-android-softinputmode" spec="file://node_modules\cordova-plugin-android-softinputmode" />
     <plugin name="cordova-plugin-geolocation" spec="^2.4.3">
         <variable name="GEOLOCATION_USAGE_DESCRIPTION" value=" " />
     </plugin>
