@@ -47,6 +47,7 @@ function load()
 {
     getSlider();
 
+
     $("#btnAyuda").click(function(){
 
         mainView.router.loadPage("ayuda.html");
@@ -62,7 +63,6 @@ function load()
     $("#btn1000dias").click(function(){
 
         mainView.router.loadPage("formulario1000dias.html");
-
     });
 
 
@@ -113,6 +113,8 @@ function load()
 $$(document).on('DOMContentLoaded', function(){
     load();
 });
+
+
 
 function validacionProtur (){
 

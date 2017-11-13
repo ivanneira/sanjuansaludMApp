@@ -86,7 +86,7 @@
     <engine name="windows" spec="4.4.2" />
     <plugin name="call-number" spec="git+https://github.com/Rohfosho/CordovaCallNumberPlugin.git" />
     <plugin name="cordova-custom-config" spec="^4.0.2" />
-    <plugin name="cordova-plugin-android-softinputmode" spec="file://node_modules\cordova-plugin-android-softinputmode" />
+    <plugin name="cordova-plugin-android-softinputmode" spec="^0.2.1" />
     <plugin name="cordova-plugin-geolocation" spec="^2.4.3">
         <variable name="GEOLOCATION_USAGE_DESCRIPTION" value=" " />
     </plugin>
@@ -102,6 +102,7 @@
     <plugin name="cordova-plugin-websql" spec="0.0.10" />
     <plugin name="cordova-plugin-whitelist" spec="1.2.2" />
     <plugin name="cordova-plugin-x-toast" spec="^2.6.0" />
+    <plugin name="cordova-sms-plugin" spec="^0.1.11" />
     <plugin name="cordova-sqlite-storage" spec="^2.0.4" />
     <plugin name="uk.co.workingedge.phonegap.plugin.launchnavigator" spec="^4.0.4">
         <variable name="LOCATION_USAGE_DESCRIPTION" value="This app requires access to your location for navigation purposes" />

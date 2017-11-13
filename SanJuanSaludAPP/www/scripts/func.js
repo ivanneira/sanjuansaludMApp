@@ -882,3 +882,95 @@ function onError(result) {
 function CallPhone(number) {
     window.plugins.CallNumber.callNumber(onSuccess, onError, number, true);
 }
+
+
+function opcionEtapa(i)
+{
+    $("#mes").empty();
+    var etapa = $("#etapa option:selected").val();
+
+
+    if(etapa == 1)
+    {
+        for(x=0;x<10;x++)
+        {
+            $("#mes").append("<option value="+x+">"+x+"</option>");
+        }
+    }
+    else if(etapa==2)
+    {
+        for(x=0;x<25;x++)
+        {
+            $("#mes").append("<option value="+x+">"+x+"</option>");
+        }
+    }
+    else {
+        $("#mes").empty();
+    }
+
+}
+
+function baja1000dias(){
+    SMS.sendSms(2);
+}
+
+function validacion1000dias(){
+
+    var doc = $("#doc").val();
+    var mes = $("#mes option:selected").val();
+
+    if(mes == undefined)
+    {
+        alert("Debe seleccionar una opción.");
+        return;
+    }
+
+    if($.trim(doc)!="" && doc.length >= 6)
+    {
+        SMS.sendSms(1);
+    }
+    else {
+        alert("Ingrese un DNI válido.");
+        return;
+    }
+
+}
+
+
+var SMS = {
+    sendSms: function(i) {
+
+        //i = 1 alta, i=2 baja
+
+        var etapa = $("#etapa option:selected").val();
+        var mes = $("#mes option:selected").val();
+        var doc = $("#doc").val();
+
+        var palabra =(etapa == 1 ) ? "MAMA" : "BEBE";
+
+        var number = 40140;
+        var message = "";
+
+        if(i == 1) {
+
+            message = palabra  + " " + doc + " " + mes;
+        }
+        else if(i==2){
+            message =  "BAJA";
+        }
+        console.log("number=" + number + ", message= " + message);
+
+        //CONFIGURATION
+        var options = {
+            replaceLineBreaks: false, // true to replace \n by a new line, false by default
+            android: {
+                intent: ''  // send SMS with the native android SMS messaging
+                //intent: '' // send SMS without open any other app
+            }
+        };
+
+        var success = function () { alert('El mensaje se envió correctamente, en breve recibirá un mensaje de bienvenida.'); };
+        var error = function (e) { alert('No se pudo enviar el mensaje: :' + e); };
+        sms.send(number, message, options, success, error);
+    }
+};
