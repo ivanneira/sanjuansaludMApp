@@ -5,7 +5,7 @@
   "dependencies": {
     "call-number": "git+https://github.com/Rohfosho/CordovaCallNumberPlugin.git",
     "cordova-android": "^6.2.3",
-    "cordova-browser": "^4.1.0",
+    "cordova-browser": "^5.0.1",
     "cordova-custom-config": "^4.0.2",
     "cordova-ios": "4.2.0",
     "cordova-plugin-android-softinputmode": "^0.2.1",
@@ -15,12 +15,10 @@
     "cordova-plugin-googlemaps-sdk": "git+https://github.com/mapsplugin/cordova-plugin-googlemaps-sdk.git",
     "cordova-plugin-request-location-accuracy": "^2.2.2",
     "cordova-plugin-splashscreen": "^4.0.3",
-    "cordova-plugin-sqlite-2": "^1.0.4",
-    "cordova-plugin-websql": "0.0.10",
     "cordova-plugin-whitelist": "1.2.2",
     "cordova-plugin-x-toast": "^2.6.0",
     "cordova-sms-plugin": "^0.1.11",
-    "cordova-sqlite-storage": "^2.0.4",
+    "cordova-sqlite-storage": "^2.1.2",
     "cordova-windows": "4.4.2",
     "material-design-lite": "^1.3.0",
     "uk.co.workingedge.phonegap.plugin.launchnavigator": "^4.0.4"
@@ -28,13 +26,12 @@
   "cordova": {
     "platforms": [
       "android",
-      "browser",
       "ios",
-      "windows"
+      "windows",
+      "browser"
     ],
     "plugins": {
       "cordova-plugin-whitelist": {},
-      "cordova-sqlite-storage": {},
       "cordova-plugin-geolocation": {
         "GEOLOCATION_USAGE_DESCRIPTION": " "
       },
@@ -46,8 +43,6 @@
       },
       "cordova-plugin-request-location-accuracy": {},
       "cordova-plugin-x-toast": {},
-      "cordova-plugin-sqlite-2": {},
-      "cordova-plugin-websql": {},
       "uk.co.workingedge.phonegap.plugin.launchnavigator": {
         "LOCATION_USAGE_DESCRIPTION": "This app requires access to your location for navigation purposes"
       },
@@ -55,7 +50,8 @@
       "cordova-plugin-android-softinputmode": {},
       "cordova-custom-config": {},
       "call-number": {},
-      "cordova-sms-plugin": {}
+      "cordova-sms-plugin": {},
+      "cordova-sqlite-storage": {}
     }
   }
 }

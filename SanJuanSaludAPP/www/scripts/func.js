@@ -1,8 +1,8 @@
 var server = "gedoc.sanjuan.gov.ar";
 var ErrorAjax = "Ups! Hubo un problema con su conexión a internet.";
 var NoticiasURL = "http://"+server+"/AresApi/Api/Portal/Noticias";
-var DepartamentosURL = "http://"+server+"/AresApi/Api/Departamento";
-var CapsURL = "http://"+server+"/AresApi/Api/CentroDeSalud";
+var DepartamentosURL = "http://"+server+"/AresApi/Api/Departamentos"; //x
+var CapsURL = "http://"+server+"/AresApi/Api/CentroDeSaluds"; //x
 var proturURL = "http://"+server+"/AresApi/Api/Protur/Solicitud";
 var csListURL = "http://"+ server + "/AresApi/Api/CentroDeSalud";
 //var proturURL = "http://10.64.64.218:1941/api/Protur/Solicitud";
@@ -12,6 +12,7 @@ var CapsID = 0;
 var sinConexion = 'El conenido online no esta disponible momentaneamente.';
 var myLat = -31.536395;
 var myLong = -68.536976;
+
 
 //-31.536395, -68.536976 
 //PARAMETROS DE CONFIGURACION PARA EL GPS
@@ -62,6 +63,7 @@ function csBuscarList()
                 */
                 if(response[i].ID != 590 && response[i].ID != 591)
                 {
+                    InsertCentroDeSalud(response[i].ID,response[i].Nombre,response[i].Latitud,response[i].Longitud,response[i].Telefono,response[i].Direccion,response[i].DepartamentoID,response[i].LocalidadID,response[i].URLImagenDelCentroDeSalud);
                     var tmp =
                         '<li class="item-content"  data-id="' + response[i].ID + '">' +
                         '<div class="item-inner">' +
@@ -91,6 +93,7 @@ function csBuscarList()
         error: function (error) {
 
             window.plugins.toast.show(ErrorAjax,"3000","bottom");
+            csBuscarListDB();
         }
 
     });
@@ -491,6 +494,7 @@ function getDepartamento()
                     htmlTitle = '';
                 }
 
+                InsertDepartamentos(response[i].ID,response[i].Nombre,response[i].Zona);
                 var htmlString =
                 '<div class="list-group">'+
                     '<ul>'+
@@ -509,13 +513,17 @@ function getDepartamento()
 
                 $("#dptos-container").append(htmlString);
             }
+
+            getDepartamentosDB();
         },
         error: function () {
-
             window.plugins.toast.show(ErrorAjax,"3000","bottom");
+            getDepartamentosDB();
         }
 
     });
+
+
 }
 
 
@@ -974,3 +982,176 @@ var SMS = {
         sms.send(number, message, options, success, error);
     }
 };
+
+
+
+function Database(db)
+{
+
+
+    db = window.sqlitePlugin.openDatabase({name: 'sjapp.db', location: 'default'});
+
+    /*
+    db.sqlBatch([
+        'drop table Departamentos'
+
+    ], function() {
+        console.log('Populated database OK');
+    }, function(error) {
+        console.log('SQL batch ERROR: ' + error.message);
+    });
+    */
+    db.sqlBatch([
+        'CREATE TABLE IF NOT EXISTS Departamentos (ID, Nombre, Zona)',
+
+    ], function() {
+        console.log('Tabla Departamento OK');
+    }, function(error) {
+        console.log('SQL batch ERROR: ' + error.message);
+    });
+
+
+
+    db.sqlBatch([
+        'CREATE TABLE IF NOT EXISTS CentroDeSalud (ID, Nombre, Latitud, Longitud, Telefono, Direccion,DepartamentoID, LocalidadID, URLImagenDelCentroDeSalud )',
+
+    ], function() {
+        console.log('Tabla CentroDeSalud OK');
+    }, function(error) {
+        console.log('SQL batch ERROR: ' + error.message);
+    });
+
+
+
+
+}
+
+function InsertDepartamentos(ID, Nombre, Zona)
+{
+
+    db = window.sqlitePlugin.openDatabase({name: 'sjapp.db', location: 'default'});
+    //Tabla Departamentos
+    db.sqlBatch([
+            [ 'INSERT INTO Departamentos (ID,Nombre, Zona) VALUES (?,?,?)',[ID,Nombre, Zona] ]
+    ], function() {
+        console.log('Populated database OK: ' + Nombre);
+    }, function(error) {
+        console.log('SQL batch ERROR: ' + error.message);
+    });
+}
+
+function InsertCentroDeSalud(ID, Nombre, Latitud, Longitud, Telefono, Direccion,DepartamentoID, LocalidadID, URLImagenDelCentroDeSalud )
+{
+
+    db = window.sqlitePlugin.openDatabase({name: 'sjapp.db', location: 'default'});
+    //Tabla Departamentos
+    db.sqlBatch([
+        [ 'INSERT INTO CentroDeSalud (ID, Nombre, Latitud, Longitud, Telefono, Direccion,DepartamentoID, LocalidadID, URLImagenDelCentroDeSalud ) VALUES (?,?,?,?,?,?,?,?,?)',[ID, Nombre, Latitud, Longitud, Telefono, Direccion,DepartamentoID, LocalidadID, URLImagenDelCentroDeSalud ] ]
+    ], function() {
+        console.log('Populated database OK: ' + Nombre);
+    }, function(error) {
+        console.log('SQL batch ERROR: ' + error.message);
+    });
+}
+
+function csBuscarListDB(){
+    db = window.sqlitePlugin.openDatabase({name: 'sjapp.db', location: 'default'});
+
+    db.executeSql('SELECT ID, Nombre, Latitud, Longitud, Telefono, Direccion,DepartamentoID, LocalidadID, URLImagenDelCentroDeSalud FROM CentroDeSalud', [], function(rs) {
+        console.dir(rs)
+
+        for(var i=0;i<rs.rows.length;i++)
+        {
+
+                var tmp =
+                    '<li class="item-content"  data-id="' + rs.rows.item(i).ID + '">' +
+                    '<div class="item-inner">' +
+                    '<div class="item-title"><div><b>' + rs.rows.item(i).Nombre +
+                    '</b><br>' +
+                    '<div class="chip">' +
+                    '<div class="chip-label"><u> Teléfono:</u>' + rs.rows.item(i).Telefono + '</div>' +
+                    '</div>' +
+                    '</div><div><u>Dirección:</u> ' + rs.rows.item(i).Direccion + '</div>' +
+                    '</div>' +
+                    '</li>';
+
+                $("#csDatalist").append(tmp);
+
+
+
+        }
+
+
+        $(".item-content").click(function(){
+            setCapsId($(this).data('id'),'capsDetail.html');
+        });
+
+
+    }, function(error) {
+        console.log('SELECT SQL statement ERROR: ' + error.message);
+    });
+}
+
+function getDepartamentosDB()
+{
+    db = window.sqlitePlugin.openDatabase({name: 'sjapp.db', location: 'default'});
+
+    db.executeSql('SELECT ID,Nombre, Zona FROM Departamentos', [], function(rs) {
+        console.dir(rs)
+        var titleFlag = "";
+        var htmlTitle= "";
+
+
+        for(var i=0;i<rs.rows.length;i++) {
+
+            if(rs.rows.item(i).Zona !== titleFlag ){
+                titleFlag = rs.rows.item(i).Zona;
+                var romano = "";
+
+                switch (rs.rows.item(i).Zona) {
+
+                    case 1:
+                        romano = 'I';
+                        break;
+                    case 2:
+                        romano = "II";
+                        break;
+                    case 3:
+                        romano = "III";
+                        break;
+                    case 4:
+                        romano = "IV";
+                        break;
+                    case 5:
+                        romano = "V";
+                        break;
+                }
+
+                htmlTitle = '<li class="list-group-title">'+ "Zona Sanitaria " + romano +'</li>';
+
+            }else{
+                htmlTitle = '';
+            }
+
+                var htmlString =
+                '<div class="list-group">'+
+                '<ul>'+
+                htmlTitle +
+                '<li class="item-content">'+
+                //'<div class="icon f7-icons" style="color:#fff; margin-right: 5px;">search</div>'+
+                '<div class="item-inner background-light" onclick="javascript:setDptoId('+rs.rows.item(i).ID+',\'caps.html\')">'+
+                '<div id="Dpto_' + rs.rows.item(i).ID + '" class="item-title">'+
+                rs.rows.item(i).Nombre +
+                '</div>' +
+                '</div>' +
+                '</li>' +
+                '</ul>'+
+                '</div>';
+
+
+            $("#dptos-container").append(htmlString);
+        }
+    }, function(error) {
+        console.log('SELECT SQL statement ERROR: ' + error.message);
+    });
+}

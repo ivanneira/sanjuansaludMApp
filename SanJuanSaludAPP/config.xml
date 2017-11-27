@@ -14,7 +14,7 @@
     <allow-intent href="sms:*" />
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
-    <preference name="SplashScreenDelay" value="3000" />
+    <preference name="SplashScreenDelay" value="1000" />
     <preference name="loadUrlTimeoutValue" value="0" />
     <preference name="ShowSplashScreenSpinner" value="false" />
     <preference name="fullscreen" value="false" />
@@ -81,11 +81,10 @@
         <splash density="port-xhdpi" src="res/screens/android/screen-xhdpi-portrait.png" />
     </platform>
     <engine name="android" spec="^6.2.3" />
-    <engine name="browser" spec="^4.1.0" />
     <engine name="ios" spec="4.2.0" />
     <engine name="windows" spec="4.4.2" />
+    <engine name="browser" spec="^5.0.1" />
     <plugin name="cordova-plugin-whitelist" spec="1.2.2" />
-    <plugin name="cordova-sqlite-storage" spec="^2.0.4" />
     <plugin name="cordova-plugin-geolocation" spec="^2.4.3">
         <variable name="GEOLOCATION_USAGE_DESCRIPTION" value=" " />
     </plugin>
@@ -97,8 +96,6 @@
     </plugin>
     <plugin name="cordova-plugin-request-location-accuracy" spec="^2.2.2" />
     <plugin name="cordova-plugin-x-toast" spec="^2.6.0" />
-    <plugin name="cordova-plugin-sqlite-2" spec="^1.0.4" />
-    <plugin name="cordova-plugin-websql" spec="0.0.10" />
     <plugin name="uk.co.workingedge.phonegap.plugin.launchnavigator" spec="^4.0.4">
         <variable name="LOCATION_USAGE_DESCRIPTION" value="This app requires access to your location for navigation purposes" />
     </plugin>
@@ -107,4 +104,5 @@
     <plugin name="cordova-custom-config" spec="^4.0.2" />
     <plugin name="call-number" spec="git+https://github.com/Rohfosho/CordovaCallNumberPlugin.git" />
     <plugin name="cordova-sms-plugin" spec="^0.1.11" />
+    <plugin name="cordova-sqlite-storage" spec="^2.1.2" />
 </widget>
