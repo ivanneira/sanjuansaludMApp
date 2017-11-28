@@ -1,8 +1,16 @@
 var server = "gedoc.sanjuan.gov.ar";
 var ErrorAjax = "Ups! Hubo un problema con su conexión a internet.";
 var NoticiasURL = "http://"+server+"/AresApi/Api/Portal/Noticias";
-var DepartamentosURL = "http://"+server+"/AresApi/Api/Departamentos"; //x
-var CapsURL = "http://"+server+"/AresApi/Api/CentroDeSaluds"; //x
+var DepartamentosURL = "http://"+server+"/AresApi/Api/Departamento"; //x
+
+var Horarios = "http://"+server+"/AresApi/Api/Horarios"; //x
+var Especialidad = "http://"+server+"/AresApi/Api/Especialidad"; //x
+var HorariosPorEspecialidadPorCentroDeSalud = "http://"+server+"/AresApi/Api/HorariosPorEspecialidadPorCentroDeSalud"; //x
+var LineaColectivoPorCentroDeSalud = "http://"+server+"/AresApi/Api/LineaColectivoPorCentroDeSalud"; //x
+var EspecialidadPorCentroDeSalud = "http://"+server+"/AresApi/Api/EspecialidadPorCentroDeSalud"; //x
+var LineaColectivo = "http://"+server+"/AresApi/Api/LineaColectivo"; //x
+
+var CapsURL = "http://"+server+"/AresApi/Api/CentroDeSalud"; //x
 var proturURL = "http://"+server+"/AresApi/Api/Protur/Solicitud";
 var csListURL = "http://"+ server + "/AresApi/Api/CentroDeSalud";
 //var proturURL = "http://10.64.64.218:1941/api/Protur/Solicitud";
@@ -27,81 +35,19 @@ function successGPS(pos) {
     var crd = pos.coords;
     myLat = parseFloat(crd.latitude);
     myLong = parseFloat(crd.longitude);
-
 }
-
 
 function csBuscarList()
 {
-
-    $.ajax({
-
-        url: CapsURL,
-        cache: false,
-        type: 'get',
-        dataType: "json",
-        success: function (response) {
-
-
-
-            //console.dir(response);
-            for(var i=0;i<response.length;i++)
-            {
-                /*
-                 var tmp = '<div><li class="item-content" data-id="'+ response[i].ID +'">'+
-                            '<div class="item-inner">'+
-                                '<div  id="item-title_cs"+i class="item-title"><b>'+response[i].Nombre+
-                                '</b> <div class="chip">' +
-                                '<div  class="chip-label"><u> Teléfono:</u> '+
-                                    response[i].Telefono +
-                                '</div>' +
-                                '</div>' +
-                                '<div  ><u>Dirección:</u> '+ response[i].Direccion+'</div>'+
-                        '</div>'+
-                            '</div>'+
-                           '</li></div>';
-                */
-                if(response[i].ID != 590 && response[i].ID != 591)
-                {
-                    InsertCentroDeSalud(response[i].ID,response[i].Nombre,response[i].Latitud,response[i].Longitud,response[i].Telefono,response[i].Direccion,response[i].DepartamentoID,response[i].LocalidadID,response[i].URLImagenDelCentroDeSalud);
-                    var tmp =
-                        '<li class="item-content"  data-id="' + response[i].ID + '">' +
-                        '<div class="item-inner">' +
-                        '<div class="item-title"><div><b>' + response[i].Nombre +
-                        '</b><br>' +
-                        '<div class="chip">' +
-                        '<div class="chip-label"><u> Teléfono:</u>' + response[i].Telefono + '</div>' +
-                        '</div>' +
-                        '</div><div><u>Dirección:</u> ' + response[i].Direccion + '</div>' +
-                        '</div>' +
-                        '</li>';
-
-                        $("#csDatalist").append(tmp);
-                }
-
-
-            }
-
-
-
-
-            $(".item-content").click(function(){
-                setCapsId($(this).data('id'),'capsDetail.html');
-            });
-
-        },
-        error: function (error) {
-
-            window.plugins.toast.show(ErrorAjax,"3000","bottom");
-            csBuscarListDB();
-        }
-
-    });
+    csBuscarListDB();
 }
 
 //FUNCION QUE BUSCA CENTROS DE SALUD EN UN RADIO DE 10KM
 function GPS()
 {
+
+
+
     var posx = {lat: myLat, lng: myLong};
     var mapPropx= {
         center:new google.maps.LatLng(posx),
@@ -291,7 +237,7 @@ function keysrt(key,desc) {
 function errorSlider(selector)
 {
     var temp =
-        '<div id="err1" class="swiper-slide" style="background: url(../images/error.svg) no-repeat center top;background-size:cover;">'+
+        '<div id="err1" class="swiper-slide" style="background: url(images/error.svg) no-repeat center top;background-size:cover;">'+
             '<div class="overlay">'+
                 '<p>'+sinConexion+'</p>'+
             '</div>'+
@@ -315,19 +261,7 @@ function setDptoId(id,page)
     openPage(page);
 }
 
-function createDatabase()
-{
 
-
-    var db = sqlitePlugin.openDatabase('mydb.db', '1.0', '', 1);
-    db.transaction(function (txn) {
-        txn.executeSql('SELECT 42 AS `answer`', [], function (tx, res) {
-            alert(res.rows.item(0).answer); // {"answer": 42}
-
-        });
-    });
-
-}
 
 //FUNCION QUE OBTIENE EL SLIDER ACTUAL DEL PORTAL DE GOBIERNO A TRAVES DE LA API DE PAULO
 function getSlider()
@@ -448,82 +382,7 @@ function abrirNoticia(slide){
 //FUNCION PARA OBTENER DEPARTAMENTOS
 function getDepartamento()
 {
-
-
-    $.ajax({
-
-        url: DepartamentosURL,
-        cache: false,
-        type: 'get',
-        dataType: "json",
-        success: function (response) {
-            //fillSlider($("#slider"), response);
-
-            var titleFlag = "";
-            var htmlTitle= "";
-
-
-            for(var i=0;i<response.length;i++) {
-
-                if(response[i].Zona !== titleFlag ){
-                    titleFlag = response[i].Zona;
-                    var romano = "";
-
-                    switch (response[i].Zona) {
-
-                        case 1:
-                            romano = 'I';
-                            break;
-                        case 2:
-                            romano = "II";
-                            break;
-                        case 3:
-                            romano = "III";
-                            break;
-                        case 4:
-                            romano = "IV";
-                            break;
-                        case 5:
-                            romano = "V";
-                            break;
-                    }
-
-                    htmlTitle = '<li class="list-group-title">'+ "Zona Sanitaria " + romano +'</li>';
-
-                }else{
-                    htmlTitle = '';
-                }
-
-                InsertDepartamentos(response[i].ID,response[i].Nombre,response[i].Zona);
-                var htmlString =
-                '<div class="list-group">'+
-                    '<ul>'+
-                         htmlTitle +
-                        '<li class="item-content">'+
-                            //'<div class="icon f7-icons" style="color:#fff; margin-right: 5px;">search</div>'+
-                            '<div class="item-inner background-light" onclick="javascript:setDptoId('+response[i].ID+',\'caps.html\')">'+
-                                '<div id="Dpto_' + response[i].ID + '" class="item-title">'+
-                                response[i].Nombre +
-                                '</div>' +
-                            '</div>' +
-                        '</li>' +
-                    '</ul>'+
-                '</div>';
-
-
-                $("#dptos-container").append(htmlString);
-            }
-
-            getDepartamentosDB();
-        },
-        error: function () {
-            window.plugins.toast.show(ErrorAjax,"3000","bottom");
-            getDepartamentosDB();
-        }
-
-    });
-
-
+    getDepartamentosDB();
 }
 
 
@@ -696,42 +555,7 @@ function navigate(desde,hasta)
 //FUNCION QUE DEVUELVE LA LISTA DE CENTROS DE SALUD EN UN DEPTO SELECCIONADO
 function getCentroDeSaludxDpto(id)
 {
-    var tmp = [];
-    var j=0;
-    $.ajax({
-
-        url: CapsURL,
-        cache: false,
-        type: 'get',
-        dataType: "json",
-        success: function (response) {
-            response = response.sort(keysrt('Nombre'));
-
-            $("#caps-container").append('<div class="list-group"><ul><li class="list-group-title">'+ $("#Dpto_" + id).text() +'</li></ul></div>');
-            for(var i=0;i<response.length;i++) {
-                if(response[i].ID != 590 && response[i].ID != 591) {
-                    if (response[i].DepartamentoID == id) {
-                        tmp.push(response[i]);
-
-                        $("#caps-container").append(
-                            '<li class="item-content"> ' +
-                            '<div class="item-inner background-light" onclick="javascript:setCapsId(' + response[i].ID + ',\'capsDetail.html\')">' +
-                            '<div class="item-title">' +
-                            response[i].Nombre +
-                            '</div>' +
-                            '</div>' +
-                            '</li>');
-                    }
-                }
-            }
-
-        },
-        error: function () {
-
-            window.plugins.toast.show(ErrorAjax,"3000","bottom");
-        }
-
-    });
+    getCentroDeSaludxDptoDB(id);
 }
 
 //FUNCION PARA OBTENER ESPECIALIDADES Y HORARIOS PARA UN CENTRO DE SALUD
@@ -988,41 +812,92 @@ var SMS = {
 function Database(db)
 {
 
-
     db = window.sqlitePlugin.openDatabase({name: 'sjapp.db', location: 'default'});
 
-    /*
-    db.sqlBatch([
-        'drop table Departamentos'
-
-    ], function() {
-        console.log('Populated database OK');
-    }, function(error) {
-        console.log('SQL batch ERROR: ' + error.message);
-    });
-    */
+    //Creo la tabla Departamentos
     db.sqlBatch([
         'CREATE TABLE IF NOT EXISTS Departamentos (ID, Nombre, Zona)',
 
     ], function() {
         console.log('Tabla Departamento OK');
     }, function(error) {
-        console.log('SQL batch ERROR: ' + error.message);
+        //console.log('SQL batch ERROR: ' + error.message);
     });
 
-
-
+    //Creo la tabla CentroDeSalud
     db.sqlBatch([
         'CREATE TABLE IF NOT EXISTS CentroDeSalud (ID, Nombre, Latitud, Longitud, Telefono, Direccion,DepartamentoID, LocalidadID, URLImagenDelCentroDeSalud )',
 
     ], function() {
         console.log('Tabla CentroDeSalud OK');
     }, function(error) {
-        console.log('SQL batch ERROR: ' + error.message);
+        //console.log('SQL batch ERROR: ' + error.message);
+    });
+
+    //Creo la tabla Horarios
+    db.sqlBatch([
+        'CREATE TABLE IF NOT EXISTS Horarios (ID, Hora, Activo)',
+
+    ], function() {
+        console.log('Tabla Horarios OK');
+    }, function(error) {
+        //console.log('SQL batch ERROR: ' + error.message);
     });
 
 
+    //Creo la tabla Especialidad
+    db.sqlBatch([
+        'CREATE TABLE IF NOT EXISTS Especialidad (ID, Nombre)',
 
+    ], function() {
+        console.log('Tabla Especialidad OK');
+    }, function(error) {
+        //console.log('SQL batch ERROR: ' + error.message);
+    });
+
+
+    //Creo la tabla EspecialidadPorCentroDeSalud
+    db.sqlBatch([
+        'CREATE TABLE IF NOT EXISTS EspecialidadPorCentroDeSalud (ID, CentroDeSaludID, EspecialidadID,Activo)',
+
+    ], function() {
+        console.log('Tabla EspecialidadPorCentroDeSalud OK');
+    }, function(error) {
+        //console.log('SQL batch ERROR: ' + error.message);
+    });
+
+
+    //Creo la tabla HorariosPorEspecialidadPorCentroDeSalud
+    db.sqlBatch([
+        'CREATE TABLE IF NOT EXISTS HorariosPorEspecialidadPorCentroDeSalud (ID, HorarioIDEntrada,HorarioIDSalida, EspecialiadPorCentroDeSaludID, Dia,Activo)',
+    ], function() {
+        console.log('Tabla HorariosPorEspecialidadPorCentroDeSalud OK');
+    }, function(error) {
+        //console.log('SQL batch ERROR: ' + error.message);
+    });
+
+
+    //Creo la tabla LineaColectivo
+    db.sqlBatch([
+        'CREATE TABLE IF NOT EXISTS LineaColectivo (ID, Numero,Activo)',
+    ], function() {
+        console.log('Tabla LineaColectivo OK');
+    }, function(error) {
+        //console.log('SQL batch ERROR: ' + error.message);
+    });
+
+
+    //Creo la tabla LineaColectivoPorCentroDeSalud
+    db.sqlBatch([
+        'CREATE TABLE IF NOT EXISTS LineaColectivoPorCentroDeSalud (ID, LineaColectivoID,CentroDeSaludID,Activo)',
+    ], function() {
+        console.log('Tabla LineaColectivoPorCentroDeSalud OK');
+    }, function(error) {
+        //console.log('SQL batch ERROR: ' + error.message);
+    });
+
+
+    sincronizarDB();
 
 }
 
@@ -1034,23 +909,24 @@ function InsertDepartamentos(ID, Nombre, Zona)
     db.sqlBatch([
             [ 'INSERT INTO Departamentos (ID,Nombre, Zona) VALUES (?,?,?)',[ID,Nombre, Zona] ]
     ], function() {
-        console.log('Populated database OK: ' + Nombre);
+        //console.log('Populated database OK: ' + Nombre);
+        window.plugins.toast.show("Los Departamentos han sido actualizados.","3000","bottom");
     }, function(error) {
-        console.log('SQL batch ERROR: ' + error.message);
+        //console.log('SQL batch ERROR: ' + error.message);
     });
 }
 
 function InsertCentroDeSalud(ID, Nombre, Latitud, Longitud, Telefono, Direccion,DepartamentoID, LocalidadID, URLImagenDelCentroDeSalud )
 {
-
     db = window.sqlitePlugin.openDatabase({name: 'sjapp.db', location: 'default'});
     //Tabla Departamentos
     db.sqlBatch([
         [ 'INSERT INTO CentroDeSalud (ID, Nombre, Latitud, Longitud, Telefono, Direccion,DepartamentoID, LocalidadID, URLImagenDelCentroDeSalud ) VALUES (?,?,?,?,?,?,?,?,?)',[ID, Nombre, Latitud, Longitud, Telefono, Direccion,DepartamentoID, LocalidadID, URLImagenDelCentroDeSalud ] ]
     ], function() {
-        console.log('Populated database OK: ' + Nombre);
+        //console.log('Populated database OK: ' + Nombre);
+        window.plugins.toast.show("Los Centros de Salud han sido Actualizados ","3000","bottom");
     }, function(error) {
-        console.log('SQL batch ERROR: ' + error.message);
+        //console.log('SQL batch ERROR: ' + error.message);
     });
 }
 
@@ -1153,5 +1029,349 @@ function getDepartamentosDB()
         }
     }, function(error) {
         console.log('SELECT SQL statement ERROR: ' + error.message);
+    });
+}
+
+
+function getCentroDeSaludxDptoDB(id)
+{
+    db = window.sqlitePlugin.openDatabase({name: 'sjapp.db', location: 'default'});
+
+    db.executeSql('SELECT * FROM CentroDeSalud where DepartamentoID='+id+' order by Nombre asc', [], function(rs) {
+        console.dir(rs)
+
+        $("#caps-container").append('<div class="list-group"><ul><li class="list-group-title">'+ $("#Dpto_" + id).text() +'</li></ul></div>');
+
+        for(var i=0;i<rs.rows.length;i++)
+        {
+            if(rs.rows.item(i).ID != 590 && rs.rows.item(i).ID != 591)
+            {
+
+
+                    $("#caps-container").append(
+                        '<li class="item-content"> ' +
+                        '<div class="item-inner background-light" onclick="javascript:setCapsId(' + rs.rows.item(i).ID + ',\'capsDetail.html\')">' +
+                        '<div class="item-title">' +
+                        rs.rows.item(i).Nombre +
+                        '</div>' +
+                        '</div>' +
+                        '</li>');
+
+            }
+        }
+
+    }, function(error) {
+        console.log('SELECT SQL statement ERROR: ' + error.message);
+    });
+
+
+}
+
+
+function sincronizarDB()
+{
+    syncBuscarList();
+    syncDepartamento();
+    syncHorarios();
+    syncEspecialidad();
+    syncEspecialidadPorCentroDeSalud();
+    syncHorariosPorEspecialidadPorCentroDeSalud();
+    syncLineaColectivo();
+    syncLineaColectivoPorCentroDeSalud();
+
+}
+
+function syncBuscarList()
+{
+    $.ajax({
+
+        url: CapsURL,
+        cache: false,
+        type: 'get',
+        dataType: "json",
+        success: function (response) {
+
+            //Si hay internet Sincronizo Centros de Salud limpiando la tabla
+            db = window.sqlitePlugin.openDatabase({name: 'sjapp.db', location: 'default'});
+
+            db.sqlBatch([
+                'delete from CentroDeSalud'
+
+            ], function() {
+                //console.log('Clear database OK');
+            }, function(error) {
+                //console.log('SQL batch ERROR: ' + error.message);
+            });
+
+            for(var i=0;i<response.length;i++) {
+                if (response[i].ID != 590 && response[i].ID != 591) {
+                    InsertCentroDeSalud(response[i].ID, response[i].Nombre, response[i].Latitud, response[i].Longitud, response[i].Telefono, response[i].Direccion, response[i].DepartamentoID, response[i].LocalidadID, response[i].URLImagenDelCentroDeSalud);
+                }
+            }
+        },
+        error: function (error) {
+            window.plugins.toast.show(ErrorAjax,"3000","bottom");
+        }
+
+    });
+}
+
+function syncDepartamento()
+{
+    $.ajax({
+        url: DepartamentosURL,
+        cache: false,
+        type: 'get',
+        dataType: "json",
+        success: function (response) {
+
+            //Si Hay internet Sincronizo Departamentos limpiando la tabla.
+            db = window.sqlitePlugin.openDatabase({name: 'sjapp.db', location: 'default'});
+
+            db.sqlBatch([
+                'delete from Departamentos'
+            ], function() {
+                //console.log('Clear database OK');
+            }, function(error) {
+                //console.log('SQL batch ERROR: ' + error.message);
+            });
+
+            for(var i=0;i<response.length;i++) {
+                InsertDepartamentos(response[i].ID, response[i].Nombre, response[i].Zona);
+            }
+
+        },
+        error: function () {
+            window.plugins.toast.show(ErrorAjax,"3000","bottom");
+        }
+
+    });
+
+
+}
+
+
+function syncHorarios()
+{
+    $.ajax({
+
+        url: Horarios,
+        cache: false,
+        type: 'get',
+        dataType: "json",
+        success: function (response) {
+
+                for (var i = 0; i < response.length; i++) {
+                        InsertHorarios(response[i].ID, response[i].Hora,response[i].Activo)
+                }
+        },
+        error: function (error) {
+            //alert(ErrorAjax);
+            window.plugins.toast.show(ErrorAjax,"3000","bottom");
+        }
+
+    });
+}
+
+
+function InsertHorarios(ID, Hora, Activo )
+{
+    db = window.sqlitePlugin.openDatabase({name: 'sjapp.db', location: 'default'});
+    //Tabla Horarios
+    db.sqlBatch([
+        [ 'INSERT INTO Horarios (ID, Hora, Activo ) VALUES (?,?,?)',[ID, Hora, Activo ] ]
+    ], function() {
+        //console.log('Populated database OK: ' + Nombre);
+        window.plugins.toast.show("Los Horarios estan siendo Actualizados ","3000","bottom");
+    }, function(error) {
+        //console.log('SQL batch ERROR: ' + error.message);
+    });
+}
+
+
+function syncEspecialidad()
+{
+    $.ajax({
+
+        url: Especialidad,
+        cache: false,
+        type: 'get',
+        dataType: "json",
+        success: function (response) {
+
+            for (var i = 0; i < response.length; i++) {
+                    InsertEspecialidad(response[i].ID, response[i].Nombre)
+            }
+        },
+        error: function (error) {
+            //alert(ErrorAjax);
+            window.plugins.toast.show(ErrorAjax,"3000","bottom");
+        }
+
+    });
+}
+
+
+function InsertEspecialidad(ID, Nombre)
+{
+    db = window.sqlitePlugin.openDatabase({name: 'sjapp.db', location: 'default'});
+    //Tabla Especialidad
+    db.sqlBatch([
+        [ 'INSERT INTO Especialidad (ID, Nombre ) VALUES (?,?)',[ID, Nombre ] ]
+    ], function() {
+        //console.log('Populated database OK: ' + Nombre);
+        window.plugins.toast.show("Las Especialidades estan siendo Actualizados ","3000","bottom");
+    }, function(error) {
+        //console.log('SQL batch ERROR: ' + error.message);
+    });
+}
+
+function syncEspecialidadPorCentroDeSalud()
+{
+    $.ajax({
+
+        url: EspecialidadPorCentroDeSalud,
+        cache: false,
+        type: 'get',
+        dataType: "json",
+        success: function (response) {
+
+            for (var i = 0; i < response.length; i++) {
+                InsertEspecialidadPorCentroDeSalud(response[i].ID, response[i].CentroDeSaludID,response[i].EspecialidadID,response[i].Activo )
+            }
+        },
+        error: function (error) {
+            //alert(ErrorAjax);
+            window.plugins.toast.show(ErrorAjax,"3000","bottom");
+        }
+
+    });
+}
+
+
+function InsertEspecialidadPorCentroDeSalud(ID, CentroDeSaludID,EspecialidadID, Activo)
+{
+    db = window.sqlitePlugin.openDatabase({name: 'sjapp.db', location: 'default'});
+    //Tabla EspecialidadPorCentroDeSalud
+    db.sqlBatch([
+        [ 'INSERT INTO EspecialidadPorCentroDeSalud (ID, Nombre ) VALUES (?,?)',[ID, CentroDeSaludID,EspecialidadID, Activo ] ]
+    ], function() {
+        //console.log('Populated database OK: ' + Nombre);
+        window.plugins.toast.show("Las Especialidades por centro de salud estan siendo Actualizados ","3000","bottom");
+    }, function(error) {
+        //console.log('SQL batch ERROR: ' + error.message);
+    });
+}
+
+
+function syncHorariosPorEspecialidadPorCentroDeSalud()
+{
+    $.ajax({
+
+        url: HorariosPorEspecialidadPorCentroDeSalud,
+        cache: false,
+        type: 'get',
+        dataType: "json",
+        success: function (response) {
+
+            for (var i = 0; i < response.length; i++) {
+                InsertEspecialidadPorCentroDeSalud(response[i].ID, response[i].HorarioIDEntrada,response[i].HorarioIDSalida,response[i].EspecialidadPorCentroDeSaludID,response[i].Dia,response[i].Activo )
+            }
+        },
+        error: function (error) {
+            //alert(ErrorAjax);
+            window.plugins.toast.show(ErrorAjax,"3000","bottom");
+        }
+
+    });
+}
+
+
+function InsertHorariosPorEspecialidadPorCentroDeSalud(ID, HorarioIDEntrada,HorarioIDSalida, EspecialidadPorCentroDeSaludID,Dia ,Activo)
+{
+    db = window.sqlitePlugin.openDatabase({name: 'sjapp.db', location: 'default'});
+    //Tabla HorariosPorEspecialidadPorCentroDeSalud
+    db.sqlBatch([
+        [ 'INSERT INTO HorariosPorEspecialidadPorCentroDeSalud (ID, HorarioIDEntrada,HorarioIDSalida, EspecialidadPorCentroDeSaludID,Dia ,Activo) VALUES (?,?,?,?,?,?)',[ID, HorarioIDEntrada,HorarioIDSalida, EspecialidadPorCentroDeSaludID,Dia ,Activo ] ]
+    ], function() {
+        //console.log('Populated database OK: ' + Nombre);
+        window.plugins.toast.show("Los Horarios por Especialidades por centro de salud estan siendo Actualizados ","3000","bottom");
+    }, function(error) {
+        //console.log('SQL batch ERROR: ' + error.message);
+    });
+}
+
+
+function syncLineaColectivo()
+{
+    $.ajax({
+
+        url: LineaColectivo,
+        cache: false,
+        type: 'get',
+        dataType: "json",
+        success: function (response) {
+
+            for (var i = 0; i < response.length; i++) {
+                InsertLineaColectivo(response[i].ID, response[i].Numero,response[i].Activo )
+            }
+        },
+        error: function (error) {
+            //alert(ErrorAjax);
+            window.plugins.toast.show(ErrorAjax,"3000","bottom");
+        }
+
+    });
+}
+
+
+function InsertLineaColectivo(ID, Numero ,Activo)
+{
+    db = window.sqlitePlugin.openDatabase({name: 'sjapp.db', location: 'default'});
+    //Tabla LineaColectivo
+    db.sqlBatch([
+        [ 'INSERT INTO LineaColectivo (ID, Numero ,Activo) VALUES (?,?,?)',[ID, Numero ,Activo ] ]
+    ], function() {
+        //console.log('Populated database OK: ' + Nombre);
+        window.plugins.toast.show("Las Lineas de colectivo  estan siendo Actualizados ","3000","bottom");
+    }, function(error) {
+        //console.log('SQL batch ERROR: ' + error.message);
+    });
+}
+
+function syncLineaColectivoPorCentroDeSalud()
+{
+    $.ajax({
+
+        url: EspecialidadPorCentroDeSalud,
+        cache: false,
+        type: 'get',
+        dataType: "json",
+        success: function (response) {
+
+            for (var i = 0; i < response.length; i++) {
+                InsertLineaColectivoPorCentroDeSalud(response[i].ID, response[i].LineaColectivoID,response[i].CentroDeSaludID ,response[i].Activo )
+            }
+        },
+        error: function (error) {
+            //alert(ErrorAjax);
+            window.plugins.toast.show(ErrorAjax,"3000","bottom");
+        }
+
+    });
+}
+
+
+function InsertLineaColectivoPorCentroDeSalud(ID, LineaColectivoID,CentroDeSaludID ,Activo)
+{
+    db = window.sqlitePlugin.openDatabase({name: 'sjapp.db', location: 'default'});
+    //Tabla LineaColectivoPorCentroDeSalud
+    db.sqlBatch([
+        [ 'INSERT INTO LineaColectivoPorCentroDeSalud (ID, LineaColectivoID,CentroDeSaludID ,Activo) VALUES (?,?,?,?)',[ID, LineaColectivoID,CentroDeSaludID ,Activo ] ]
+    ], function() {
+        //console.log('Populated database OK: ' + Nombre);
+        window.plugins.toast.show("Las Lineas de colectivo por centro de salud estan siendo Actualizados ","3000","bottom");
+    }, function(error) {
+        //console.log('SQL batch ERROR: ' + error.message);
     });
 }
