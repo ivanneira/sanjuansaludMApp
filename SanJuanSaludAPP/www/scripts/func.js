@@ -261,8 +261,6 @@ function setDptoId(id,page)
     openPage(page);
 }
 
-
-
 //FUNCION QUE OBTIENE EL SLIDER ACTUAL DEL PORTAL DE GOBIERNO A TRAVES DE LA API DE PAULO
 function getSlider()
 {
@@ -384,8 +382,6 @@ function getDepartamento()
 {
     getDepartamentosDB();
 }
-
-
 
 //FUNCION PARA OBTENER UN CENTRO DE SALUD
 function getCentroDeSalud(id)
@@ -869,7 +865,7 @@ function Database(db)
 
     //Creo la tabla HorariosPorEspecialidadPorCentroDeSalud
     db.sqlBatch([
-        'CREATE TABLE IF NOT EXISTS HorariosPorEspecialidadPorCentroDeSalud (ID, HorarioIDEntrada,HorarioIDSalida, EspecialiadPorCentroDeSaludID, Dia,Activo)',
+        'CREATE TABLE IF NOT EXISTS HorariosPorEspecialidadPorCentroDeSalud (ID, HorarioIDEntrada,HorarioIDSalida, EspecialidadPorCentroDeSaludID, Dia,Activo)',
     ], function() {
         console.log('Tabla HorariosPorEspecialidadPorCentroDeSalud OK');
     }, function(error) {
@@ -1032,7 +1028,6 @@ function getDepartamentosDB()
     });
 }
 
-
 function getCentroDeSaludxDptoDB(id)
 {
     db = window.sqlitePlugin.openDatabase({name: 'sjapp.db', location: 'default'});
@@ -1067,6 +1062,36 @@ function getCentroDeSaludxDptoDB(id)
 
 }
 
+
+//FUNCION PARA OBTENER LINEAS DE COLECTIVOS QUE LLEGAN A UN CENTRO DE SALUD
+function getCentroDeSaludLCDB(id)
+{
+    console.log(id);
+    db = window.sqlitePlugin.openDatabase({name: 'sjapp.db', location: 'default'});
+
+    db.executeSql('SELECT LC.Numero FROM LineaColectivoPorCentroDeSalud  LCXCS INNER JOIN LineaColectivo LC on LC.ID = LCXCS.LineaColectivoID where LCXCS.CentroDeSaludID='+id+' order by LC.Numero asc ', [], function(rs) {
+        console.dir(rs)
+
+        $("#caps-basic").append(
+            '<h4 class="color-h4">Líneas de Colectivo disponibles</h4><div id="caps-lc"></div> ');
+
+        if(rs.rows.length !=0) {
+            for (var i = 0; i < rs.rows.length; i++) {
+
+                $("#caps-basic").append('<p><span class="icono-bus"> </span>  Línea número ' + rs.rows.item(i).Numero + "</p>");
+            }
+        }
+        else{
+
+            $("#caps-lc").append('<p><div class="icon f7-icons">close</div>  Sin información para mostrar.</p>');
+        }
+
+    }, function(error) {
+        console.log('SELECT SQL statement ERROR: ' + error.message);
+    });
+
+
+}
 
 function sincronizarDB()
 {
@@ -1161,6 +1186,17 @@ function syncHorarios()
         dataType: "json",
         success: function (response) {
 
+            db = window.sqlitePlugin.openDatabase({name: 'sjapp.db', location: 'default'});
+
+            db.sqlBatch([
+                'delete from Horarios'
+
+            ], function() {
+                //console.log('Clear database OK');
+            }, function(error) {
+                //console.log('SQL batch ERROR: ' + error.message);
+            });
+
                 for (var i = 0; i < response.length; i++) {
                         InsertHorarios(response[i].ID, response[i].Hora,response[i].Activo)
                 }
@@ -1199,6 +1235,17 @@ function syncEspecialidad()
         dataType: "json",
         success: function (response) {
 
+            db = window.sqlitePlugin.openDatabase({name: 'sjapp.db', location: 'default'});
+
+            db.sqlBatch([
+                'delete from Especialidad'
+
+            ], function() {
+                //console.log('Clear database OK');
+            }, function(error) {
+                //console.log('SQL batch ERROR: ' + error.message);
+            });
+
             for (var i = 0; i < response.length; i++) {
                     InsertEspecialidad(response[i].ID, response[i].Nombre)
             }
@@ -1236,8 +1283,21 @@ function syncEspecialidadPorCentroDeSalud()
         dataType: "json",
         success: function (response) {
 
+            db = window.sqlitePlugin.openDatabase({name: 'sjapp.db', location: 'default'});
+
+            db.sqlBatch([
+                'delete from EspecialidadPorCentroDeSalud'
+
+            ], function() {
+                console.log('Limpieza  OK');
+            }, function(error) {
+                //console.log('SQL batch ERROR: ' + error.message);
+            });
+
             for (var i = 0; i < response.length; i++) {
+                console.log(i);
                 InsertEspecialidadPorCentroDeSalud(response[i].ID, response[i].CentroDeSaludID,response[i].EspecialidadID,response[i].Activo )
+
             }
         },
         error: function (error) {
@@ -1254,7 +1314,7 @@ function InsertEspecialidadPorCentroDeSalud(ID, CentroDeSaludID,EspecialidadID, 
     db = window.sqlitePlugin.openDatabase({name: 'sjapp.db', location: 'default'});
     //Tabla EspecialidadPorCentroDeSalud
     db.sqlBatch([
-        [ 'INSERT INTO EspecialidadPorCentroDeSalud (ID, Nombre ) VALUES (?,?)',[ID, CentroDeSaludID,EspecialidadID, Activo ] ]
+        [ 'INSERT INTO EspecialidadPorCentroDeSalud (ID, CentroDeSaludID,EspecialidadID, Activo ) VALUES (?,?,?,?)',[ID, CentroDeSaludID,EspecialidadID, Activo ] ]
     ], function() {
         //console.log('Populated database OK: ' + Nombre);
         window.plugins.toast.show("Las Especialidades por centro de salud estan siendo Actualizados ","3000","bottom");
@@ -1274,8 +1334,18 @@ function syncHorariosPorEspecialidadPorCentroDeSalud()
         dataType: "json",
         success: function (response) {
 
+            db = window.sqlitePlugin.openDatabase({name: 'sjapp.db', location: 'default'});
+            db.sqlBatch([
+                'delete from HorariosPorEspecialidadPorCentroDeSalud'
+
+            ], function() {
+                //console.log('Clear database OK');
+            }, function(error) {
+                //console.log('SQL batch ERROR: ' + error.message);
+            });
+
             for (var i = 0; i < response.length; i++) {
-                InsertEspecialidadPorCentroDeSalud(response[i].ID, response[i].HorarioIDEntrada,response[i].HorarioIDSalida,response[i].EspecialidadPorCentroDeSaludID,response[i].Dia,response[i].Activo )
+                InsertHorariosPorEspecialidadPorCentroDeSalud(response[i].ID,response[i].HorarioIDEntrada, response[i].HorarioIDSalida, response[i].EspecialidadPorCentroDeSaludID,response[i].Dia,response[i].Activo)
             }
         },
         error: function (error) {
@@ -1312,6 +1382,18 @@ function syncLineaColectivo()
         dataType: "json",
         success: function (response) {
 
+            db = window.sqlitePlugin.openDatabase({name: 'sjapp.db', location: 'default'});
+
+            db.sqlBatch([
+                'delete from LineaColectivo'
+
+            ], function() {
+                //console.log('Clear database OK');
+            }, function(error) {
+                //console.log('SQL batch ERROR: ' + error.message);
+            });
+
+
             for (var i = 0; i < response.length; i++) {
                 InsertLineaColectivo(response[i].ID, response[i].Numero,response[i].Activo )
             }
@@ -1343,11 +1425,21 @@ function syncLineaColectivoPorCentroDeSalud()
 {
     $.ajax({
 
-        url: EspecialidadPorCentroDeSalud,
+        url: LineaColectivoPorCentroDeSalud,
         cache: false,
         type: 'get',
         dataType: "json",
         success: function (response) {
+
+            db = window.sqlitePlugin.openDatabase({name: 'sjapp.db', location: 'default'});
+            db.sqlBatch([
+                'delete from LineaColectivoPorCentroDeSalud'
+
+            ], function() {
+                //console.log('Clear database OK');
+            }, function(error) {
+                //console.log('SQL batch ERROR: ' + error.message);
+            });
 
             for (var i = 0; i < response.length; i++) {
                 InsertLineaColectivoPorCentroDeSalud(response[i].ID, response[i].LineaColectivoID,response[i].CentroDeSaludID ,response[i].Activo )
@@ -1374,4 +1466,293 @@ function InsertLineaColectivoPorCentroDeSalud(ID, LineaColectivoID,CentroDeSalud
     }, function(error) {
         //console.log('SQL batch ERROR: ' + error.message);
     });
+}
+
+
+//FUNCION PARA OBTENER UN CENTRO DE SALUD
+function getCentroDeSaludDB(id)
+{
+
+    db = window.sqlitePlugin.openDatabase({name: 'sjapp.db', location: 'default'});
+
+    db.executeSql('SELECT * FROM CentroDeSalud where ID='+id, [], function(rs) {
+        console.dir(rs)
+
+        $("#caps-tittle").html(rs.rows.item(0).Nombre);
+        $("#caps-basic").append(
+            '<p>' +
+            '<h4 class="color-h4">Dirección</h4>'+
+            rs.rows.item(0).Direccion +
+            '</p>'+
+            '<p>' +
+            '<h4 class="color-h4">Teléfonos</h4>' +
+            '<div class="icon f7-icons color-red">phone_fill</div>' + "  " +
+            rs.rows.item(0).Telefono +
+            "</p>");
+
+
+        if(rs.rows.item(0).URLImagenDelCentroDeSalud != "No Disponible") {
+            $("#capsImg").append('<img src="' + rs.rows.item(0).URLImagenDelCentroDeSalud + '" height="250px">');
+        }
+
+        capsNombre = rs.rows.item(0).Nombre;
+
+
+        if(rs.rows.item(0).Latitud != 0 || rs.rows.item(0).Longitud != 0) {
+            var pos = {lat: parseFloat(rs.rows.item(0).Latitud), lng: parseFloat(rs.rows.item(0).Longitud)};
+            var mapProp = {
+                center: new google.maps.LatLng(pos),
+                zoom: 15,
+                scrollwheel: true,
+                navigationControl: true,
+                scaleControl: true,
+                //draggable: false,
+                mapTypeControl: false,
+                streetViewControl: false,
+                fullscreenControl: false,
+                disableDefaultUI: false,
+                styles: [
+                    {
+                        "featureType": "administrative.neighborhood",
+                        "stylers": [
+                            {
+                                "visibility": "off"
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "poi",
+                        "elementType": "labels.text",
+                        "stylers": [
+                            {
+                                "visibility": "off"
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "poi.business",
+                        "stylers": [
+                            {
+                                "visibility": "off"
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "road",
+                        "elementType": "labels.icon",
+                        "stylers": [
+                            {
+                                "visibility": "off"
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "transit",
+                        "stylers": [
+                            {
+                                "visibility": "off"
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "water",
+                        "elementType": "labels.text",
+                        "stylers": [
+                            {
+                                "visibility": "off"
+                            }
+                        ]
+                    }
+                ]
+
+            };
+            var map = new google.maps.Map(document.getElementById("googleMapDetail"), mapProp);
+            var marker = new google.maps.Marker({position: pos});
+            var infowindow = new google.maps.InfoWindow({
+                content: rs.rows.item(0).Nombre
+            });
+            infowindow.open(map, marker);
+            marker.setMap(map);
+
+            var directionsDisplay = new google.maps.DirectionsRenderer();
+            var directionsService = new google.maps.DirectionsService();
+
+            var posActual = {lat: myLat, lng: myLong};
+            var request = {
+                origin: posActual,
+                destination: pos,
+                travelMode: google.maps.DirectionsTravelMode['DRIVING'],
+                unitSystem: google.maps.DirectionsUnitSystem['METRIC'],
+                provideRouteAlternatives: true
+            };
+
+            directionsService.route(request, function (response, status) {
+
+                if (status == google.maps.DirectionsStatus.OK) {
+                    directionsDisplay.setMap(map);
+                    directionsDisplay.setDirections(response);
+
+
+
+                    $("#Distancia").html(
+
+
+                        "<p>Segun tu ubicación te encuentras a: "+
+                        (response.routes[0].legs[0].distance.value / 1000).toFixed() +
+                        " KM aproximados." +
+                        "</p>" +
+                        "<a class='button button-fill button-raised boton-navigation' href='javascript:navigate(["+myLat+","+myLong+"],["+pos.lat+","+pos.lng+"]);' >" +
+                        'Indicaciones para llegar' +
+                        "</a>");
+
+
+                } else {
+                    $("#Distancia").html("No existen rutas disponibles entre su ubicación actual y " + capsNombre +".");
+                }
+            });
+        }
+        else {
+            $("#googleMapDetail").html('<p><div class="icon f7-icons">close</div>  No hay datos de geolocalización disponibles.</p>');
+
+        }
+
+
+    }, function(error) {
+        console.log('SELECT SQL statement ERROR: ' + error.message);
+    });
+
+
+}
+
+//FUNCION PARA OBTENER ESPECIALIDADES Y HORARIOS PARA UN CENTRO DE SALUD DB
+function getCentroDeSaludEyHDB(id)
+{
+
+    db = window.sqlitePlugin.openDatabase({name: 'sjapp.db', location: 'default'});
+
+    db.executeSql('select ESP.NOMBRE,ESPXCS.ID from EspecialidadPorCentroDeSalud ESPXCS INNER JOIN Especialidad ESP on ESP.ID = ESPXCS.EspecialidadID where ESPXCS.CentroDeSaludID='+id+' ORDER BY ESP.Nombre asc', [], function(rs) {
+        console.dir(rs)
+
+        //inicio
+        var htmlStringEsp = '<ul>';
+
+
+        if(rs.rows.length>0)
+        {
+            for (var i = 0; i < rs.rows.length; i++)
+            {
+
+                //agrega título
+                htmlStringEsp += '<li  class="accordion-item">' +
+                    '<a href="#" class="item-content item-link">' +
+                    '<div class="item-inner">' +
+                    ' <div class="item-title">' +
+                    rs.rows.item(i).Nombre +
+                    '</div></div></a>';
+
+
+                    db.executeSql('select HXCS.Dia,HE.Hora as Entrada, HS.Hora as Salida from HorariosPorEspecialidadPorCentroDeSalud HXCS inner join Horarios HE on HE.ID = HXCS.HorarioIDEntrada inner join Horarios HS on HS.ID = HXCS.HorarioIDSalida where HXCS.EspecialidadPorCentroDeSaludID='+rs.rows.item(i).ID+' order by HXCS.Dia asc', [], function(rs_h) {
+                    console.dir(rs_h);
+
+                    for(var j=0;j<rs_h.rows.length;j++)
+                    {
+                        console.log(j);
+
+                        htmlStringEsp += '<div class="accordion-item-content"><div class="content-block"><p>'+rs_h.rows.item(j).Entrada+': <br/>' + rs_h.rows.item(j).Salida + '</p></div></div>';
+                        console.log("asdasdas " + htmlStringEsp );
+                    }
+                }, function(error) {
+                    console.log('SELECT SQL statement ERROR: ' + error.message);
+                });
+
+                htmlStringEsp += '</li>';
+            }
+                htmlStringEsp += '</ul>';
+            console.log("afsfsadsfaddsafasdasfdfsda");
+            console.log(htmlStringEsp);
+            $("#caps-eyh").append(htmlStringEsp);
+
+        }
+        else
+        {
+            $("#caps-eyh").append('<p><div class="icon f7-icons">close</div>  Sin información para mostrar.</p>');
+        }
+
+
+    }, function(error) {
+        console.log('SELECT SQL statement ERROR: ' + error.message);
+    });
+
+/*
+        $.ajax({
+
+        url: CapsURL + "/" + id+ "/EspecialidadesYHorarios",
+        cache: false,
+        type: 'get',
+        dataType: "json",
+        success: function (response) {
+
+
+            $("#caps-eyh").append('<h3 class="color-h3 ">Especialidades y Horarios</h3>');
+
+            response  = response.sort(keysrt('Nombre'));
+
+            if(response.length !=0) {
+
+                //inicio
+                var htmlStringEsp = '<ul>';
+
+
+                for (var i = 0; i < response.length; i++) {
+
+
+                    //agrega título
+                    htmlStringEsp += '<li class="accordion-item">'+
+                        '<a href="#" class="item-content item-link">'+
+                        '<div class="item-inner">'+
+                        ' <div class="item-title">'+
+                        response[i].Nombre +
+                        '</div></div></a>';
+
+
+                    var HorariosDia = [];
+                    var Horarios = [];
+                    var IndexDia = 0;
+                    var IndexHorario = 0;
+                    for(var j=0;j<response[i].Horarios.length;j++)
+                    {
+                        IndexHorario = HorariosDia.indexOf(response[i].Horarios[j].Dia);
+                        if ( IndexHorario == -1){
+                            HorariosDia[IndexDia] = response[i].Horarios[j].Dia;
+                            Horarios[IndexDia] = response[i].Horarios[j].HorarioEntrada + ' hs. - ' + response[i].Horarios[j].HorarioSalida + ' hs.';
+                            IndexDia = IndexDia + 1;
+                        }
+                        else{
+                            Horarios[IndexHorario] += ' <br/> ' + response[i].Horarios[j].HorarioEntrada + ' hs. - ' + response[i].Horarios[j].HorarioSalida+ ' hs.';
+                        }
+                    }
+                    for(var k=0;k<HorariosDia.length;k++){
+                        htmlStringEsp += '<div class="accordion-item-content"><div class="content-block"><p>'+HorariosDia[k]+': <br/>' + Horarios[k] + '</p></div></div>';
+                    }
+
+                    htmlStringEsp += '</li>';
+                }
+
+                htmlStringEsp += '</ul>';
+
+
+                $("#caps-eyh").append(htmlStringEsp);
+            }
+            else
+            {
+                $("#caps-eyh").append('<p><div class="icon f7-icons">close</div>  Sin información para mostrar.</p>');
+            }
+        },
+        error: function (error) {
+            //alert(ErrorAjax);
+            window.plugins.toast.show(ErrorAjax,"3000","bottom");
+        }
+
+    });
+    */
 }

@@ -23,9 +23,12 @@ myApp.onPageInit('caps', function (page) {
 myApp.onPageInit('caps-detail', function (page) {
 
     requestPermissionGPS();
-    getCentroDeSalud(CapsID);
-    getCentroDeSaludEyH(CapsID);
-    getCentroDeSaludLC(CapsID);
+    //getCentroDeSalud(CapsID);
+    getCentroDeSaludDB(CapsID);
+    //getCentroDeSaludEyH(CapsID);
+    getCentroDeSaludEyHDB(CapsID);
+    //getCentroDeSaludLC(CapsID);
+    getCentroDeSaludLCDB(CapsID);
 
 });
 
