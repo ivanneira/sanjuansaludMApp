@@ -1070,7 +1070,7 @@ function getCentroDeSaludLCDB(id)
     db = window.sqlitePlugin.openDatabase({name: 'sjapp.db', location: 'default'});
 
     db.executeSql('SELECT LC.Numero FROM LineaColectivoPorCentroDeSalud  LCXCS INNER JOIN LineaColectivo LC on LC.ID = LCXCS.LineaColectivoID where LCXCS.CentroDeSaludID='+id+' order by LC.Numero asc ', [], function(rs) {
-        console.dir(rs)
+        //console.dir(rs)
 
         $("#caps-basic").append(
             '<h4 class="color-h4">Líneas de Colectivo disponibles</h4><div id="caps-lc"></div> ');
@@ -1628,49 +1628,35 @@ function getCentroDeSaludDB(id)
 function getCentroDeSaludEyHDB(id)
 {
 
+    var rs_tmp;
+
     db = window.sqlitePlugin.openDatabase({name: 'sjapp.db', location: 'default'});
 
     db.executeSql('select ESP.NOMBRE,ESPXCS.ID from EspecialidadPorCentroDeSalud ESPXCS INNER JOIN Especialidad ESP on ESP.ID = ESPXCS.EspecialidadID where ESPXCS.CentroDeSaludID='+id+' ORDER BY ESP.Nombre asc', [], function(rs) {
-        console.dir(rs)
+        //console.dir(rs)
 
+        rs_tmp = rs;
         //inicio
         var htmlStringEsp = '<ul>';
 
 
-        if(rs.rows.length>0)
-        {
-            for (var i = 0; i < rs.rows.length; i++)
-            {
+
+        if(rs.rows.length>0) {
+            for (var i = 0; i < rs.rows.length; i++) {
 
                 //agrega título
-                htmlStringEsp += '<li  class="accordion-item">' +
+                htmlStringEsp += '<li id="esp' + rs.rows.item(i).ID + '" class="accordion-item">' +
                     '<a href="#" class="item-content item-link">' +
                     '<div class="item-inner">' +
                     ' <div class="item-title">' +
                     rs.rows.item(i).Nombre +
-                    '</div></div></a>';
-
-
-                    db.executeSql('select HXCS.Dia,HE.Hora as Entrada, HS.Hora as Salida from HorariosPorEspecialidadPorCentroDeSalud HXCS inner join Horarios HE on HE.ID = HXCS.HorarioIDEntrada inner join Horarios HS on HS.ID = HXCS.HorarioIDSalida where HXCS.EspecialidadPorCentroDeSaludID='+rs.rows.item(i).ID+' order by HXCS.Dia asc', [], function(rs_h) {
-                    console.dir(rs_h);
-
-                    for(var j=0;j<rs_h.rows.length;j++)
-                    {
-                        console.log(j);
-
-                        htmlStringEsp += '<div class="accordion-item-content"><div class="content-block"><p>'+rs_h.rows.item(j).Entrada+': <br/>' + rs_h.rows.item(j).Salida + '</p></div></div>';
-                        console.log("asdasdas " + htmlStringEsp );
-                    }
-                }, function(error) {
-                    console.log('SELECT SQL statement ERROR: ' + error.message);
-                });
-
-                htmlStringEsp += '</li>';
+                    '</div></div></a></li>';
             }
-                htmlStringEsp += '</ul>';
-            console.log("afsfsadsfaddsafasdasfdfsda");
+
+            htmlStringEsp += '</ul>';
             console.log(htmlStringEsp);
             $("#caps-eyh").append(htmlStringEsp);
+            getEspecialidadesDB(rs_tmp);
 
         }
         else
@@ -1678,81 +1664,77 @@ function getCentroDeSaludEyHDB(id)
             $("#caps-eyh").append('<p><div class="icon f7-icons">close</div>  Sin información para mostrar.</p>');
         }
 
-
     }, function(error) {
         console.log('SELECT SQL statement ERROR: ' + error.message);
     });
 
-/*
-        $.ajax({
 
-        url: CapsURL + "/" + id+ "/EspecialidadesYHorarios",
-        cache: false,
-        type: 'get',
-        dataType: "json",
-        success: function (response) {
+}
 
 
-            $("#caps-eyh").append('<h3 class="color-h3 ">Especialidades y Horarios</h3>');
-
-            response  = response.sort(keysrt('Nombre'));
-
-            if(response.length !=0) {
-
-                //inicio
-                var htmlStringEsp = '<ul>';
 
 
-                for (var i = 0; i < response.length; i++) {
+function getEspecialidadesDB(data) {
 
+    for(var j=0;j<data.rows.length;j++) {
+        returnSQLArray('select HXCS.Dia,HE.Hora as Entrada, HS.Hora as Salida from HorariosPorEspecialidadPorCentroDeSalud HXCS inner join Horarios HE on HE.ID = HXCS.HorarioIDEntrada inner join Horarios HS on HS.ID = HXCS.HorarioIDSalida where HXCS.EspecialidadPorCentroDeSaludID=' + data.rows.item(j).ID + ' order by HXCS.Dia asc', processPersonsResponse,data.rows.item(j).ID);
+    }
+}
 
-                    //agrega título
-                    htmlStringEsp += '<li class="accordion-item">'+
-                        '<a href="#" class="item-content item-link">'+
-                        '<div class="item-inner">'+
-                        ' <div class="item-title">'+
-                        response[i].Nombre +
-                        '</div></div></a>';
+function returnSQLArray(str, callback,id) {
+    db = window.sqlitePlugin.openDatabase({name: 'sjapp.db', location: 'default'});
+    db.executeSql(str, [], function(tx, result) { callback(tx,id); });
+}
 
-
-                    var HorariosDia = [];
-                    var Horarios = [];
-                    var IndexDia = 0;
-                    var IndexHorario = 0;
-                    for(var j=0;j<response[i].Horarios.length;j++)
-                    {
-                        IndexHorario = HorariosDia.indexOf(response[i].Horarios[j].Dia);
-                        if ( IndexHorario == -1){
-                            HorariosDia[IndexDia] = response[i].Horarios[j].Dia;
-                            Horarios[IndexDia] = response[i].Horarios[j].HorarioEntrada + ' hs. - ' + response[i].Horarios[j].HorarioSalida + ' hs.';
-                            IndexDia = IndexDia + 1;
-                        }
-                        else{
-                            Horarios[IndexHorario] += ' <br/> ' + response[i].Horarios[j].HorarioEntrada + ' hs. - ' + response[i].Horarios[j].HorarioSalida+ ' hs.';
-                        }
-                    }
-                    for(var k=0;k<HorariosDia.length;k++){
-                        htmlStringEsp += '<div class="accordion-item-content"><div class="content-block"><p>'+HorariosDia[k]+': <br/>' + Horarios[k] + '</p></div></div>';
-                    }
-
-                    htmlStringEsp += '</li>';
-                }
-
-                htmlStringEsp += '</ul>';
-
-
-                $("#caps-eyh").append(htmlStringEsp);
-            }
-            else
+function processPersonsResponse(response,id) {
+    //do work with response
+    var Dia;
+    console.dir(response);
+    console.log("Response");
+    for(var t=0; t<response.rows.length;t++) {
+        switch (response.rows.item(t).Dia)
+        {
+            case 1:
             {
-                $("#caps-eyh").append('<p><div class="icon f7-icons">close</div>  Sin información para mostrar.</p>');
-            }
-        },
-        error: function (error) {
-            //alert(ErrorAjax);
-            window.plugins.toast.show(ErrorAjax,"3000","bottom");
+                Dia = "Lunes";
+            }break;
+
+            case 2:
+            {
+                Dia = "Martes";
+            }break;
+
+            case 3:
+            {
+                Dia = "Miércoles";
+            }break;
+
+            case 4:
+            {
+                Dia = "Jueves";
+            }break;
+
+            case 5:
+            {
+                Dia = "Viernes";
+            }break;
+
+            case 6:
+            {
+                Dia = "Sábado";
+            }break;
+
+            case 7:
+            {
+                Dia = "Domingo";
+            }break;
         }
 
-    });
-    */
+        var tmp = '<b><p>'+Dia+'</p></b>'+
+                  '<p> Desde : '+response.rows.item(t).Entrada+' hs  Hasta : '+response.rows.item(t).Salida+' hs</p>';
+
+        $("#esp" + id).append('<div class="accordion-item-content"><div class="content-block"><p></p><p>'+tmp+'</p></div></div>');
+    }
 }
+
+
