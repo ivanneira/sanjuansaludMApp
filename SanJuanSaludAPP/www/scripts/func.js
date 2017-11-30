@@ -1,5 +1,5 @@
 var server = "gedoc.sanjuan.gov.ar";
-var ErrorAjax = "Ups! Hubo un problema con su conexión a internet.";
+var ErrorAjax = "Para poder utilizar los mapas en la aplicación, recuerda que debes estar conectado internet.";
 var NoticiasURL = "http://"+server+"/AresApi/Api/Portal/Noticias";
 var DepartamentosURL = "http://"+server+"/AresApi/Api/Departamento"; //x
 
@@ -939,17 +939,17 @@ function csBuscarListDB(){
                     '<li class="item-content"  data-id="' + rs.rows.item(i).ID + '">' +
                     '<div class="item-inner">' +
                     '<div class="item-title"><div><b>' + rs.rows.item(i).Nombre +
-                    '</b><br>' +
-                    '<div class="chip">' +
-                    '<div class="chip-label"><u> Teléfono:</u>' + rs.rows.item(i).Telefono + '</div>' +
+                    '</b>' +
+                    /*
+                    '<div class="x">' +
+                    '<div class="chip-labelx"><u> Teléfono:</u>' + rs.rows.item(i).Telefono + '</div>' +
                     '</div>' +
                     '</div><div><u>Dirección:</u> ' + rs.rows.item(i).Direccion + '</div>' +
+                    */
                     '</div>' +
                     '</li>';
 
                 $("#csDatalist").append(tmp);
-
-
 
         }
 
@@ -1688,7 +1688,7 @@ function returnSQLArray(str, callback,id) {
 
 function processPersonsResponse(response,id) {
     //do work with response
-    var Dia;
+    var Dia,DiaT;
     console.dir(response);
     console.log("Response");
     for(var t=0; t<response.rows.length;t++) {
@@ -1730,8 +1730,12 @@ function processPersonsResponse(response,id) {
             }break;
         }
 
-        var tmp = '<b><p>'+Dia+'</p></b>'+
-                  '<p> Desde : '+response.rows.item(t).Entrada+' hs  Hasta : '+response.rows.item(t).Salida+' hs</p>';
+        var z = (Dia != DiaT) ? Dia : '';
+
+        var tmp = '<b><p>'+ z +'</p></b>'+
+                  '<p> Desde : '+response.rows.item(t).Entrada+' hs.  Hasta : '+response.rows.item(t).Salida+' hs.</p>';
+
+        DiaT = Dia;
 
         $("#esp" + id).append('<div class="accordion-item-content"><div class="content-block"><p></p><p>'+tmp+'</p></div></div>');
     }

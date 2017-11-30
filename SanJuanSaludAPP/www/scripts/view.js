@@ -8,8 +8,6 @@ myApp.onPageInit('departamentos', function (page) {
 
 myApp.onPageInit('buscar' , function(page){
 
-    var mySearchbar = $$('.searchbar')[0].f7Searchbar;
-
     // Now you can use it
     //mySearchbar.search('Hello aworld');
     csBuscarList();
@@ -23,11 +21,8 @@ myApp.onPageInit('caps', function (page) {
 myApp.onPageInit('caps-detail', function (page) {
 
     requestPermissionGPS();
-    //getCentroDeSalud(CapsID);
     getCentroDeSaludDB(CapsID);
-    //getCentroDeSaludEyH(CapsID);
     getCentroDeSaludEyHDB(CapsID);
-    //getCentroDeSaludLC(CapsID);
     getCentroDeSaludLCDB(CapsID);
 
 });

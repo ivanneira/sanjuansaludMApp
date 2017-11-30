@@ -8,9 +8,11 @@ var $$ = Dom7;
 var mainView = myApp.addView('.view-main', {
     main: true,
     material: true,
-    fastClicks: false,
-    animateNavBackIcon:true,
+    fastClicks: true,
+    animateNavBackIcon:false,
 });
+
+//var mySearchbar = $$('.searchbar')[0].f7Searchbar;
 
 var db = null;
 
