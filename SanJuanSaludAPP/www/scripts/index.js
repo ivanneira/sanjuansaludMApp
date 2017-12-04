@@ -8,10 +8,13 @@ var $$ = Dom7;
 var mainView = myApp.addView('.view-main', {
     main: true,
     material: true,
-    fastClicks: false,
-    animateNavBackIcon:true,
+    fastClicks: true,
+    animateNavBackIcon:false,
 });
 
+//var mySearchbar = $$('.searchbar')[0].f7Searchbar;
+
+var db = null;
 
 function requestPermissionGPS()
 {
@@ -45,7 +48,6 @@ function requestPermissionGPS()
 
     document.addEventListener( 'deviceready', onDeviceReady.bind( this ), false );
 
-
     function onDeviceReady() {
 
 
@@ -53,8 +55,11 @@ function requestPermissionGPS()
 
         //FORZADO DE ACTIVACION DE GPS EN LAS PLATAFORMAS
         requestPermissionGPS();
-        //createDatabase();
-        //maps();
+
+
+        Database(db);
+
+
 
         // Controlar la pausa de Cordova y reanudar eventos
         document.addEventListener( 'pause', onPause.bind( this ), false );
@@ -105,6 +110,5 @@ function requestPermissionGPS()
 
 
 } )();
-
 
 

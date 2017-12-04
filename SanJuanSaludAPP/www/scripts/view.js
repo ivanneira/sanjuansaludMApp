@@ -8,11 +8,9 @@ myApp.onPageInit('departamentos', function (page) {
 
 myApp.onPageInit('buscar' , function(page){
 
-    var mySearchbar = $$('.searchbar')[0].f7Searchbar;
-
     // Now you can use it
     //mySearchbar.search('Hello aworld');
-    csBuscarList();
+    //csBuscarList();
 });
 
 myApp.onPageInit('caps', function (page) {
@@ -23,9 +21,9 @@ myApp.onPageInit('caps', function (page) {
 myApp.onPageInit('caps-detail', function (page) {
 
     requestPermissionGPS();
-    getCentroDeSalud(CapsID);
-    getCentroDeSaludEyH(CapsID);
-    getCentroDeSaludLC(CapsID);
+    getCentroDeSaludDB(CapsID);
+    getCentroDeSaludEyHDB(CapsID);
+    getCentroDeSaludLCDB(CapsID);
 
 });
 
@@ -47,6 +45,8 @@ function load()
 {
     getSlider();
 
+
+
     $("#btnAyuda").click(function(){
 
         mainView.router.loadPage("ayuda.html");
@@ -63,6 +63,14 @@ function load()
         mainView.router.loadPage("1000dias.html");
 
     });
+
+
+    $("#btn1000dias").click(function(){
+
+        mainView.router.loadPage("formulario1000dias.html");
+    });
+
+
 
 
     //- Two groups
@@ -110,6 +118,8 @@ function load()
 $$(document).on('DOMContentLoaded', function(){
     load();
 });
+
+
 
 function validacionProtur (){
 
