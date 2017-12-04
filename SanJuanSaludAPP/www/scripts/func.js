@@ -21,7 +21,6 @@ var sinConexion = 'El conenido online no esta disponible momentaneamente.';
 var myLat = -31.536395;
 var myLong = -68.536976;
 
-
 //-31.536395, -68.536976 
 //PARAMETROS DE CONFIGURACION PARA EL GPS
 var optionsGPS = {
@@ -807,7 +806,6 @@ var SMS = {
 
 function Database(db)
 {
-
     db = window.sqlitePlugin.openDatabase({name: 'sjapp.db', location: 'default'});
 
     //Creo la tabla Departamentos
@@ -1109,30 +1107,41 @@ function sincronizarDB()
 function syncBuscarList()
 {
     $.ajax({
-
         url: CapsURL,
         cache: false,
         type: 'get',
         dataType: "json",
         success: function (response) {
-
-            //Si hay internet Sincronizo Centros de Salud limpiando la tabla
             db = window.sqlitePlugin.openDatabase({name: 'sjapp.db', location: 'default'});
-
+            var strSQL = "delete from CentroDeSalud;";
             db.sqlBatch([
-                'delete from CentroDeSalud'
-
+                strSQL
             ], function() {
                 //console.log('Clear database OK');
             }, function(error) {
                 //console.log('SQL batch ERROR: ' + error.message);
             });
+            strSQL = "INSERT INTO CentroDeSalud (ID, Nombre, Latitud, Longitud, Telefono, Direccion,DepartamentoID, LocalidadID, URLImagenDelCentroDeSalud) VALUES ";
+            for(var i=0;i<140;i++) {
+                    strSQL = strSQL + "(" + response[i].ID + ",'" + response[i].Nombre + "'," + response[i].Latitud + "," + response[i].Longitud + ",'" + response[i].Telefono + "','" + response[i].Direccion + "'," + response[i].DepartamentoID + "," + response[i].LocalidadID + ",'" + response[i].URLImagenDelCentroDeSalud + "')"
+                    strSQL = strSQL + ",";
 
-            for(var i=0;i<response.length;i++) {
-                if (response[i].ID != 590 && response[i].ID != 591) {
-                    InsertCentroDeSalud(response[i].ID, response[i].Nombre, response[i].Latitud, response[i].Longitud, response[i].Telefono, response[i].Direccion, response[i].DepartamentoID, response[i].LocalidadID, response[i].URLImagenDelCentroDeSalud);
-                }
             }
+
+            strSQL = strSQL.slice(0,-1);
+            strSQL = strSQL + ";";
+
+            console.log(strSQL);
+            //Si hay internet Sincronizo Centros de Salud limpiando la tabla
+            db.sqlBatch([
+                strSQL
+            ], function() {
+                console.log('Centros de salud');
+                window.plugins.toast.show("Los Centros de Salud estan siendo Actualizados ","3000","bottom");
+
+            }, function(error) {
+                console.log('SQL batch ERROR: centros ' + error.message);
+            });
         },
         error: function (error) {
             window.plugins.toast.show(ErrorAjax,"3000","bottom");
@@ -1149,57 +1158,69 @@ function syncDepartamento()
         type: 'get',
         dataType: "json",
         success: function (response) {
-
-            //Si Hay internet Sincronizo Departamentos limpiando la tabla.
             db = window.sqlitePlugin.openDatabase({name: 'sjapp.db', location: 'default'});
-
+            var strSQL = "delete from Departamentos;";
             db.sqlBatch([
-                'delete from Departamentos'
+                strSQL
             ], function() {
                 //console.log('Clear database OK');
             }, function(error) {
                 //console.log('SQL batch ERROR: ' + error.message);
             });
-
+            strSQL = "INSERT INTO Departamentos (ID,Nombre, Zona) VALUES ";
             for(var i=0;i<response.length;i++) {
-                InsertDepartamentos(response[i].ID, response[i].Nombre, response[i].Zona);
+                strSQL = strSQL + "(" + response[i].ID + ",'" + response[i].Nombre + "'," + response[i].Zona + "),"
             }
+            strSQL = strSQL.replace(/.$/,";")
+            console.log(strSQL);
+            //Si Hay internet Sincronizo Departamentos limpiando la tabla.
 
+            db.sqlBatch([
+                strSQL
+            ], function() {
+                //console.log('Clear database OK');
+                window.plugins.toast.show("Los Departamentos estan siendo Actualizados ","3000","bottom");
+            }, function(error) {
+                //console.log('SQL batch ERROR: ' + error.message);
+            });
         },
         error: function () {
             window.plugins.toast.show(ErrorAjax,"3000","bottom");
         }
 
     });
-
-
 }
-
 
 function syncHorarios()
 {
     $.ajax({
-
         url: Horarios,
         cache: false,
         type: 'get',
         dataType: "json",
         success: function (response) {
-
             db = window.sqlitePlugin.openDatabase({name: 'sjapp.db', location: 'default'});
-
+            var strSQL = "delete from Horarios;";
             db.sqlBatch([
-                'delete from Horarios'
-
+                strSQL
             ], function() {
                 //console.log('Clear database OK');
             }, function(error) {
                 //console.log('SQL batch ERROR: ' + error.message);
             });
-
-                for (var i = 0; i < response.length; i++) {
-                        InsertHorarios(response[i].ID, response[i].Hora,response[i].Activo)
-                }
+            strSQL = "INSERT INTO Horarios (ID, Hora, Activo ) VALUES ";
+            for(var i=0;i<response.length;i++) {
+                strSQL = strSQL + "(" + response[i].ID + ",'" + response[i].Hora + "'," +response[i].Activo + "),";
+            }
+            strSQL = strSQL.replace(/.$/,";");
+            db.sqlBatch([
+                strSQL
+            ], function() {
+                //console.log('Clear database OK');
+                window.plugins.toast.show("Los Horarios estan siendo Actualizados ","3000","bottom");
+            }, function(error) {
+                //console.log('SQL batch ERROR: ' + error.message);
+            });
         },
         error: function (error) {
             //alert(ErrorAjax);
@@ -1234,21 +1255,28 @@ function syncEspecialidad()
         type: 'get',
         dataType: "json",
         success: function (response) {
-
             db = window.sqlitePlugin.openDatabase({name: 'sjapp.db', location: 'default'});
-
+            var strSQL = "delete from Especialidad;";
             db.sqlBatch([
-                'delete from Especialidad'
-
+                strSQL
             ], function() {
                 //console.log('Clear database OK');
             }, function(error) {
                 //console.log('SQL batch ERROR: ' + error.message);
             });
-
-            for (var i = 0; i < response.length; i++) {
-                    InsertEspecialidad(response[i].ID, response[i].Nombre)
+            strSQL = "INSERT INTO Especialidad (ID, Nombre ) VALUES ";
+            for(var i=0;i<response.length;i++) {
+                strSQL = strSQL + "(" + response[i].ID + ",'" + response[i].Nombre + "'),"
             }
+            strSQL = strSQL.replace(/.$/,";");
+            db.sqlBatch([
+                strSQL
+            ], function() {
+                //console.log('Clear database OK');
+            }, function(error) {
+                //console.log('SQL batch ERROR: ' + error.message);
+                window.plugins.toast.show("Las Especialidades estan siendo Actualizados ","3000","bottom");
+            });
         },
         error: function (error) {
             //alert(ErrorAjax);
@@ -1276,29 +1304,33 @@ function InsertEspecialidad(ID, Nombre)
 function syncEspecialidadPorCentroDeSalud()
 {
     $.ajax({
-
         url: EspecialidadPorCentroDeSalud,
         cache: false,
         type: 'get',
         dataType: "json",
         success: function (response) {
-
             db = window.sqlitePlugin.openDatabase({name: 'sjapp.db', location: 'default'});
-
+            var strSQL = "delete from EspecialidadPorCentroDeSalud;";
             db.sqlBatch([
-                'delete from EspecialidadPorCentroDeSalud'
-
+                strSQL
             ], function() {
-                console.log('Limpieza  OK');
+                //console.log('Clear database OK');
             }, function(error) {
                 //console.log('SQL batch ERROR: ' + error.message);
             });
-
+            strSQL = "INSERT INTO EspecialidadPorCentroDeSalud (ID, CentroDeSaludID,EspecialidadID, Activo ) VALUES ";
             for (var i = 0; i < response.length; i++) {
-                console.log(i);
-                InsertEspecialidadPorCentroDeSalud(response[i].ID, response[i].CentroDeSaludID,response[i].EspecialidadID,response[i].Activo )
-
+                strSQL = strSQL + "(" + response[i].ID + "," + response[i].CentroDeSaludID + "," + response[i].EspecialidadID + "," + response[i].Activo + "),";
             }
+            strSQL = strSQL.replace(/.$/,";");
+            db.sqlBatch([
+                strSQL
+            ], function() {
+                //console.log('Limpieza  OK');
+                window.plugins.toast.show("Las Especialidades por centro de salud estan siendo Actualizados ","3000","bottom");
+            }, function(error) {
+                //console.log('SQL batch ERROR: ' + error.message);
+            });
         },
         error: function (error) {
             //alert(ErrorAjax);
@@ -1333,20 +1365,28 @@ function syncHorariosPorEspecialidadPorCentroDeSalud()
         type: 'get',
         dataType: "json",
         success: function (response) {
-
             db = window.sqlitePlugin.openDatabase({name: 'sjapp.db', location: 'default'});
+            var strSQL = "delete from HorariosPorEspecialidadPorCentroDeSalud;";
             db.sqlBatch([
-                'delete from HorariosPorEspecialidadPorCentroDeSalud'
-
+                strSQL
             ], function() {
                 //console.log('Clear database OK');
             }, function(error) {
                 //console.log('SQL batch ERROR: ' + error.message);
             });
-
+            strSQL = "INSERT INTO HorariosPorEspecialidadPorCentroDeSalud (ID, HorarioIDEntrada,HorarioIDSalida, EspecialidadPorCentroDeSaludID,Dia ,Activo) VALUES ";
             for (var i = 0; i < response.length; i++) {
-                InsertHorariosPorEspecialidadPorCentroDeSalud(response[i].ID,response[i].HorarioIDEntrada, response[i].HorarioIDSalida, response[i].EspecialidadPorCentroDeSaludID,response[i].Dia,response[i].Activo)
+                strSQL = strSQL + "(" + response[i].ID + ",'" + response[i].HorarioIDEntrada, + "','" + response[i].HorarioIDSalida + "'," + response[i].EspecialidadPorCentroDeSaludID + "," +response[i].Dia + "," +response[i].Activo + "),";
             }
+            strSQL = strSQL.replace(/.$/,";");
+            db.sqlBatch([
+                strSQL
+            ], function() {
+                //console.log('Clear database OK');
+                window.plugins.toast.show("Los Horarios por Especialidades por centro de salud estan siendo Actualizados ","3000","bottom");
+            }, function(error) {
+                //console.log('SQL batch ERROR: ' + error.message);
+            });
         },
         error: function (error) {
             //alert(ErrorAjax);
@@ -1375,28 +1415,34 @@ function InsertHorariosPorEspecialidadPorCentroDeSalud(ID, HorarioIDEntrada,Hora
 function syncLineaColectivo()
 {
     $.ajax({
-
         url: LineaColectivo,
         cache: false,
         type: 'get',
         dataType: "json",
         success: function (response) {
-
             db = window.sqlitePlugin.openDatabase({name: 'sjapp.db', location: 'default'});
-
+            var strSQL = "delete from LineaColectivo;";
             db.sqlBatch([
-                'delete from LineaColectivo'
-
+                strSQL
             ], function() {
                 //console.log('Clear database OK');
             }, function(error) {
                 //console.log('SQL batch ERROR: ' + error.message);
             });
-
-
+            strSQL = "INSERT INTO LineaColectivo (ID, Numero ,Activo) VALUES ";
             for (var i = 0; i < response.length; i++) {
-                InsertLineaColectivo(response[i].ID, response[i].Numero,response[i].Activo )
+                strSQL = strSQL + "(" + response[i].ID + ",'" + response[i].Numero + "'," + response[i].Activo + "),"
             }
+            strSQL = strSQL.replace(/.$/,";");
+            db.sqlBatch([
+                strSQL
+            ], function() {
+                //console.log('Clear database OK');
+                window.plugins.toast.show("Las Lineas de colectivo  estan siendo Actualizados ","3000","bottom");
+            }, function(error) {
+                //console.log('SQL batch ERROR: ' + error.message);
+            });
+
         },
         error: function (error) {
             //alert(ErrorAjax);
@@ -1424,26 +1470,33 @@ function InsertLineaColectivo(ID, Numero ,Activo)
 function syncLineaColectivoPorCentroDeSalud()
 {
     $.ajax({
-
         url: LineaColectivoPorCentroDeSalud,
         cache: false,
         type: 'get',
         dataType: "json",
         success: function (response) {
-
             db = window.sqlitePlugin.openDatabase({name: 'sjapp.db', location: 'default'});
+            var strSQL = "delete from LineaColectivoPorCentroDeSalud;";
             db.sqlBatch([
-                'delete from LineaColectivoPorCentroDeSalud'
-
+                strSQL
             ], function() {
                 //console.log('Clear database OK');
             }, function(error) {
                 //console.log('SQL batch ERROR: ' + error.message);
             });
-
+            strSQL = "INSERT INTO LineaColectivoPorCentroDeSalud (ID, LineaColectivoID,CentroDeSaludID ,Activo) VALUES ";
             for (var i = 0; i < response.length; i++) {
-                InsertLineaColectivoPorCentroDeSalud(response[i].ID, response[i].LineaColectivoID,response[i].CentroDeSaludID ,response[i].Activo )
+                strSQL = strSQL + "(" + response[i].ID + "," + response[i].LineaColectivoID + "," + response[i].CentroDeSaludID + "," + response[i].Activo + "),";
             }
+            strSQL = strSQL.replace(/.$/,";");
+            db.sqlBatch([
+                strSQL
+            ], function() {
+                //console.log('Clear database OK');
+                window.plugins.toast.show("Las Lineas de colectivo por centro de salud estan siendo Actualizados ","3000","bottom");
+            }, function(error) {
+                //console.log('SQL batch ERROR: ' + error.message);
+            });
         },
         error: function (error) {
             //alert(ErrorAjax);

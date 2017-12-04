@@ -16,8 +16,6 @@ var mainView = myApp.addView('.view-main', {
 
 var db = null;
 
-
-
 function requestPermissionGPS()
 {
     if(typeof(cordova.plugins) != 'undefined') {
