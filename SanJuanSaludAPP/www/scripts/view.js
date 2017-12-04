@@ -10,7 +10,7 @@ myApp.onPageInit('buscar' , function(page){
 
     // Now you can use it
     //mySearchbar.search('Hello aworld');
-    csBuscarList();
+    //csBuscarList();
 });
 
 myApp.onPageInit('caps', function (page) {
