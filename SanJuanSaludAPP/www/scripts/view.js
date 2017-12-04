@@ -46,6 +46,7 @@ function load()
     getSlider();
 
 
+
     $("#btnAyuda").click(function(){
 
         mainView.router.loadPage("ayuda.html");

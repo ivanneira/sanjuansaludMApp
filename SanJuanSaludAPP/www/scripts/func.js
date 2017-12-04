@@ -748,7 +748,7 @@ function validacion1000dias(){
 
     if(mes == undefined)
     {
-        alert("Debe seleccionar una opción.");
+        myApp.alert("Debe seleccionar una opción.","Mil Dias");
         return;
     }
 
@@ -757,7 +757,7 @@ function validacion1000dias(){
         SMS.sendSms(1);
     }
     else {
-        alert("Ingrese un DNI válido.");
+        myApp.alert("Ingrese un DNI válido.","Mil Dias");
         return;
     }
 
@@ -796,8 +796,8 @@ var SMS = {
             }
         };
 
-        var success = function () { alert('El mensaje se envió correctamente, en breve recibirá un mensaje de bienvenida.'); };
-        var error = function (e) { alert('No se pudo enviar el mensaje: :' + e); };
+        var success = function () { myApp.alert('El mensaje se envió correctamente, en breve recibirá un mensaje de bienvenida.',"Mil Dias"); };
+        var error = function (e) { myApp.alert('No se pudo enviar el mensaje: :' + e,"Mil Dias"); };
         sms.send(number, message, options, success, error);
     }
 };
@@ -807,6 +807,16 @@ var SMS = {
 function Database(db)
 {
     db = window.sqlitePlugin.openDatabase({name: 'sjapp.db', location: 'default'});
+
+    //Creo la tabla DatosPersonales
+    db.sqlBatch([
+        'CREATE TABLE IF NOT EXISTS DatosPersonales ( Telefono, DNI)',
+
+    ], function() {
+        console.log('Tabla DatosPersonales OK');
+    }, function(error) {
+        //console.log('SQL batch ERROR: ' + error.message);
+    });
 
     //Creo la tabla Departamentos
     db.sqlBatch([
@@ -897,7 +907,7 @@ function csBuscarListDB(cap){
 
     if(cap == "")
     {
-        alert("Ingrese un nombre válido");
+        myApp.alert("Ingrese un nombre válido","Búsqueda por nombre");
         return;
     }
 
@@ -923,7 +933,10 @@ function csBuscarListDB(cap){
                     '</div><div><u>Dirección:</u> ' + rs.rows.item(i).Direccion + '</div>' +
 
                     '</div>' +
-                    '</li>';
+                    '</li><br>';
+
+
+
 
                 $("#csDatalist").append(tmp);
 
@@ -1071,6 +1084,7 @@ function getCentroDeSaludLCDB(id)
 
 function sincronizarDB()
 {
+    getDatosPersonales();
     syncBuscarList();
     syncDepartamento();
     syncHorarios();
@@ -1707,3 +1721,63 @@ function processPersonsResponse(response,id) {
 }
 
 
+function getDatosPersonales() {
+
+    db = window.sqlitePlugin.openDatabase({name: 'sjapp.db', location: 'default'});
+
+    db.executeSql('select * from DatosPersonales', [], function(rs) {
+        console.dir(rs)
+
+        for(var i=0;i<rs.rows.length;i++)
+        {
+            console.dir(rs.rows.item(i));
+        }
+
+        if(rs.rows.length == 0)
+        {
+            mainView.router.loadPage("datosPersonales.html");
+            console.log("No hay datos cargados");
+        }
+
+    }, function(error) {
+        console.log('SELECT SQL statement ERROR: ' + error.message);
+    });
+}
+
+
+function enviarFormularioDP(){
+
+    if($("#cel").val().length < 5)
+    {
+        myApp.alert("Ingrese un Número válido.","Datos Personales");
+        return;
+    }
+
+    if($("#dni").val().length < 6)
+    {
+        myApp.alert("Ingrese un Número  de documento válido.","Datos Personales");
+        return;
+    }
+
+    db = window.sqlitePlugin.openDatabase({name: 'sjapp.db', location: 'default'});
+    var strSQL = "delete from DatosPersonales;";
+    db.sqlBatch([
+        strSQL
+    ], function() {
+        //console.log('Clear database OK');
+    }, function(error) {
+        //console.log('SQL batch ERROR: ' + error.message);
+    });
+    strSQL = "INSERT INTO DatosPersonales (Telefono, DNI) VALUES ('"+$("#cel").val()+"','"+$("#dni").val()+"')";
+
+    //Si hay internet Sincronizo Centros de Salud limpiando la tabla
+    db.sqlBatch([
+        strSQL
+    ], function() {
+        window.plugins.toast.show("Gracias por su confianza. ","3000","bottom");
+        mainView.router.loadPage("index.html");
+    }, function(error) {
+        console.log('SQL batch ERROR: centros ' + error.message);
+    });
+
+}
