@@ -889,12 +889,8 @@ function Database(db)
     }, function(error) {
         //console.log('SQL batch ERROR: ' + error.message);
     });
-
-
     sincronizarDB();
-
 }
-
 
 
 function csBuscarListDB(cap){
@@ -908,8 +904,8 @@ function csBuscarListDB(cap){
     db = window.sqlitePlugin.openDatabase({name: 'sjapp.db', location: 'default'});
 
     db.executeSql('SELECT ID, Nombre, Latitud, Longitud, Telefono, Direccion,DepartamentoID, LocalidadID, URLImagenDelCentroDeSalud FROM CentroDeSalud where Nombre like "%'+cap+'%"', [], function(rs) {
-        console.log('SELECT ID, Nombre, Latitud, Longitud, Telefono, Direccion,DepartamentoID, LocalidadID, URLImagenDelCentroDeSalud FROM CentroDeSalud where Nombre like "%'+cap+'%"');
-        console.dir(rs)
+        //console.log('SELECT ID, Nombre, Latitud, Longitud, Telefono, Direccion,DepartamentoID, LocalidadID, URLImagenDelCentroDeSalud FROM CentroDeSalud where Nombre like "%'+cap+'%"');
+        //console.dir(rs)
 
         $("#csDatalist").empty();
         for(var i=0;i<rs.rows.length;i++)
@@ -949,7 +945,7 @@ function getDepartamentosDB()
     db = window.sqlitePlugin.openDatabase({name: 'sjapp.db', location: 'default'});
 
     db.executeSql('SELECT ID,Nombre, Zona FROM Departamentos', [], function(rs) {
-        console.dir(rs)
+        //console.dir(rs)
         var titleFlag = "";
         var htmlTitle= "";
 
@@ -1013,7 +1009,7 @@ function getCentroDeSaludxDptoDB(id)
     db = window.sqlitePlugin.openDatabase({name: 'sjapp.db', location: 'default'});
 
     db.executeSql('SELECT * FROM CentroDeSalud where DepartamentoID='+id+' order by Nombre asc', [], function(rs) {
-        console.dir(rs)
+        //console.dir(rs)
 
         $("#caps-container").append('<div class="list-group"><ul><li class="list-group-title">'+ $("#Dpto_" + id).text() +'</li></ul></div>');
 
@@ -1046,7 +1042,7 @@ function getCentroDeSaludxDptoDB(id)
 //FUNCION PARA OBTENER LINEAS DE COLECTIVOS QUE LLEGAN A UN CENTRO DE SALUD
 function getCentroDeSaludLCDB(id)
 {
-    console.log(id);
+    //console.log(id);
     db = window.sqlitePlugin.openDatabase({name: 'sjapp.db', location: 'default'});
 
     db.executeSql('SELECT LC.Numero FROM LineaColectivoPorCentroDeSalud  LCXCS INNER JOIN LineaColectivo LC on LC.ID = LCXCS.LineaColectivoID where LCXCS.CentroDeSaludID='+id+' order by LC.Numero asc ', [], function(rs) {
@@ -1329,9 +1325,6 @@ function syncHorariosPorEspecialidadPorCentroDeSalud()
             strSQL = strSQL.slice(0,-1);
             strSQL = strSQL + ";";
 
-            console.log("**********************************************************")
-            console.log(strSQL);
-            console.log("**********************************************************")
 
             db.sqlBatch([
                 strSQL
@@ -1451,7 +1444,7 @@ function getCentroDeSaludDB(id)
     db = window.sqlitePlugin.openDatabase({name: 'sjapp.db', location: 'default'});
 
     db.executeSql('SELECT * FROM CentroDeSalud where ID='+id, [], function(rs) {
-        console.dir(rs)
+        //console.dir(rs)
 
         $("#caps-tittle").html(rs.rows.item(0).Nombre);
         $("#caps-basic").append(
@@ -1629,7 +1622,7 @@ function getCentroDeSaludEyHDB(id)
             }
 
             htmlStringEsp += '</ul>';
-            console.log(htmlStringEsp);
+            //console.log(htmlStringEsp);
             $("#caps-eyh").append(htmlStringEsp);
             getEspecialidadesDB(rs_tmp);
 
@@ -1660,8 +1653,8 @@ function returnSQLArray(str, callback,id) {
 function processPersonsResponse(response,id) {
     //do work with response
     var Dia,DiaT;
-    console.dir(response);
-    console.log("Response");
+    //console.dir(response);
+    //console.log("Response");
     for(var t=0; t<response.rows.length;t++) {
         switch (response.rows.item(t).Dia)
         {
