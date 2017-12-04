@@ -1105,6 +1105,7 @@ function syncBuscarList()
                     strSQL = strSQL + ",";
             }
 
+
             strSQL = strSQL.slice(0,-1);
             strSQL = strSQL + ";";
 
