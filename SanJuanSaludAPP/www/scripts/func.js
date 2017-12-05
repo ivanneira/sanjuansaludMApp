@@ -808,6 +808,16 @@ function Database(db)
 {
     db = window.sqlitePlugin.openDatabase({name: 'sjapp.db', location: 'default'});
 
+
+    //Creo la tabla RegistroActualizacionTablas
+    db.sqlBatch([
+        'CREATE TABLE IF NOT EXISTS RegistroActualizacionTablas ( ID, NombreTabla, FechaUltimaActualizacion)',
+    ], function() {
+        console.log('Tabla RegistroActualizacionTablas OK');
+    }, function(error) {
+        //console.log('SQL batch ERROR: ' + error.message);
+    });
+
     //Creo la tabla DatosPersonales
     db.sqlBatch([
         'CREATE TABLE IF NOT EXISTS DatosPersonales ( Telefono, DNI)',
@@ -921,8 +931,9 @@ function csBuscarListDB(cap){
         for(var i=0;i<rs.rows.length;i++)
         {
 
+            /*
                 var tmp =
-                    '<li class="item-content"  data-id="' + rs.rows.item(i).ID + '">' +
+                    '<li class="item-content asd"  data-id="' + rs.rows.item(i).ID + '">' +
                     '<div class="item-inner">' +
                     '<div class="item-title"><div><b>' + rs.rows.item(i).Nombre +
                     '</b>' +
@@ -934,8 +945,14 @@ function csBuscarListDB(cap){
 
                     '</div>' +
                     '</li><br>';
-
-
+            */
+            var tmp = '<div class="card clickEvent" data-id="' + rs.rows.item(i).ID + '">'+
+                '<div class="card-header"><i class="icon f7-icons  color-red">info_fill</i>' + rs.rows.item(i).Nombre + '</div>'+
+                '<div class="card-content">'+
+                '<div class="card-content-inner"><i class="icon f7-icons  color-red">phone_fill</i>' + rs.rows.item(i).Telefono + '</div>'+
+                '<div class="card-content-inner"><i class="icon f7-icons  color-red">navigation_fill</i>' + rs.rows.item(i).Direccion + '</div>'+
+                '</div>'+
+                '</div> <br>';
 
 
                 $("#csDatalist").append(tmp);
@@ -943,7 +960,7 @@ function csBuscarListDB(cap){
         }
 
 
-        $(".item-content").click(function(){
+        $(".clickEvent").click(function(){
             setCapsId($(this).data('id'),'capsDetail.html');
         });
 
@@ -1652,6 +1669,11 @@ function getCentroDeSaludEyHDB(id)
     });
 }
 
+function getRegistroActualizacionTablas(NombreTabla)
+{
+   //2017-12-01 12:08:55.673
+    return "2017-12-01 12:08:55.673";
+}
 
 function getEspecialidadesDB(data) {
 
@@ -1745,18 +1767,24 @@ function getDatosPersonales() {
 }
 
 
-function enviarFormularioDP(){
+function enviarFormularioDP(flag){
 
-    if($("#cel").val().length < 5)
-    {
-        myApp.alert("Ingrese un Número válido.","Datos Personales");
-        return;
+    var msg = "";
+    if(flag==0) {
+        if ($("#cel").val().length < 5) {
+            myApp.alert("Ingrese un Número válido.", "Datos Personales");
+            return;
+        }
+
+        if ($("#dni").val().length < 6) {
+            myApp.alert("Ingrese un Número  de documento válido.", "Datos Personales");
+            return;
+        }
+        msg = "Gracias por su confianza. ";
     }
-
-    if($("#dni").val().length < 6)
+    else
     {
-        myApp.alert("Ingrese un Número  de documento válido.","Datos Personales");
-        return;
+        msg= "La información personal fue omitida.";
     }
 
     db = window.sqlitePlugin.openDatabase({name: 'sjapp.db', location: 'default'});
@@ -1774,7 +1802,7 @@ function enviarFormularioDP(){
     db.sqlBatch([
         strSQL
     ], function() {
-        window.plugins.toast.show("Gracias por su confianza. ","3000","bottom");
+        window.plugins.toast.show(msg,"3000","bottom");
         mainView.router.loadPage("index.html");
     }, function(error) {
         console.log('SQL batch ERROR: centros ' + error.message);
