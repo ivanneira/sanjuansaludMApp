@@ -29,6 +29,8 @@ var optionsGPS = {
     maximumAge: 0
 };
 
+
+
 //FUNCION QUE DEVOLVERA LA POSICION ACTUAL DEL GPS
 function successGPS(pos) {
     var crd = pos.coords;
@@ -1101,16 +1103,34 @@ function getCentroDeSaludLCDB(id)
 
 function sincronizarDB()
 {
-    getDatosPersonales();
-    syncBuscarList();
-    syncDepartamento();
-    syncHorarios();
-    syncEspecialidad();
-    syncEspecialidadPorCentroDeSalud();
-    syncHorariosPorEspecialidadPorCentroDeSalud();
-    syncLineaColectivo();
-    syncLineaColectivoPorCentroDeSalud();
+    var networkState = navigator.connection.type;
 
+    var states = {};
+    states[Connection.UNKNOWN]  = 'Unknown connection';
+    states[Connection.ETHERNET] = 'Ethernet connection';
+    states[Connection.WIFI]     = 'WiFi connection';
+    states[Connection.CELL_2G]  = 'Cell 2G connection';
+    states[Connection.CELL_3G]  = 'Cell 3G connection';
+    states[Connection.CELL_4G]  = 'Cell 4G connection';
+    states[Connection.CELL]     = 'Cell generic connection';
+    states[Connection.NONE]     = 'No network connection';
+
+    //alert('Connection type: ' + states[networkState]);
+    if(states[networkState] == "Cell 4G connection" || states[networkState] == 'Cell 3G connection' || states[networkState] == 'WiFi connection') {
+        getDatosPersonales();
+        syncBuscarList();
+        syncDepartamento();
+        syncHorarios();
+        syncEspecialidad();
+        syncEspecialidadPorCentroDeSalud();
+        syncHorariosPorEspecialidadPorCentroDeSalud();
+        syncLineaColectivo();
+        syncLineaColectivoPorCentroDeSalud();
+    }
+    else
+    {
+        window.plugins.toast.show("La conexión detectada es lenta o inestable, los datos serán actualizados cuando detectemos una conexión estable.","4000","bottom");
+    }
 }
 
 function syncBuscarList()
@@ -1122,7 +1142,8 @@ function syncBuscarList()
         dataType: "json",
         success: function (response) {
             db = window.sqlitePlugin.openDatabase({name: 'sjapp.db', location: 'default'});
-            var strSQL = "delete from CentroDeSalud;";
+            var strDelSQL = "delete from CentroDeSalud;";
+            /*
             db.sqlBatch([
                 strSQL
             ], function() {
@@ -1130,7 +1151,8 @@ function syncBuscarList()
             }, function(error) {
                 //console.log('SQL batch ERROR: ' + error.message);
             });
-            strSQL = "INSERT INTO CentroDeSalud (ID, Nombre, Latitud, Longitud, Telefono, Direccion,DepartamentoID, LocalidadID, URLImagenDelCentroDeSalud) VALUES ";
+            */
+            var strSQL = "INSERT INTO CentroDeSalud (ID, Nombre, Latitud, Longitud, Telefono, Direccion,DepartamentoID, LocalidadID, URLImagenDelCentroDeSalud) VALUES ";
             for(var i=0;i<response.length;i++) {
                     strSQL = strSQL + "(" + response[i].ID + ",'" + response[i].Nombre + "','" + response[i].Latitud + "','" + response[i].Longitud + "','" + response[i].Telefono + "','" + response[i].Direccion + "'," + response[i].DepartamentoID + "," + response[i].LocalidadID + ",'" + response[i].URLImagenDelCentroDeSalud + "')"
                     strSQL = strSQL + ",";
@@ -1142,6 +1164,7 @@ function syncBuscarList()
 
             //Si hay internet Sincronizo Centros de Salud limpiando la tabla
             db.sqlBatch([
+                strDelSQL,
                 strSQL
             ], function() {
                 console.log('Centros de salud');
@@ -1167,7 +1190,8 @@ function syncDepartamento()
         dataType: "json",
         success: function (response) {
             db = window.sqlitePlugin.openDatabase({name: 'sjapp.db', location: 'default'});
-            var strSQL = "delete from Departamentos;";
+            var strDelSQL = "delete from Departamentos;";
+            /*
             db.sqlBatch([
                 strSQL
             ], function() {
@@ -1175,7 +1199,8 @@ function syncDepartamento()
             }, function(error) {
                 //console.log('SQL batch ERROR: ' + error.message);
             });
-            strSQL = "INSERT INTO Departamentos (ID,Nombre, Zona) VALUES ";
+            */
+            var strSQL = "INSERT INTO Departamentos (ID,Nombre, Zona) VALUES ";
             for(var i=0;i<response.length;i++) {
                 strSQL = strSQL + "(" + response[i].ID + ",'" + response[i].Nombre + "'," + response[i].Zona + "),"
             }
@@ -1185,6 +1210,7 @@ function syncDepartamento()
             //Si Hay internet Sincronizo Departamentos limpiando la tabla.
 
             db.sqlBatch([
+                strDelSQL,
                 strSQL
             ], function() {
                 //console.log('Clear database OK');
@@ -1209,7 +1235,8 @@ function syncHorarios()
         dataType: "json",
         success: function (response) {
             db = window.sqlitePlugin.openDatabase({name: 'sjapp.db', location: 'default'});
-            var strSQL = "delete from Horarios;";
+            var strDelSQL = "delete from Horarios;";
+            /*
             db.sqlBatch([
                 strSQL
             ], function() {
@@ -1217,13 +1244,15 @@ function syncHorarios()
             }, function(error) {
                 //console.log('SQL batch ERROR: ' + error.message);
             });
-            strSQL = "INSERT INTO Horarios (ID, Hora, Activo ) VALUES ";
+            */
+            var strSQL = "INSERT INTO Horarios (ID, Hora, Activo ) VALUES ";
             for(var i=0;i<response.length;i++) {
                 strSQL = strSQL + "(" + response[i].ID + ",'" + response[i].Hora + "','" +response[i].Activo + "'),";
             }
             strSQL = strSQL.slice(0,-1);
             strSQL = strSQL + ";";
             db.sqlBatch([
+                strDelSQL,
                 strSQL
             ], function() {
                 //console.log('Clear database OK');
@@ -1254,7 +1283,8 @@ function syncEspecialidad()
         dataType: "json",
         success: function (response) {
             db = window.sqlitePlugin.openDatabase({name: 'sjapp.db', location: 'default'});
-            var strSQL = "delete from Especialidad;";
+            var strDelSQL = "delete from Especialidad;";
+            /*
             db.sqlBatch([
                 strSQL
             ], function() {
@@ -1262,7 +1292,8 @@ function syncEspecialidad()
             }, function(error) {
                 //console.log('SQL batch ERROR: ' + error.message);
             });
-            strSQL = "INSERT INTO Especialidad (ID, Nombre ) VALUES ";
+            */
+            var strSQL = "INSERT INTO Especialidad (ID, Nombre ) VALUES ";
             for(var i=0;i<response.length;i++) {
                 strSQL = strSQL + "(" + response[i].ID + ",'" + response[i].Nombre + "'),"
             }
@@ -1270,6 +1301,7 @@ function syncEspecialidad()
             strSQL = strSQL + ";";
 
             db.sqlBatch([
+                strDelSQL,
                 strSQL
             ], function() {
                 //console.log('Clear database OK');
@@ -1298,7 +1330,8 @@ function syncEspecialidadPorCentroDeSalud()
         dataType: "json",
         success: function (response) {
             db = window.sqlitePlugin.openDatabase({name: 'sjapp.db', location: 'default'});
-            var strSQL = "delete from EspecialidadPorCentroDeSalud;";
+            var strDelSQL = "delete from EspecialidadPorCentroDeSalud;";
+            /*
             db.sqlBatch([
                 strSQL
             ], function() {
@@ -1306,7 +1339,8 @@ function syncEspecialidadPorCentroDeSalud()
             }, function(error) {
                 //console.log('SQL batch ERROR: ' + error.message);
             });
-            strSQL = "INSERT INTO EspecialidadPorCentroDeSalud (ID, CentroDeSaludID,EspecialidadID, Activo ) VALUES ";
+            */
+            var strSQL = "INSERT INTO EspecialidadPorCentroDeSalud (ID, CentroDeSaludID,EspecialidadID, Activo ) VALUES ";
             for (var i = 0; i < response.length; i++) {
                 strSQL = strSQL + "(" + response[i].ID + "," + response[i].CentroDeSaludID + "," + response[i].EspecialidadID + ",'" + response[i].Activo + "'),";
             }
@@ -1314,6 +1348,7 @@ function syncEspecialidadPorCentroDeSalud()
             strSQL = strSQL + ";";
 
             db.sqlBatch([
+                strDelSQL,
                 strSQL
             ], function() {
                 //console.log('Limpieza  OK');
@@ -1342,7 +1377,8 @@ function syncHorariosPorEspecialidadPorCentroDeSalud()
         dataType: "json",
         success: function (response) {
             db = window.sqlitePlugin.openDatabase({name: 'sjapp.db', location: 'default'});
-            var strSQL = "delete from HorariosPorEspecialidadPorCentroDeSalud;";
+            var strDelSQL = "delete from HorariosPorEspecialidadPorCentroDeSalud;";
+            /*
             db.sqlBatch([
                 strSQL
             ], function() {
@@ -1350,7 +1386,8 @@ function syncHorariosPorEspecialidadPorCentroDeSalud()
             }, function(error) {
                 //console.log('SQL batch ERROR: ' + error.message);
             });
-            strSQL = "INSERT INTO HorariosPorEspecialidadPorCentroDeSalud (ID, HorarioIDEntrada,HorarioIDSalida, EspecialidadPorCentroDeSaludID,Dia ,Activo) VALUES ";
+            */
+            var strSQL = "INSERT INTO HorariosPorEspecialidadPorCentroDeSalud (ID, HorarioIDEntrada,HorarioIDSalida, EspecialidadPorCentroDeSaludID,Dia ,Activo) VALUES ";
             for (var i = 0; i < response.length; i++) {
                 strSQL = strSQL + "(" + response[i].ID + "," + response[i].HorarioIDEntrada + "," + response[i].HorarioIDSalida + "," + response[i].EspecialidadPorCentroDeSaludID + "," +response[i].Dia + ",'" +response[i].Activo + "'),";
             }
@@ -1359,6 +1396,7 @@ function syncHorariosPorEspecialidadPorCentroDeSalud()
 
 
             db.sqlBatch([
+                strDelSQL,
                 strSQL
             ], function() {
                 //console.log('Clear database OK');
@@ -1386,7 +1424,8 @@ function syncLineaColectivo()
         dataType: "json",
         success: function (response) {
             db = window.sqlitePlugin.openDatabase({name: 'sjapp.db', location: 'default'});
-            var strSQL = "delete from LineaColectivo;";
+            var strDelSQL = "delete from LineaColectivo;";
+            /*
             db.sqlBatch([
                 strSQL
             ], function() {
@@ -1394,8 +1433,8 @@ function syncLineaColectivo()
             }, function(error) {
                 //console.log('SQL batch ERROR: ' + error.message);
             });
-
-            strSQL = "INSERT INTO LineaColectivo (ID, Numero ,Activo) VALUES ";
+            */
+            var strSQL = "INSERT INTO LineaColectivo (ID, Numero ,Activo) VALUES ";
             for (var i = 0; i < response.length; i++) {
                 strSQL = strSQL + "(" + response[i].ID + ",'" + response[i].Numero + "','" + response[i].Activo + "'),"
             }
@@ -1404,6 +1443,7 @@ function syncLineaColectivo()
             strSQL = strSQL + ";";
 
             db.sqlBatch([
+                strDelSQL,
                 strSQL
             ], function() {
                 //console.log('Clear database OK');
@@ -1433,7 +1473,8 @@ function syncLineaColectivoPorCentroDeSalud()
         dataType: "json",
         success: function (response) {
             db = window.sqlitePlugin.openDatabase({name: 'sjapp.db', location: 'default'});
-            var strSQL = "delete from LineaColectivoPorCentroDeSalud;";
+            var strDelSQL = "delete from LineaColectivoPorCentroDeSalud;";
+            /*
             db.sqlBatch([
                 strSQL
             ], function() {
@@ -1441,7 +1482,8 @@ function syncLineaColectivoPorCentroDeSalud()
             }, function(error) {
                 //console.log('SQL batch ERROR: ' + error.message);
             });
-            strSQL = "INSERT INTO LineaColectivoPorCentroDeSalud (ID, LineaColectivoID,CentroDeSaludID ,Activo) VALUES ";
+            */
+            var strSQL = "INSERT INTO LineaColectivoPorCentroDeSalud (ID, LineaColectivoID,CentroDeSaludID ,Activo) VALUES ";
             for (var i = 0; i < response.length; i++) {
                 strSQL = strSQL + "(" + response[i].ID + "," + response[i].LineaColectivoID + "," + response[i].CentroDeSaludID + ",'" + response[i].Activo + "'),";
             }
@@ -1449,6 +1491,7 @@ function syncLineaColectivoPorCentroDeSalud()
             strSQL = strSQL + ";";
 
             db.sqlBatch([
+                strDelSQL,
                 strSQL
             ], function() {
                 //console.log('Clear database OK');
@@ -1788,7 +1831,8 @@ function enviarFormularioDP(flag){
     }
 
     db = window.sqlitePlugin.openDatabase({name: 'sjapp.db', location: 'default'});
-    var strSQL = "delete from DatosPersonales;";
+    var strDelSQL = "delete from DatosPersonales;";
+    /*
     db.sqlBatch([
         strSQL
     ], function() {
@@ -1796,10 +1840,12 @@ function enviarFormularioDP(flag){
     }, function(error) {
         //console.log('SQL batch ERROR: ' + error.message);
     });
-    strSQL = "INSERT INTO DatosPersonales (Telefono, DNI) VALUES ('"+$("#cel").val()+"','"+$("#dni").val()+"')";
+    */
+    var strSQL = "INSERT INTO DatosPersonales (Telefono, DNI) VALUES ('"+$("#cel").val()+"','"+$("#dni").val()+"')";
 
     //Si hay internet Sincronizo Centros de Salud limpiando la tabla
     db.sqlBatch([
+        strDelSQL,
         strSQL
     ], function() {
         window.plugins.toast.show(msg,"3000","bottom");

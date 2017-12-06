@@ -12,7 +12,6 @@ var mainView = myApp.addView('.view-main', {
     animateNavBackIcon:false,
 });
 
-//var mySearchbar = $$('.searchbar')[0].f7Searchbar;
 
 var db = null;
 
@@ -47,6 +46,22 @@ function requestPermissionGPS()
     "use strict";
 
     document.addEventListener( 'deviceready', onDeviceReady.bind( this ), false );
+    document.addEventListener("offline", onOffline, false);
+    document.addEventListener("online", onOnline, false);
+
+    function onOffline() {
+        // Handle the offline event
+        //myApp.alert("Has perdido la conexión a internet","Salud San Juan.");
+        //getSlider();
+    }
+
+    function onOnline() {
+        // Handle the online event
+        sincronizarDB();
+        getSlider();
+        //myApp.alert("Has recuperado la conexión a internet, la aplicación sincronizará información ahora.","Salud San Juan.");
+
+    }
 
     function onDeviceReady() {
 
@@ -56,9 +71,7 @@ function requestPermissionGPS()
         //FORZADO DE ACTIVACION DE GPS EN LAS PLATAFORMAS
         requestPermissionGPS();
 
-
         Database(db);
-
 
 
         // Controlar la pausa de Cordova y reanudar eventos
@@ -66,11 +79,7 @@ function requestPermissionGPS()
         document.addEventListener( 'resume', onResume.bind( this ), false );
 
         // TODO: Cordova se ha cargado. Haga aquí las inicializaciones que necesiten Cordova.
-        //var parentElement = document.getElementById('deviceready');
-        //var listeningElement = parentElement.querySelector('.listening');
-        //var receivedElement = parentElement.querySelector('.received');
-        //listeningElement.setAttribute('style', 'display:none;');
-        //receivedElement.setAttribute('style', 'display:block;');
+
     };
 
     function onPause() {
@@ -83,7 +92,6 @@ function requestPermissionGPS()
 
     // device APIs are available
     //
-
 
     // Handle the back button
     //
