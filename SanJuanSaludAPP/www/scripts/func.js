@@ -709,7 +709,11 @@ function onError(result) {
 }
 
 function CallPhone(number) {
-    window.plugins.CallNumber.callNumber(onSuccess, onError, number, true);
+    myApp.confirm('¿Está seguro que desea llamar a emergencias?', 'Salud San Juan.',function () {
+        //navigator.app.clearHistory(); navigator.app.exitApp();
+        window.plugins.CallNumber.callNumber(onSuccess, onError, number, true);
+    });
+
 }
 
 
@@ -919,8 +923,7 @@ function csBuscarListDB(cap){
 
     if(cap == "")
     {
-        myApp.alert("Ingrese un nombre válido","Búsqueda por nombre");
-        return;
+        $("#csDatalist").empty();
     }
 
     db = window.sqlitePlugin.openDatabase({name: 'sjapp.db', location: 'default'});
