@@ -949,10 +949,10 @@ function csBuscarListDB(cap){
                     '</li><br>';
             */
             var tmp = '<div class="card clickEvent" data-id="' + rs.rows.item(i).ID + '">'+
-                '<div class="card-header"><i class="icon f7-icons  color-red">info_fill</i>' + rs.rows.item(i).Nombre + '</div>'+
+                '<div class="card-header"><i class="icon f7-icons  color-red">info_fill</i> ' + rs.rows.item(i).Nombre + '</div>'+
                 '<div class="card-content">'+
-                '<div class="card-content-inner"><i class="icon f7-icons  color-red">phone_fill</i>' + rs.rows.item(i).Telefono + '</div>'+
-                '<div class="card-content-inner"><i class="icon f7-icons  color-red">navigation_fill</i>' + rs.rows.item(i).Direccion + '</div>'+
+                '<div class="card-content-inner"><i class="icon f7-icons  color-red">phone_fill</i> ' + rs.rows.item(i).Telefono + '</div>'+
+                '<div class="card-content-inner"><i class="icon f7-icons  color-red">navigation_fill</i> ' + rs.rows.item(i).Direccion + '</div>'+
                 '</div>'+
                 '</div> <br>';
 
@@ -1117,6 +1117,9 @@ function sincronizarDB()
 
     //alert('Connection type: ' + states[networkState]);
     if(states[networkState] == "Cell 4G connection" || states[networkState] == 'Cell 3G connection' || states[networkState] == 'WiFi connection') {
+
+        window.plugins.toast.show("Los Datos están siendo actualizados.","3000","bottom");
+
         getDatosPersonales();
         syncBuscarList();
         syncDepartamento();
@@ -1126,6 +1129,8 @@ function sincronizarDB()
         syncHorariosPorEspecialidadPorCentroDeSalud();
         syncLineaColectivo();
         syncLineaColectivoPorCentroDeSalud();
+
+
     }
     else
     {
@@ -1168,7 +1173,7 @@ function syncBuscarList()
                 strSQL
             ], function() {
                 console.log('Centros de salud');
-                window.plugins.toast.show("Los Centros de Salud estan siendo Actualizados ","3000","bottom");
+                //window.plugins.toast.show("Los Centros de Salud estan siendo Actualizados ","3000","bottom");
 
             }, function(error) {
                 console.log('SQL batch ERROR: centros ' + error.message);
@@ -1214,7 +1219,7 @@ function syncDepartamento()
                 strSQL
             ], function() {
                 //console.log('Clear database OK');
-                window.plugins.toast.show("Los Departamentos estan siendo Actualizados ","3000","bottom");
+                //window.plugins.toast.show("Los Departamentos estan siendo Actualizados ","3000","bottom");
             }, function(error) {
                 //console.log('SQL batch ERROR: ' + error.message);
             });
@@ -1256,7 +1261,7 @@ function syncHorarios()
                 strSQL
             ], function() {
                 //console.log('Clear database OK');
-                window.plugins.toast.show("Los Horarios estan siendo Actualizados ","3000","bottom");
+                //window.plugins.toast.show("Los Horarios estan siendo Actualizados ","3000","bottom");
             }, function(error) {
                 console.log('SQL batch ERROR: ' + error.message);
             });
@@ -1307,7 +1312,7 @@ function syncEspecialidad()
                 //console.log('Clear database OK');
             }, function(error) {
                 //console.log('SQL batch ERROR: ' + error.message);
-                window.plugins.toast.show("Las Especialidades estan siendo Actualizados ","3000","bottom");
+                //window.plugins.toast.show("Las Especialidades estan siendo Actualizados ","3000","bottom");
             });
         },
         error: function (error) {
@@ -1352,7 +1357,7 @@ function syncEspecialidadPorCentroDeSalud()
                 strSQL
             ], function() {
                 //console.log('Limpieza  OK');
-                window.plugins.toast.show("Las Especialidades por centro de salud estan siendo Actualizados ","3000","bottom");
+                //window.plugins.toast.show("Las Especialidades por centro de salud estan siendo Actualizados ","3000","bottom");
             }, function(error) {
                 //console.log('SQL batch ERROR: ' + error.message);
             });
@@ -1400,7 +1405,7 @@ function syncHorariosPorEspecialidadPorCentroDeSalud()
                 strSQL
             ], function() {
                 //console.log('Clear database OK');
-                window.plugins.toast.show("Los Horarios por Especialidades por centro de salud estan siendo Actualizados ","3000","bottom");
+                //window.plugins.toast.show("Los Horarios por Especialidades por centro de salud estan siendo Actualizados ","3000","bottom");
             }, function(error) {
                 console.log('SQL batch ERROR: ' + error.message);
             });
@@ -1447,7 +1452,7 @@ function syncLineaColectivo()
                 strSQL
             ], function() {
                 //console.log('Clear database OK');
-                window.plugins.toast.show("Las Lineas de colectivo  estan siendo Actualizados ","3000","bottom");
+                //window.plugins.toast.show("Las Lineas de colectivo  estan siendo Actualizados ","3000","bottom");
             }, function(error) {
                 console.log('SQL batch ERROR: ' + error.message);
             });
@@ -1495,7 +1500,7 @@ function syncLineaColectivoPorCentroDeSalud()
                 strSQL
             ], function() {
                 //console.log('Clear database OK');
-                window.plugins.toast.show("Las Lineas de colectivo por centro de salud estan siendo Actualizados ","3000","bottom");
+                //window.plugins.toast.show("Las Lineas de colectivo por centro de salud estan siendo Actualizados ","3000","bottom");
             }, function(error) {
                 //console.log('SQL batch ERROR: ' + error.message);
             });
@@ -1777,7 +1782,7 @@ function processPersonsResponse(response,id) {
         var z = (Dia != DiaT) ? Dia : '';
 
         var tmp = '<b><p>'+ z +'</p></b>'+
-                  '<p> Desde : '+response.rows.item(t).Entrada+' hs.  Hasta : '+response.rows.item(t).Salida+' hs.</p>';
+                  '<p> De : '+response.rows.item(t).Entrada+' hs.  a : '+response.rows.item(t).Salida+' hs.</p>';
 
         DiaT = Dia;
 
