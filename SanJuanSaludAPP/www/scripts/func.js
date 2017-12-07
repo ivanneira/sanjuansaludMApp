@@ -311,6 +311,10 @@ function fillSlider(selector,json)
         autoplay: 4000
     });
 
+    mySwiper.on('tap', function(data){
+        window.plugins.toast.show("Toque dos veces para noticia completa.","3000","bottom");
+    });
+
     mySwiper.on('doubleTap', function(data){
        abrirNoticia(data);
 
