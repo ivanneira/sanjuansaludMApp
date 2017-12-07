@@ -312,7 +312,7 @@ function fillSlider(selector,json)
     });
 
     mySwiper.on('tap', function(data){
-        window.plugins.toast.show("Toque dos veces para noticia completa.","3000","bottom");
+        window.plugins.toast.show("Toque dos veces para ver la noticia completa.","3000","bottom");
     });
 
     mySwiper.on('doubleTap', function(data){

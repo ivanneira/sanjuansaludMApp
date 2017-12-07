@@ -35,6 +35,13 @@ myApp.onPageInit('index', function (page) {
     load();
 });
 
+myApp.onPageInit('cartaMedica', function (page) {
+
+    setTimeout(function(){ $(".loading").remove() }, 8000);
+    $("#iframe").show();
+
+});
+
 
 myApp.onPageInit('mapa', function (page) {
 

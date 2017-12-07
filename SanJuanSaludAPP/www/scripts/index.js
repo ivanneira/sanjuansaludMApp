@@ -52,6 +52,7 @@ function requestPermissionGPS()
     function onOffline() {
 
         $("#btnCartaMedica").unbind('click');
+
         $("#btnCartaMedica").click(function() {
             window.plugins.toast.show("Se requiere una conexión activa para usar este servicio.", "3000", "bottom");
         });
