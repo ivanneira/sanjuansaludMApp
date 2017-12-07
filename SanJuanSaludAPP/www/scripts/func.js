@@ -1118,6 +1118,7 @@ function sincronizarDB()
     states[Connection.CELL]     = 'Cell generic connection';
     states[Connection.NONE]     = 'No network connection';
 
+
     //alert('Connection type: ' + states[networkState]);
     if(states[networkState] == "Cell 4G connection" || states[networkState] == 'Cell 3G connection' || states[networkState] == 'WiFi connection') {
 

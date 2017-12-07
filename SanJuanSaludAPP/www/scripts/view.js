@@ -18,6 +18,9 @@ myApp.onPageInit('caps', function (page) {
     getCentroDeSaludxDpto(DptoID);
 });
 
+
+
+
 myApp.onPageInit('caps-detail', function (page) {
 
     requestPermissionGPS();
@@ -46,11 +49,14 @@ function load()
     getSlider();
 
 
-
     $("#btnAyuda").click(function(){
 
         mainView.router.loadPage("ayuda.html");
     });
+
+
+
+
 
     $("#btnProtur").click(function(){
 
