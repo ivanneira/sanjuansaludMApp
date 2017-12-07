@@ -1,4 +1,5 @@
 ﻿
+
 .justificado{
     text-align: justify;
 }
@@ -23,10 +24,15 @@
 .searchbar .searchbar-input{
     height: auto;
 }
+#csDatalist .card-header{
+
+    display: -webkit-box !important;
+}
 
 #csDatalist{
 
-    margin: 58px 8px;
+    margin: 20px 8px;
+    padding: 0 !important;
 }
 
 .list-block ul{
