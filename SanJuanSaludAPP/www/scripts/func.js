@@ -311,7 +311,7 @@ function fillSlider(selector,json)
         autoplay: 4000
     });
 
-    mySwiper.on('onTap', function(data){
+    mySwiper.on('doubleTap', function(data){
        abrirNoticia(data);
 
     });
@@ -919,16 +919,22 @@ function Database(db)
 }
 
 
+function blurevent()
+{
+
+}
 function csBuscarListDB(cap){
 
-    if(cap == "")
-    {
+    if( $("#txt_buscar").val().trim() == "") {
         $("#csDatalist").empty();
+        return;
     }
+
+
 
     db = window.sqlitePlugin.openDatabase({name: 'sjapp.db', location: 'default'});
 
-    db.executeSql('SELECT ID, Nombre, Latitud, Longitud, Telefono, Direccion,DepartamentoID, LocalidadID, URLImagenDelCentroDeSalud FROM CentroDeSalud where Nombre like "%'+cap+'%"', [], function(rs) {
+    db.executeSql('SELECT ID, Nombre, Latitud, Longitud, Telefono, Direccion,DepartamentoID, LocalidadID, URLImagenDelCentroDeSalud FROM CentroDeSalud where Nombre like "%'+cap+'%" and  (id!=590 and id!=591)', [], function(rs) {
         //console.log('SELECT ID, Nombre, Latitud, Longitud, Telefono, Direccion,DepartamentoID, LocalidadID, URLImagenDelCentroDeSalud FROM CentroDeSalud where Nombre like "%'+cap+'%"');
         //console.dir(rs)
 

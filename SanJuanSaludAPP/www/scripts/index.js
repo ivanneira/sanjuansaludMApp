@@ -60,6 +60,8 @@ function requestPermissionGPS()
 
     function onOnline() {
 
+        $("#btnCartaMedica").unbind('click');
+
         $("#btnCartaMedica").click(function(){
             mainView.router.loadPage("cartaMedica.html");
         });
