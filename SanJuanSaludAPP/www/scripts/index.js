@@ -53,20 +53,33 @@ function requestPermissionGPS()
 
         $("#btnCartaMedica").unbind('click');
 
-        $("#btnCartaMedica").click(function() {
+        setTimeout(function(){
+
+            $("#btnCartaMedica").click(function() {
             window.plugins.toast.show("Se requiere una conexión activa para usar este servicio.", "3000", "bottom");
         });
         $("#btnCartaMedica").css('background-color','lightgray');
+        }, 3000);
+
     }
 
     function onOnline() {
 
         $("#btnCartaMedica").unbind('click');
 
-        $("#btnCartaMedica").click(function(){
-            mainView.router.loadPage("cartaMedica.html");
-        });
-        $("#btnCartaMedica").css('background-color','white');
+        setTimeout(function(){
+
+            $("#btnCartaMedica").click(function(){
+                mainView.router.loadPage("cartaMedica.html");
+            });
+            $("#btnCartaMedica").css('background-color','white');
+
+
+        }, 3000);
+
+
+
+
 
 
         // Handle the online event
