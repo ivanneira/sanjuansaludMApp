@@ -18,6 +18,9 @@ myApp.onPageInit('caps', function (page) {
     getCentroDeSaludxDpto(DptoID);
 });
 
+
+
+
 myApp.onPageInit('caps-detail', function (page) {
 
     requestPermissionGPS();
@@ -30,6 +33,13 @@ myApp.onPageInit('caps-detail', function (page) {
 myApp.onPageInit('index', function (page) {
 
     load();
+});
+
+myApp.onPageInit('cartaMedica', function (page) {
+
+    setTimeout(function(){ $(".loading").remove() }, 8000);
+    $("#iframe").show();
+
 });
 
 
@@ -46,11 +56,14 @@ function load()
     getSlider();
 
 
-
     $("#btnAyuda").click(function(){
 
         mainView.router.loadPage("ayuda.html");
     });
+
+
+
+
 
     $("#btnProtur").click(function(){
 

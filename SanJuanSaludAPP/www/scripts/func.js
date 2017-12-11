@@ -311,7 +311,11 @@ function fillSlider(selector,json)
         autoplay: 4000
     });
 
-    mySwiper.on('onTap', function(data){
+    mySwiper.on('tap', function(data){
+        window.plugins.toast.show("Toque dos veces para ver la noticia completa.","3000","bottom");
+    });
+
+    mySwiper.on('doubleTap', function(data){
        abrirNoticia(data);
 
     });
@@ -919,16 +923,22 @@ function Database(db)
 }
 
 
+function blurevent()
+{
+
+}
 function csBuscarListDB(cap){
 
-    if(cap == "")
-    {
+    if( $("#txt_buscar").val().trim() == "") {
         $("#csDatalist").empty();
+        return;
     }
+
+
 
     db = window.sqlitePlugin.openDatabase({name: 'sjapp.db', location: 'default'});
 
-    db.executeSql('SELECT ID, Nombre, Latitud, Longitud, Telefono, Direccion,DepartamentoID, LocalidadID, URLImagenDelCentroDeSalud FROM CentroDeSalud where Nombre like "%'+cap+'%"', [], function(rs) {
+    db.executeSql('SELECT ID, Nombre, Latitud, Longitud, Telefono, Direccion,DepartamentoID, LocalidadID, URLImagenDelCentroDeSalud FROM CentroDeSalud where Nombre like "%'+cap+'%" and  (id!=590 and id!=591)', [], function(rs) {
         //console.log('SELECT ID, Nombre, Latitud, Longitud, Telefono, Direccion,DepartamentoID, LocalidadID, URLImagenDelCentroDeSalud FROM CentroDeSalud where Nombre like "%'+cap+'%"');
         //console.dir(rs)
 
@@ -1117,6 +1127,7 @@ function sincronizarDB()
     states[Connection.CELL_4G]  = 'Cell 4G connection';
     states[Connection.CELL]     = 'Cell generic connection';
     states[Connection.NONE]     = 'No network connection';
+
 
     //alert('Connection type: ' + states[networkState]);
     if(states[networkState] == "Cell 4G connection" || states[networkState] == 'Cell 3G connection' || states[networkState] == 'WiFi connection') {
