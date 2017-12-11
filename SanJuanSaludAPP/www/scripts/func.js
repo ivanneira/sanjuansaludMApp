@@ -209,9 +209,20 @@ function errorGPS(err) {
 
 //FUNCION QUE DETECTA EL LLAMADO Y RESPUESTA DE AJAX PARA MOSTRAR UN PRELOADER
 $(document).ajaxStart(function() {
-    myApp.showPreloader('Por favor espere...');
+    //myApp.showPreloader('Por favor espere...');
+
+    var temp =
+        '<div id="err1" class="swiper-slide" style="background: url(images/ajax.gif) no-repeat center top;background-size:contain;">'+
+        '<div class="overlay">'+
+        '<p>Por favor espere...</p>'+
+        '</div>'+
+        '</div>';
+
+    $("#slide").css('background-color',' #63b7aa');
+    $("#slide").append(temp)
+
 }).ajaxComplete(function() {
-    myApp.hidePreloader();
+    //myApp.hidePreloader();
 });
 
 //FUNCION PARA CALCULAR DISTANCIA ENTREW DOS PUNTOS
@@ -237,6 +248,8 @@ function keysrt(key,desc) {
 //FUNCION ALTERNATIVA A CUANDO LOS DATOS O CONECTIVIDAD DESDE EL DISPOSITIVO NO ESTAN DISPONIBLES
 function errorSlider(selector)
 {
+
+
     var temp =
         '<div id="err1" class="swiper-slide" style="background: url(images/error.svg) no-repeat center top;background-size:cover;">'+
             '<div class="overlay">'+
