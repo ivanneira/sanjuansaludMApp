@@ -53,6 +53,25 @@ myApp.onPageInit('mapa', function (page) {
 
 function load()
 {
+
+    setTimeout(function(){
+
+        $("#btnCartaMedica").unbind('click').click(function() {
+            window.plugins.toast.show("Se requiere una conexión activa para usar este servicio.", "3000", "bottom");
+        });
+        $("#btnCartaMedica").css('background-color','lightgray');
+    }, 3000);
+
+    var temp =
+        '<div id="err1" class="swiper-slide" style="background: url(images/ajax.gif) no-repeat center top;background-size:contain;">'+
+        '<div class="overlay">'+
+        '<p>Por favor espere...</p>'+
+        '</div>'+
+        '</div>';
+
+    $("#slide").css('background-color',' #63b7aa');
+    $("#slide").append(temp)
+
     getSlider();
 
 

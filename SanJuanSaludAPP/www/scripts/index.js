@@ -51,25 +51,22 @@ function requestPermissionGPS()
 
     function onOffline() {
 
-        $("#btnCartaMedica").unbind('click');
-
         setTimeout(function(){
 
-            $("#btnCartaMedica").click(function() {
+            $("#btnCartaMedica").unbind('click').click(function() {
             window.plugins.toast.show("Se requiere una conexión activa para usar este servicio.", "3000", "bottom");
         });
         $("#btnCartaMedica").css('background-color','lightgray');
         }, 3000);
 
+
     }
 
     function onOnline() {
 
-        $("#btnCartaMedica").unbind('click');
-
         setTimeout(function(){
 
-            $("#btnCartaMedica").click(function(){
+            $("#btnCartaMedica").unbind('click').click(function() {
                 mainView.router.loadPage("cartaMedica.html");
             });
             $("#btnCartaMedica").css('background-color','white');
@@ -77,12 +74,6 @@ function requestPermissionGPS()
 
         }, 3000);
 
-
-
-
-
-
-        // Handle the online event
         sincronizarDB();
         getSlider();
         //myApp.alert("Has recuperado la conexión a internet, la aplicación sincronizará información ahora.","Salud San Juan.");
