@@ -55,7 +55,9 @@ function requestPermissionGPS()
 
             $("#btnCartaMedica").unbind('click').click(function() {
             window.plugins.toast.show("Se requiere una conexión activa para usar este servicio.", "3000", "bottom");
-        });
+
+            });
+
         $("#btnCartaMedica").css('background-color','lightgray');
         }, 3000);
 
@@ -64,11 +66,14 @@ function requestPermissionGPS()
 
     function onOnline() {
 
+
         setTimeout(function(){
+
 
             $("#btnCartaMedica").unbind('click').click(function() {
                 mainView.router.loadPage("cartaMedica.html");
             });
+
             $("#btnCartaMedica").css('background-color','white');
 
 
