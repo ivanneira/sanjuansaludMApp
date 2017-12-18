@@ -208,7 +208,7 @@ function validacionProtur (){
 
         confirmarEnvio();
     }else {
-        
+
         window.plugins.toast.show(mensajeVerificacion,"3000","bottom");
     }
 
