@@ -951,7 +951,7 @@ function csBuscarListDB(cap){
 
     db = window.sqlitePlugin.openDatabase({name: 'sjapp.db', location: 'default'});
 
-    db.executeSql('SELECT ID, Nombre, Latitud, Longitud, Telefono, Direccion,DepartamentoID, LocalidadID, URLImagenDelCentroDeSalud FROM CentroDeSalud where Nombre like "%'+cap+'%" and  (id!=590 and id!=591)', [], function(rs) {
+    db.executeSql('SELECT cs.ID, cs.Nombre, cs.Latitud, cs.Longitud, cs.Telefono, cs.Direccion,cs.DepartamentoID, cs.LocalidadID, cs.URLImagenDelCentroDeSalud,dp.Nombre as Departamento, dp.Zona as Zona FROM CentroDeSalud as cs inner join Departamentos as dp on dp.ID = cs.DepartamentoID  where cs.Nombre like "%'+cap+'%" and  (cs.id!=590 and cs.id!=591)', [], function(rs) {
         //console.log('SELECT ID, Nombre, Latitud, Longitud, Telefono, Direccion,DepartamentoID, LocalidadID, URLImagenDelCentroDeSalud FROM CentroDeSalud where Nombre like "%'+cap+'%"');
         //console.dir(rs)
 
@@ -978,7 +978,8 @@ function csBuscarListDB(cap){
                 '<div class="card-header"><i class="icon f7-icons  color-red">info_fill</i> ' + rs.rows.item(i).Nombre + '</div>'+
                 '<div class="card-content">'+
                 '<div class="card-content-inner"><i class="icon f7-icons  color-red">phone_fill</i> ' + rs.rows.item(i).Telefono + '</div>'+
-                '<div class="card-content-inner"><i class="icon f7-icons  color-red">navigation_fill</i> ' + rs.rows.item(i).Direccion + '</div>'+
+                '<div class="card-content-inner"><i class="icon f7-icons  color-red">right</i> Departamento: ' + rs.rows.item(i).Departamento + '</div>'+
+                '<div class="card-content-inner"><i class="icon f7-icons  color-red">right</i> Zona Sanitaria: ' + rs.rows.item(i).Zona + '</div>'+
                 '</div>'+
                 '</div> <br>';
 
@@ -1550,14 +1551,14 @@ function getCentroDeSaludDB(id)
 
     db = window.sqlitePlugin.openDatabase({name: 'sjapp.db', location: 'default'});
 
-    db.executeSql('SELECT * FROM CentroDeSalud where ID='+id, [], function(rs) {
+    db.executeSql('SELECT cs.*,dp.Nombre as Departamento, dp.Zona as Zona  FROM CentroDeSalud as cs inner join Departamentos as dp on dp.ID = cs.DepartamentoID where cs.ID='+id, [], function(rs) {
         //console.dir(rs)
 
         $("#caps-tittle").html(rs.rows.item(0).Nombre);
         $("#caps-basic").append(
             '<p>' +
             '<h4 class="color-h4">Dirección</h4>'+
-            rs.rows.item(0).Direccion +
+            rs.rows.item(0).Direccion + "<br><br>Departamento: " + rs.rows.item(0).Departamento + "<br><br>Zona Sanitaria: "+ rs.rows.item(0).Zona +
             '</p>'+
             '<p>' +
             '<h4 class="color-h4">Teléfonos</h4>' +
