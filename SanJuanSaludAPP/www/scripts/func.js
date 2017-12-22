@@ -1669,13 +1669,22 @@ function getCentroDeSaludDB(id)
                     directionsDisplay.setDirections(response);
 
 
+                    var distancia = (response.routes[0].legs[0].distance.value / 1000).toFixed();
+                    var texto = "";
+                    if(distancia == 0 )
+                    {
+                        texto = "Menos de 1 KM.";
+                    }
+                    else
+                    {
+                        texto = distancia + " KM Aproximados."
+                    }
 
                     $("#Distancia").html(
 
 
                         "<p>Segun tu ubicación te encuentras a: "+
-                        (response.routes[0].legs[0].distance.value / 1000).toFixed() +
-                        " KM aproximados." +
+                        texto +
                         "</p>" +
                         "<a class='button button-fill button-raised boton-navigation' href='javascript:navigate(["+myLat+","+myLong+"],["+pos.lat+","+pos.lng+"]);' >" +
                         'Indicaciones para llegar' +
@@ -1713,7 +1722,7 @@ function getCentroDeSaludEyHDB(id)
 
         rs_tmp = rs;
         //inicio
-        var htmlStringEsp = '<ul>';
+        var htmlStringEsp = '<h4 class="color-h4">Especialiades y Horarios</h4><ul>';
 
 
 
