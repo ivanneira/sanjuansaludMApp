@@ -1,59 +1,59 @@
 {
-  "name": "SanJuanSaludAPP",
-  "version": "1.0.0",
-  "private": true,
-  "dependencies": {
-    "call-number": "git+https://github.com/Rohfosho/CordovaCallNumberPlugin.git",
-    "cordova-android": "^6.2.3",
-    "cordova-browser": "^5.0.1",
-    "cordova-custom-config": "^4.0.2",
-    "cordova-ios": "4.2.0",
-    "cordova-plugin-android-softinputmode": "^0.2.1",
-    "cordova-plugin-compat": "^1.0.0",
-    "cordova-plugin-geolocation": "^2.4.3",
-    "cordova-plugin-googlemaps": "git+https://github.com/mapsplugin/cordova-plugin-googlemaps.git#multiple_maps",
-    "cordova-plugin-googlemaps-sdk": "git+https://github.com/mapsplugin/cordova-plugin-googlemaps-sdk.git",
-    "cordova-plugin-network-information": "^1.3.4",
-    "cordova-plugin-request-location-accuracy": "^2.2.2",
-    "cordova-plugin-splashscreen": "^4.0.3",
-    "cordova-plugin-whitelist": "1.2.2",
-    "cordova-plugin-x-toast": "^2.6.0",
-    "cordova-sms-plugin": "^0.1.11",
-    "cordova-sqlite-storage": "^2.1.2",
-    "cordova-windows": "4.4.2",
-    "material-design-lite": "^1.3.0",
-    "uk.co.workingedge.phonegap.plugin.launchnavigator": "^4.0.4"
-  },
-  "cordova": {
-    "platforms": [
-      "android",
-      "browser",
-      "ios",
-      "windows"
-    ],
-    "plugins": {
-      "cordova-plugin-whitelist": {},
-      "cordova-plugin-geolocation": {
-        "GEOLOCATION_USAGE_DESCRIPTION": " "
-      },
-      "cordova-plugin-googlemaps": {
-        "API_KEY_FOR_ANDROID": "AIzaSyC_LkjOstSW67FyZ2oABpMfZSG4STjiu7c",
-        "API_KEY_FOR_IOS": "AIzaSyBZK0bGv6wCVNOpLiLRLgV_hy8B-Y07pp4",
-        "LOCATION_WHEN_IN_USE_DESCRIPTION": "Show your location on the map",
-        "LOCATION_ALWAYS_USAGE_DESCRIPTION": "Trace your location on the map"
-      },
-      "cordova-plugin-request-location-accuracy": {},
-      "cordova-plugin-x-toast": {},
-      "uk.co.workingedge.phonegap.plugin.launchnavigator": {
-        "LOCATION_USAGE_DESCRIPTION": "This app requires access to your location for navigation purposes"
-      },
-      "cordova-plugin-splashscreen": {},
-      "cordova-plugin-android-softinputmode": {},
-      "cordova-custom-config": {},
-      "call-number": {},
-      "cordova-sms-plugin": {},
-      "cordova-sqlite-storage": {},
-      "cordova-plugin-network-information": {}
+    "name": "SanJuanSaludAPP",
+    "version": "1.0.0",
+    "private": true,
+    "dependencies": {
+        "call-number": "git+https://github.com/Rohfosho/CordovaCallNumberPlugin.git",
+        "cordova-android": "^6.2.3",
+        "cordova-browser": "^5.0.1",
+        "cordova-custom-config": "^4.0.2",
+        "cordova-ios": "4.2.0",
+        "cordova-plugin-android-softinputmode": "^0.2.1",
+        "cordova-plugin-compat": "^1.0.0",
+        "cordova-plugin-geolocation": "^2.4.3",
+        "cordova-plugin-googlemaps": "git+https://github.com/mapsplugin/cordova-plugin-googlemaps.git#multiple_maps",
+        "cordova-plugin-googlemaps-sdk": "git+https://github.com/mapsplugin/cordova-plugin-googlemaps-sdk.git",
+        "cordova-plugin-network-information": "^1.3.4",
+        "cordova-plugin-request-location-accuracy": "^2.2.2",
+        "cordova-plugin-splashscreen": "^4.0.3",
+        "cordova-plugin-whitelist": "1.2.2",
+        "cordova-plugin-x-toast": "^2.6.0",
+        "cordova-sms-plugin": "^0.1.11",
+        "cordova-sqlite-storage": "^2.1.2",
+        "cordova-windows": "4.4.2",
+        "material-design-lite": "^1.3.0",
+        "uk.co.workingedge.phonegap.plugin.launchnavigator": "^4.0.4"
+    },
+    "cordova": {
+        "platforms": [
+            "android",
+            "browser",
+            "ios",
+            "windows"
+        ],
+        "plugins": {
+            "cordova-plugin-whitelist": {},
+            "cordova-plugin-geolocation": {
+                "GEOLOCATION_USAGE_DESCRIPTION": " "
+            },
+            "cordova-plugin-googlemaps": {
+                "API_KEY_FOR_ANDROID": "AIzaSyC_LkjOstSW67FyZ2oABpMfZSG4STjiu7c",
+                "API_KEY_FOR_IOS": "AIzaSyBZK0bGv6wCVNOpLiLRLgV_hy8B-Y07pp4",
+                "LOCATION_WHEN_IN_USE_DESCRIPTION": "Show your location on the map",
+                "LOCATION_ALWAYS_USAGE_DESCRIPTION": "Trace your location on the map"
+            },
+            "cordova-plugin-request-location-accuracy": {},
+            "cordova-plugin-x-toast": {},
+            "uk.co.workingedge.phonegap.plugin.launchnavigator": {
+                "LOCATION_USAGE_DESCRIPTION": "This app requires access to your location for navigation purposes"
+            },
+            "cordova-plugin-splashscreen": {},
+            "cordova-plugin-android-softinputmode": {},
+            "cordova-custom-config": {},
+            "call-number": {},
+            "cordova-sms-plugin": {},
+            "cordova-sqlite-storage": {},
+            "cordova-plugin-network-information": {}
+        }
     }
-  }
 }

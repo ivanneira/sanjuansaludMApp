@@ -58,7 +58,13 @@ function requestPermissionGPS()
 
             });
 
-        $("#btnCartaMedica").css('background-color','lightgray');
+            $("#btnProtur").unbind('click').click(function() {
+                window.plugins.toast.show("Se requiere una conexión activa para usar este servicio.", "3000", "bottom");
+
+            });
+
+            $("#btnCartaMedica").css('background-color','lightgray');
+            $("#btnProtur").css('background-color','lightgray');
         }, 3000);
 
 
@@ -74,7 +80,12 @@ function requestPermissionGPS()
                 mainView.router.loadPage("cartaMedica.html");
             });
 
+            $("#btnProtur").unbind('click').click(function() {
+                mainView.router.loadPage("formularioProtur.html");
+            });
+
             $("#btnCartaMedica").css('background-color','white');
+            $("#btnProtur").css('background-color','white');
 
 
         }, 3000);
