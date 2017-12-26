@@ -312,6 +312,7 @@ function enviarDatos(){
         type: "POST",
         url: proturURL,
         data: data ,
+        timeout: timeOut,
         success: function(response){
 
             console.dir(response)
@@ -367,6 +368,7 @@ function enviarComentario(){
 
         $.ajax({
             type: "POST",
+            timeout: timeOut,
             url: comentarioURL,
             data: {
                 'mail': $('#cemail').val(),

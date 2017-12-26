@@ -21,6 +21,7 @@ var sinConexion = 'El conenido online no esta disponible momentaneamente.';
 var myLat = -31.536395;
 var myLong = -68.536976;
 
+var timeOut = 6000;
 //-31.536395, -68.536976 
 //PARAMETROS DE CONFIGURACION PARA EL GPS
 var optionsGPS = {
@@ -143,6 +144,7 @@ function GPS()
         url: CapsURL,
         cache: false,
         type: 'get',
+        timeout: timeOut,
         dataType: "json",
         success: function (response) {
 
@@ -285,10 +287,12 @@ function getSlider()
         cache: false,
         type: 'get',
         dataType: "json",
+        timeout: timeOut,
         success: function (response) {
             fillSlider($("#slide"), response);
         },
         error: function () {
+
             //alert(ErrorAjax);
             errorSlider($("#slide"));
         }
@@ -410,6 +414,7 @@ function getCentroDeSalud(id)
         url: CapsURL + "/" + id,
         cache: false,
         type: 'get',
+        timeout: timeOut,
         dataType: "json",
         success: function (response) {
 
@@ -580,6 +585,7 @@ function getCentroDeSaludEyH(id)
         url: CapsURL + "/" + id+ "/EspecialidadesYHorarios",
         cache: false,
         type: 'get',
+        timeout: timeOut,
         dataType: "json",
         success: function (response) {
 
@@ -656,6 +662,7 @@ function getCentroDeSaludLC(id)
         url: CapsURL + "/" + id+ "/LineasDeColectivos",
         cache: false,
         type: 'get',
+        timeout: timeOut,
         dataType: "json",
         success: function (response) {
 
@@ -1220,6 +1227,7 @@ function syncDepartamento()
         url: DepartamentosURL,
         cache: false,
         type: 'get',
+        timeout: timeOut,
         dataType: "json",
         success: function (response) {
             db = window.sqlitePlugin.openDatabase({name: 'sjapp.db', location: 'default'});
@@ -1313,6 +1321,7 @@ function syncEspecialidad()
         url: Especialidad,
         cache: false,
         type: 'get',
+        timeout: timeOut,
         dataType: "json",
         success: function (response) {
             db = window.sqlitePlugin.openDatabase({name: 'sjapp.db', location: 'default'});
@@ -1360,6 +1369,7 @@ function syncEspecialidadPorCentroDeSalud()
         url: EspecialidadPorCentroDeSalud,
         cache: false,
         type: 'get',
+        timeout: timeOut,
         dataType: "json",
         success: function (response) {
             db = window.sqlitePlugin.openDatabase({name: 'sjapp.db', location: 'default'});
@@ -1407,6 +1417,7 @@ function syncHorariosPorEspecialidadPorCentroDeSalud()
         url: HorariosPorEspecialidadPorCentroDeSalud,
         cache: false,
         type: 'get',
+        timeout: timeOut,
         dataType: "json",
         success: function (response) {
             db = window.sqlitePlugin.openDatabase({name: 'sjapp.db', location: 'default'});
@@ -1454,6 +1465,7 @@ function syncLineaColectivo()
         url: LineaColectivo,
         cache: false,
         type: 'get',
+        timeout: timeOut,
         dataType: "json",
         success: function (response) {
             db = window.sqlitePlugin.openDatabase({name: 'sjapp.db', location: 'default'});
@@ -1503,6 +1515,7 @@ function syncLineaColectivoPorCentroDeSalud()
         url: LineaColectivoPorCentroDeSalud,
         cache: false,
         type: 'get',
+        timeout: timeOut,
         dataType: "json",
         success: function (response) {
             db = window.sqlitePlugin.openDatabase({name: 'sjapp.db', location: 'default'});
